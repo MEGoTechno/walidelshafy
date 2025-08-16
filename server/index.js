@@ -74,7 +74,7 @@ app.use('/api/get-ip', (req, res, next) => {
     })
 })
 
-const origin = ['https://walidelshafy.com'] //'https://elbeltagy-front.vercel.app',
+const origin = ['https://walidelshafy.com', 'https://walidelshafy-8g6t.vercel.app'] //'https://elbeltagy-front.vercel.app',
 process.env.NODE_ENV === 'development' && origin.push(...['http://192.168.1.16:3000', 'http://localhost:3000', 'http://192.168.1.13:3000'])
 
 app.use(cors(
