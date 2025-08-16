@@ -56,7 +56,7 @@ function Services() {
                 <Typography variant='banner' textAlign={'center'} ><span style={{ color: 'orange', }}>المنهج عندنا</span> و المذاكره عليك </Typography>
             </FlexRow> */}
             <FlexColumn>
-                <Grid max={'4'}>
+                <Grid>
                     {features.map((f, i) => {
                         return <Paper key={i} elevation={3} sx={{ p: '16px', width: '100%', textAlign: 'center', bgcolor: theme.palette.primary.main + 20 }}>
                             <FlexColumn gap={'12px'} sx={{ width: '100%' }}>
