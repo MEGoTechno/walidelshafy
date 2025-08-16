@@ -13,7 +13,7 @@ import * as Sentry from "@sentry/react";
 
 import.meta.env.VITE_NODE_ENV === 'production' &&
   Sentry.init({
-    dsn: "https://0784ad202f2f2c0f6fe694052b61202a@o4508263180337152.ingest.us.sentry.io/4508263195607041",
+    dsn: "https://242e0169eb5a34eec9389726d66af7e1@o4508263180337152.ingest.us.sentry.io/4509854877483008", //ID
     integrations: [
       Sentry.browserTracingIntegration(),
       Sentry.replayIntegration(),
