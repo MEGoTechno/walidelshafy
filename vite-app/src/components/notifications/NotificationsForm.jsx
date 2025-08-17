@@ -5,7 +5,7 @@ import MakeForm from '../../tools/makeform/MakeForm'
 import { useCreateNotificationMutation } from '../../toolkit/apis/notificationsApi'
 import usePostData from '../../hooks/usePostData'
 import senderConstants from '../../settings/constants/senderConstants'
-import GetWhatsStatus from '../whatsapp/GetWhatsStatus'
+// import GetWhatsStatus from '../whatsapp/GetWhatsStatus'
 import TitleWithDividers from '../ui/TitleWithDividers'
 import { useState } from 'react'
 
@@ -62,7 +62,7 @@ function NotificationsForm({ setNotifications, resetFc, user }) {
     return (
         <Section>
             <TitleWithDividers title={'ارسال اشعار'} />
-            <GetWhatsStatus setWhatsStatus={setWhatsStatus} />
+            {/* <GetWhatsStatus setWhatsStatus={setWhatsStatus} /> */}
             <MakeForm inputs={inputs} btnWidth={'100%'} status={status} onSubmit={onSubmit} />
         </Section>
     )

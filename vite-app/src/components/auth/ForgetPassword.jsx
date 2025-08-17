@@ -3,7 +3,7 @@ import ListMethods from '../../style/mui/styled/ListMethods';
 import { useState } from 'react';
 import senderConstants from '../../settings/constants/senderConstants';
 
-import { FaWhatsapp } from "react-icons/fa";
+// import { FaWhatsapp } from "react-icons/fa";
 import { MdMarkEmailUnread } from "react-icons/md";
 import { FcContacts } from "react-icons/fc";
 import { FlexColumn } from '../../style/mui/styled/Flexbox';
@@ -17,8 +17,8 @@ import * as Yup from "yup"
 import { FaSquarePhoneFlip } from 'react-icons/fa6';
 import { TbPasswordUser } from 'react-icons/tb';
 import Section from '../../style/mui/styled/Section';
-import { useGetWhatsappStatusQuery } from '../../toolkit/apis/whatsappApi';
-import TabInfo from '../ui/TabInfo';
+// import { useGetWhatsappStatusQuery } from '../../toolkit/apis/whatsappApi';
+// import TabInfo from '../ui/TabInfo';
 
 export default function ForgetPassword() {
     const [chosenMethod, setChosenMethod] = useState(senderConstants.EMAIL);
@@ -30,20 +30,10 @@ export default function ForgetPassword() {
     const [ForgetPassword] = usePostData(sendForget)
     const [verifyResetPassword] = usePostData(sendVerify)
 
-    const { data, isLoading, isSuccess } = useGetWhatsappStatusQuery()
-    console.log(data?.values?.isValid)
+    // const { data, isLoading, isSuccess } = useGetWhatsappStatusQuery()
+    // console.log(data?.values?.isValid)
     const methods = [
         { value: senderConstants.EMAIL, label: senderConstants.EMAIL, icon: <MdMarkEmailUnread />, isValid: true },
-        {
-            value: senderConstants.WHATSAPP,
-            label: senderConstants.WHATSAPP,
-            icon: <FaWhatsapp />,
-            isValid: isSuccess && data?.values?.isValid || false,
-            descCompo: true,
-            description: isLoading ? <TabInfo count={'loading...'} i={0} /> :
-                (isSuccess && data?.values?.isValid) ? <TabInfo count={'active'} i={1} /> :
-                    <TabInfo count={'غير فعال'} i={3} sx={{ fontSize: '8px' }} />
-        },
         { value: senderConstants.CONTACT, label: senderConstants.CONTACT, icon: <FcContacts />, isValid: true },
     ]
 
