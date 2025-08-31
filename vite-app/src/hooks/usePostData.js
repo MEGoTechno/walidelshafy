@@ -16,9 +16,10 @@ export default function usePostData(sendData, setLoading, setReset = null) {
     }
 
     // data = values
-    data = Object.fromEntries(
+    data = Array.isArray ? values : Object.fromEntries(
       Object.entries(values).filter(([k, v]) => v !== null && v !== undefined && v !== '')
     );
+
     // console.log(data)
     // removing spacing
     Object.keys(data).forEach(key => {

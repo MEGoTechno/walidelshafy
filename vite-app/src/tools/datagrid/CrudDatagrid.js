@@ -28,7 +28,7 @@ import BtnConfirm from '../../components/ui/BtnConfirm';
 const BooleanSwitchCell = ({ field, row, updateFc, params }) => {
     const handleChange = async () => {
         const newRow = { [field]: !row[field], _id: row._id, id: row._id }
-        await updateFc(newRow);
+        await updateFc(newRow, field);
         params.api.updateRows([{ ...newRow }])
     };
 

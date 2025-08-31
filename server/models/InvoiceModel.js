@@ -13,7 +13,8 @@ const invoiceSchema = new mongoose.Schema({
     payment: { type: mongoose.Schema.Types.ObjectId, ref: 'payment', required: true },
     status: String,
     message: String,
-
+    sendFrom: String,
+    
     file: {
         url: { type: String }
     },

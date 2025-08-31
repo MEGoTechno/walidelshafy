@@ -71,7 +71,7 @@ const unLinkQuestionToTags = expressAsyncHandler(async (req, res, next) => {
 
 // For Many
 const createManyQuestions = expressAsyncHandler(async (req, res, next) => {
-    const questionsData = req.body || []
+    const questionsData = req.body.questions || []
     const handledQs = questionsData.map(q => {
         if (q.isShuffle) {
             const options = shuffleArray(q.options)

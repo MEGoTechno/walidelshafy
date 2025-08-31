@@ -108,7 +108,7 @@ exports.getAll = (Model, docName, params = [], isModernSort = true, populate = '
 
         // search && filter
         let match = parseFilters(params(query))
-        
+
         // console.log(match)
         //find({course: {$in: [90, 80, 40]}})
         //sort 
@@ -478,9 +478,8 @@ exports.pushToModel = (Model) => {
             { _id: { $in: targetIds } },
             update
         );
-
         res.status(200).json({
-            message: `تم بنجاح` + ' ' + action === 'push' ? ' الايضافه' : ' الازاله',
+            message: `تم بنجاح` + ' ' + (action === 'push' ? ' تمت الايضافه بنجاح' : ' تمت الازاله بنجاح'),
             status: statusTexts.SUCCESS
         });
     })

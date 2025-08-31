@@ -39,7 +39,7 @@ function AdminCourseStatisticsMenu({ course }) {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem component={Link} to={'/management/reports?course=' + course?._id}>تقارير الكورس</MenuItem>
+                {/* <MenuItem component={Link} to={'/management/reports?course=' + course?._id}>تقارير الكورس</MenuItem> */}
 
                 <MenuItem component={Link} to={'/statistics/views?course=' + course?._id}>مشاهدات الكورس</MenuItem>
                 <MenuItem component={Link} to={'/management/attempts?courseId=' + course?._id}> احصائيات الاختبارات</MenuItem>

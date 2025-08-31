@@ -10,7 +10,6 @@ import BtnModal from "../ui/BtnModal"
 import AttemptPage from "../../pages/user/AttemptPage"
 import { useMemo } from "react"
 import { user_roles } from "../../settings/constants/roles"
-import { useRemoveAnswerMutation } from "../../toolkit/apis/answersApi"
 
 const exportObj = {
     createdAt: (row) => {
@@ -110,6 +109,8 @@ function AttemptsGrid({ exam, courseId, attemptRole }) {
             headerName: lang.ROLE,
             width: 200,
             type: 'singleSelect',
+            sortable: false,
+            filterable: false,
             valueOptions: [user_roles.INREVIEW, user_roles.ONLINE, user_roles.STUDENT],
         }, {
             field: 'phone',
@@ -175,14 +176,14 @@ function AttemptsGrid({ exam, courseId, attemptRole }) {
     const fetchFilters = useMemo(() => {
         const params = {
             populate: 'exam course user',
-            course: courseId, exam: exam?._id, attemptRole
+            course: courseId, exam: exam?._id
         }
         if (exam) {
             params.populate = 'course user'
         }
 
         return params
-    }, [attemptRole, courseId, exam])
+    }, [ courseId, exam])
 
     const data = {
         useFetch: useLazyGetAttemptsQuery, fetchFilters,

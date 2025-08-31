@@ -2,7 +2,6 @@ import { Box } from '@mui/material';
 import { Form, Formik } from 'formik';
 
 import * as Yup from "yup"
-import MakeInput from './MakeInput';
 import Loader from '../../style/mui/loaders/Loader';
 import { FilledHoverBtn } from '../../style/buttonsStyles';
 import DynamicFormGrid from './DynamicFormGrid2';
@@ -15,7 +14,7 @@ const SEND = 'إرسال'
 // another solution but i don`t do => currentPrev, setCurrentPrev
 
 
-export default function CreateFormik({ inputs, onSubmit, status, btnWidth, enableReinitialize = true, formDirection = 'column', btnStyle = {}, submitBtnStatus = false, disabledBtn = false, allowDirty = true, preValue = null }) {
+export default function CreateFormik({ inputs, onSubmit, status, btnWidth, enableReinitialize = true, formDirection = 'column', btnStyle = {}, submitBtnStatus = false, disabledBtn = false, allowDirty = true, preValue = null, isAllDisabled = false }) {
     // arrange data of input with ===> name , validation, initial value
     const { data, validation } = useMemo(() => {
         let data = {}
@@ -25,21 +24,22 @@ export default function CreateFormik({ inputs, onSubmit, status, btnWidth, enabl
             if (input.name) {
                 if (preValue) {
                     data[input.name] = preValue[input.name] ?? ''
-                }
-                if (input.type === 'array') {
+                } else if (input.value ?? true) {
+                    data[input.name] = input.value ?? ""
+                    // After That No
+                } else if (input.type === 'array') {
                     data[input.name] = input.value || []
-                }
-                if (input.value === 0) {
-                    data[input.name] = 0
                 } else if ((typeof input.value === 'object' && Object.keys(input.value || {}).length === 0) && input?.value) {
                     data[input.name] = ''
-                } else {
-                    data[input.name] = input.value ?? ""
                 }
             }
 
             if (input.validation) {
                 validation[input.name] = input.validation
+            }
+
+            if (isAllDisabled) {
+                input.disabled = true
             }
         });
 
@@ -57,16 +57,19 @@ export default function CreateFormik({ inputs, onSubmit, status, btnWidth, enabl
 
                             <DynamicFormGrid inputs={inputs} props={props} />
 
-                            <FilledHoverBtn
-                                type='submit'
-                                disabled={disabledBtn ? disabledBtn : status?.isLoading || (!props.dirty && !submitBtnStatus && allowDirty) ? true : false}
-                                sx={{
-                                    width: btnWidth || '100%', py: '10px', ...btnStyle
-                                }}
-                            >
-                                {status?.isLoading ? <Loader color={'#fff'} /> : SEND}
-                            </FilledHoverBtn>
+                            {!isAllDisabled && (
+                                <FilledHoverBtn
+                                    type='submit'
+                                    disabled={disabledBtn ? disabledBtn : status?.isLoading || (!props.dirty && !submitBtnStatus && allowDirty) ? true : false}
+                                    sx={{
+                                        width: btnWidth || '100%', py: '10px', ...btnStyle
+                                    }}
+                                >
+                                    {status?.isLoading ? <Loader color={'#fff'} /> : SEND}
+                                </FilledHoverBtn>
+                            )}
                         </Form>
+
                     )}
                 </Formik>
 

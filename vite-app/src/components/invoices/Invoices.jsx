@@ -6,7 +6,6 @@ import { getDateWithTime, getFullDate } from "../../settings/constants/dateConst
 import FullComponent from "../../tools/datagrid/FullComponent"
 import { useDeleteInvoiceMutation, useDeleteManyInvoicesMutation, useInvoiceWebhookMutation, useLazyGetInvoicesQuery, useUpdateInvoiceMutation } from "../../toolkit/apis/invoicesApi"
 import BtnConfirm from "../ui/BtnConfirm"
-import { FilledHoverBtn } from "../../style/buttonsStyles"
 import { HiArrowLeft, HiExclamationCircle } from "react-icons/hi"
 import { Button } from "@mui/material"
 import { makeArrWithValueAndLabel } from "../../tools/fcs/MakeArray"
@@ -73,6 +72,10 @@ function Invoices() {
         }, {
             field: 'description',
             headerName: 'الوصف',
+            width: 200
+        }, {
+            field: 'sendFrom',
+            headerName: 'رقم او اسم حساب التحويل',
             width: 200
         }, {
             field: 'status',

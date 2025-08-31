@@ -16,7 +16,7 @@ function CreateQuestions({ setReset }) {
     const onSubmit = async (values, props) => {
         try {
             setLoading(true)
-            const { questions } = await saveFiles(values)
+            const questions = await saveFiles(values)
             await createQuestionFc(questions)
 
             localStorage.setItem("grade", questions[questions.length - 1]?.grade)
