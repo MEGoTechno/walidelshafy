@@ -115,7 +115,7 @@ function UserHome() {
 
     return (
         <Section sx={{ minHeight: '86vh' }}>
-            <Typography variant='subBanner' >
+            <Typography variant='h4' >
                 مرحبًا :  {user.name}
             </Typography>
             <Separator />

@@ -1,5 +1,4 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
-import React from 'react'
+import { Box,  Card, CardActions, CardContent, Typography } from '@mui/material'
 import Separator from '../../../components/ui/Separator'
 import Image from '../../../components/ui/Image'
 

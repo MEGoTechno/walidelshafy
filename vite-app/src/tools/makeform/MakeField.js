@@ -33,7 +33,7 @@ function MakeField({ input, inputName, props }) {
 
             placeholder={input.placeholder && input.placeholder}
             variant={input.variant ? input.variant : "outlined"}
-            color='success'
+            // color='success'
 
             required={input.required || false}
             disabled={input.disabled ? true : false}
