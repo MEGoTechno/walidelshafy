@@ -132,10 +132,12 @@ function UserHome() {
                 </FlexColumn>
 
                 {compos.find(compo => compo.value === activeCompo)?.compo}
+
+                <LatestCourses />
+
             </>
             }
 
-            <LatestCourses />
         </Section>
     )
 }
