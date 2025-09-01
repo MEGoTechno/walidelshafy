@@ -21,6 +21,7 @@ import { FlexColumn, FlexRow } from '../../style/mui/styled/Flexbox'
 import PieChart from '../../tools/charts/PieChart'
 import DynamicBarChart from '../../tools/charts/BarChart'
 import TitleWithDividers from '../ui/TitleWithDividers'
+import LatestCourses from './LatestCourses'
 
 function UserHome() {
 
@@ -133,6 +134,8 @@ function UserHome() {
                 {compos.find(compo => compo.value === activeCompo)?.compo}
             </>
             }
+
+            <LatestCourses />
         </Section>
     )
 }
