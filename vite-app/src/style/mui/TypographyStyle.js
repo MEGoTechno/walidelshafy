@@ -20,18 +20,16 @@ export const typographies = {
         // textTransform: 'uppercase',
     },
     banner: {
-
-        fontSize: '3.5rem',
+        fontSize: '4.5rem',//3.5
         fontWeight: 700,
-        '@media (max-width:600px)': {
-            fontSize: '2.8rem',
+        '@media (max-width:800px)': {
+            fontSize: '2.8rem !important',
         },
         // textShadow: '0 20px 30px hsla(0, 0%, 0%, 0.1)',
         fontFamily: '"Rubik", sans-serif'
     }, subBanner: {
         fontSize: '1.8rem',
         fontWeight: 600,
-
         letterSpacing: 1.8,
         '@media (max-width:600px)': {
             fontSize: '1.5rem',

@@ -163,6 +163,7 @@ export const themeSettings = (mode) => {
                         default: bgColors.light.dafault,
                         paper: bgColors.light.alt,
                         alt: bgColors.light.alt,
+                        dark: bgColors.dark.dafault
                     },
                     grey: tokensDark.grey,
 

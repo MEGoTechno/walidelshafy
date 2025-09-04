@@ -1,8 +1,8 @@
 export default WAnimation
 
-function WAnimation() {
+function WAnimation({ sx }) {
     return (
-        <div className="content">
+        <div className="content" style={{ ...sx }}>
             <div className="image-container">
                 <img src="/assets/w-animate.png" alt="outer" />
                 <img src="/assets/inner-logo.png" alt="inner" />

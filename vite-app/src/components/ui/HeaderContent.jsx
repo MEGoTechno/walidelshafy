@@ -1,11 +1,9 @@
 import { Box, Typography, useTheme } from '@mui/material'
-import React from 'react'
 import { FlexColumn, FlexRow } from '../../style/mui/styled/Flexbox'
 import CardInfo from '../../style/mui/components/CardInfo'
-import Separator from './Separator'
 import Image from './Image'
 
-const iiinn = ["icon, caption, desc"]
+// const iiinn = ["icon, caption, desc"]
 
 function HeaderContent({ title, body, infos = [], img, children, height = '86vh' }) {
 
