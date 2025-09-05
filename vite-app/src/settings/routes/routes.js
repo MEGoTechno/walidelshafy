@@ -15,7 +15,7 @@ import { statisticsRoutes } from "./statisticsRoutes";
 import ProtectedRoute from "./ProtectedRoute";
 import { user_roles } from "../constants/roles";
 import { couponsRoutes } from "./couponsRoutes";
-import ReportsPage from "../../pages/admin/ReportsPage";
+// import ReportsPage from "../../pages/admin/ReportsPage";
 import { groupsRoutes } from "./groupsRoutes";
 import { questionsRoutes } from "./questions";
 import { answerRoutes } from "./answersRoutes";
@@ -23,11 +23,12 @@ import { attemptsRoutes } from "./attemptsRoutes";
 import { paymentsRoutes } from "./paymentRoutes";
 import { invoicesRoutes } from "./invoicesRoutes";
 import LecturesPage from "../../pages/admin/LecturesPage";
+import HomePage from "../../pages/HomePage";
 
 
 const ErrorPage = lazy(() => import("../../pages/errors/ErrorPage"))
 const NotFoundPage = lazy(() => import("../../pages/errors/NotFoundPage"))
-const HomePage = lazy(() => import("../../pages/HomePage"))
+// const HomePage = lazy(() => import("../../pages/HomePage"))
 
 const ExamStartPage = lazy(() => import("../../pages/user/ExamStartPage"))
 const AttemptPage = lazy(() => import("../../pages/user/AttemptPage"))
