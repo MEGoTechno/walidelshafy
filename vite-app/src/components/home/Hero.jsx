@@ -135,7 +135,7 @@ function Hero() {
                         style={{
                             width: "100%",              // full width, responsive
                             minHeight: isMobileScreen ? '40vh' : '90vh',           // or use a % if you want
-                            backgroundImage: "url('./assets/wjpguped.jpg')",
+                            backgroundImage: "url('./assets/walidhero.webp')",
                             backgroundSize: "cover",    // cover entire container
                             backgroundRepeat: "no-repeat",
                             backgroundPosition: isMobileScreen && 'left 20% top 0', // keep left side fixed
