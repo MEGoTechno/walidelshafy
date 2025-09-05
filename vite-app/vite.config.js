@@ -51,7 +51,7 @@ export default defineConfig(({ mode, command }) => {
       },
       // Set the correct URL prefix (CRITICAL)
       urlPrefix: '~/',
-      debug: true, //Show info after prod
+      debug: false, //Show info after prod
       // Error handling - don't fail build on warnings
       errorHandler: (err) => {
         if (err.message.includes('Could not auto-detect')) {

@@ -118,7 +118,7 @@ function Hero() {
 
             <Box sx={{
                 position: isMobileScreen ? 'relative' : 'absolute',
-                top: 0, left: 0, zIndex: -1
+                top: 0, left: 0, zIndex: -1, backgroundColor: theme.palette.background.dark || theme.palette.background.default
             }}>
                 <Box position={'relative'} sx={{
                     width: '100vw',
@@ -135,7 +135,7 @@ function Hero() {
                         style={{
                             width: "100%",              // full width, responsive
                             minHeight: isMobileScreen ? '40vh' : '90vh',           // or use a % if you want
-                            backgroundImage: "url('./assets/wjpg.jpg')",
+                            backgroundImage: "url('./assets/wjpguped.jpg')",
                             backgroundSize: "cover",    // cover entire container
                             backgroundRepeat: "no-repeat",
                             backgroundPosition: isMobileScreen && 'left 20% top 0', // keep left side fixed
