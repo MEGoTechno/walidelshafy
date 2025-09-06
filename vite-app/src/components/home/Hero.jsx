@@ -25,7 +25,7 @@ function Hero() {
     } : {}
 
     return (
-        <Box sx={{ position: 'relative' }}>
+        <Box sx={{ position: 'relative',  }}>
 
             <FlexColumn
                 sx={{
@@ -33,7 +33,7 @@ function Hero() {
                     color: '#fff',
                     justifyContent: 'center',
                     alignItems: isMobileScreen ? 'center' : 'flex-start',
-                    p: '36px 32px', ...content
+                    p: '36px 32px', ...content,
                 }} >
                 {isMobileScreen && (
                     <Box sx={{
@@ -135,7 +135,7 @@ function Hero() {
                         style={{
                             width: "100%",              // full width, responsive
                             minHeight: isMobileScreen ? '40vh' : '90vh',           // or use a % if you want
-                            backgroundImage: "url('./assets/walidhero.webp')",
+                            backgroundImage: "url('./assets/worigin.jpg')",
                             backgroundSize: "cover",    // cover entire container
                             backgroundRepeat: "no-repeat",
                             backgroundPosition: isMobileScreen && 'left 20% top 0', // keep left side fixed
