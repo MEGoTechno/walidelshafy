@@ -15,6 +15,7 @@ import WAnimation from './WAnimation'
 function Hero() {
     const theme = useTheme()
     const isMobileScreen = useMediaQuery('(max-width:700px)');
+    const darkBg = theme.palette.background.dark || theme.palette.background.default
 
     const content = isMobileScreen ? {
         backgroundImage: "url('./assets/wrt.png')",
@@ -25,7 +26,10 @@ function Hero() {
     } : {}
 
     return (
-        <Box sx={{ position: 'relative',  }}>
+        <Box sx={{
+            position: 'relative',
+            backgroundColor: darkBg,
+        }}>
 
             <FlexColumn
                 sx={{
@@ -33,13 +37,15 @@ function Hero() {
                     color: '#fff',
                     justifyContent: 'center',
                     alignItems: isMobileScreen ? 'center' : 'flex-start',
+                    zIndex: 1,
+
                     p: '36px 32px', ...content,
                 }} >
                 {isMobileScreen && (
                     <Box sx={{
                         position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
                         background: `linear-gradient(to top,
-                            ${theme.palette.background.dark || theme.palette.background.default},
+                            ${darkBg},
                             rgba(0,0,0,0) 70%) ` //rgb(0,0,0)
                     }} />
                 )}
@@ -118,7 +124,8 @@ function Hero() {
 
             <Box sx={{
                 position: isMobileScreen ? 'relative' : 'absolute',
-                top: 0, left: 0, zIndex: -1, backgroundColor: theme.palette.background.dark || theme.palette.background.default
+                top: 0, left: 0, zIndex: 0,
+                backgroundColor: darkBg
             }}>
                 <Box position={'relative'} sx={{
                     width: '100vw',
@@ -128,7 +135,7 @@ function Hero() {
                     <Box sx={{
                         position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
                         background: `linear-gradient(to ${isMobileScreen ? 'bottom' : 'right'},
-                        ${theme.palette.background.dark || theme.palette.background.default},
+                        ${darkBg},
                         rgba(0,0,0,0) 70%) ` //rgb(0,0,0)
                     }} />
                     <div
