@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { lang } from '../../settings/constants/arlang'
-import { MdOutlineDriveFileRenameOutline } from 'react-icons/md'
-import { AiFillPoundCircle } from 'react-icons/ai'
-import { VscSymbolBoolean } from 'react-icons/vsc'
 import MakeForm from '../../tools/makeform/MakeForm'
-import { useCreateLectureMutation } from '../../toolkit/apis/lecturesApi'
-import usePostData from '../../hooks/usePostData'
+
 
 import Section from "../../style/mui/styled/Section"
 import * as Yup from "yup"
-import { Box, Button, Switch, Typography } from '@mui/material'
-import { useField } from 'formik'
+import { Button } from '@mui/material'
+
 import MakeSelect from '../../style/mui/styled/MakeSelect'
 import sectionConstants from '../../settings/constants/sectionConstants'
 import { FlexColumn } from '../../style/mui/styled/Flexbox'
@@ -22,7 +18,7 @@ import filePlayers from '../../settings/constants/filePlayers'
 const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/|shorts\/|.+\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})(\?.*)?$/;
 
 // const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/|.+\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})(\?.*)?$/;
-const durationRegex = /^(?!^\d+$)(?:(?:\d+[hms]))(?:\s+(?:(?:\d+[hms])))*$/;
+export const durationRegex = /^(?!^\d+$)(?:(?:\d+[hms]))(?:\s+(?:(?:\d+[hms])))*$/;
 const bunnyRegex = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 
 

@@ -49,13 +49,14 @@ export default function usePostData(sendData, setLoading, setReset = null) {
 
       try {
         const res = await sendData(formData, params)
+        if (setLoading) {
+          setLoading(false)
+        }
 
         if (res.error) {
           // error ===> invalid jwt or not user
           if (res.error?.data?.isKick === true) {
-            if (setLoading) {
-              setLoading(false)
-            }
+
             dispatch(logout())
             dispatch(setGlobalMsg({ message: res.error?.data?.message || "sorry!, you have to log in", severity: "error" }))
             navigate('/')

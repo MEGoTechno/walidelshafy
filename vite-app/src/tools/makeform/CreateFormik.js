@@ -20,60 +20,73 @@ export default function CreateFormik({ inputs, onSubmit, status, btnWidth, enabl
         let data = {}
         let validation = {}
 
-        inputs.forEach((input, i) => {
-            if (input.name) {
-                if (preValue) {
-                    data[input.name] = preValue[input.name] ?? ''
-                } else if (input.value ?? true) {
-                    data[input.name] = input.value ?? ""
-                    // After That No
-                } else if (input.type === 'array') {
-                    data[input.name] = input.value || []
-                } else if ((typeof input.value === 'object' && Object.keys(input.value || {}).length === 0) && input?.value) {
-                    data[input.name] = ''
-                }
+        inputs.forEach((input) => {
+            if (preValue) {
+                data[input.name] = preValue[input.name] ?? ''
+            } else if ((typeof input.value === 'object' && Object.keys(input.value || {}).length === 0) && input?.value) {
+                data[input.name] = ''
+            } else if (input.value ?? true) {
+                data[input.name] = input.value ?? ""
+                // After That No
+            } else if (input.type === 'array') {
+                data[input.name] = input.value || []
+            } else {
+                data[input.name] = ''
             }
+
+            // if (input.name) {
+            //     if (preValue) {
+            //         data[input.name] = preValue[input.name] ?? ''
+            //     } else if (input.value ?? true) {
+            //         data[input.name] = input.value ?? ""
+            //         // After That No
+            //     } else if (input.type === 'array') {
+            //         data[input.name] = input.value || []
+            //     } else if ((typeof input.value === 'object' && Object.keys(input.value || {}).length === 0) && input?.value) {
+            //         data[input.name] = ''
+            //     }
+            // }
 
             if (input.validation) {
-                validation[input.name] = input.validation
-            }
+            validation[input.name] = input.validation
+        }
 
-            if (isAllDisabled) {
-                input.disabled = true
-            }
-        });
+        if (isAllDisabled) {
+            input.disabled = true
+        }
+    });
 
-        return { data, validation }
-    }, [inputs, preValue])
+    return { data, validation }
+}, [inputs, preValue])
 
-    const validationSchema = Yup.object().shape(validation)
-    return (
-        <>
-            <Box width={"100%"}>
-                <Formik enableReinitialize={enableReinitialize} initialValues={data} onSubmit={onSubmit} validationSchema={validationSchema} validateOnChange={true}>
-                    {(props) => (
-                        <Form style={{ display: 'flex', alignItems: 'center', flexDirection: formDirection }}>
-                            {/*  onChange={() => props.validateForm()} */}
+const validationSchema = Yup.object().shape(validation)
+return (
+    <>
+        <Box width={"100%"}>
+            <Formik enableReinitialize={enableReinitialize} initialValues={data} onSubmit={onSubmit} validationSchema={validationSchema} validateOnChange={true}>
+                {(props) => (
+                    <Form style={{ display: 'flex', alignItems: 'center', flexDirection: formDirection }}>
+                        {/*  onChange={() => props.validateForm()} */}
 
-                            <DynamicFormGrid inputs={inputs} props={props} />
+                        <DynamicFormGrid inputs={inputs} props={props} />
 
-                            {!isAllDisabled && (
-                                <FilledHoverBtn
-                                    type='submit'
-                                    disabled={disabledBtn ? disabledBtn : status?.isLoading || (!props.dirty && !submitBtnStatus && allowDirty) ? true : false}
-                                    sx={{
-                                        width: btnWidth || '100%', py: '10px', ...btnStyle
-                                    }}
-                                >
-                                    {status?.isLoading ? <Loader color={'#fff'} /> : SEND}
-                                </FilledHoverBtn>
-                            )}
-                        </Form>
+                        {!isAllDisabled && (
+                            <FilledHoverBtn
+                                type='submit'
+                                disabled={disabledBtn ? disabledBtn : status?.isLoading || (!props.dirty && !submitBtnStatus && allowDirty) ? true : false}
+                                sx={{
+                                    width: btnWidth || '100%', py: '10px', ...btnStyle
+                                }}
+                            >
+                                {status?.isLoading ? <Loader color={'#fff'} /> : SEND}
+                            </FilledHoverBtn>
+                        )}
+                    </Form>
 
-                    )}
-                </Formik>
+                )}
+            </Formik>
 
-            </Box>
-        </>
-    )
+        </Box>
+    </>
+)
 }

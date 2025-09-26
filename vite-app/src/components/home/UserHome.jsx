@@ -68,10 +68,10 @@ function UserHome() {
     const [activeCompo, setActiveCompo] = useState(0)
 
     const btns = [
-        <Button key={0} variant={activeCompo === 0 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(0)}>كورساتك</Button>,
-        <Button key={1} variant={activeCompo === 1 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(1)}>محاضرات خاصه</Button>,
-        <Button key={2} variant={activeCompo === 2 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(2)}>محتوى مجموعاتك</Button>,
-        <Button key={3} variant={activeCompo === 3 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(3)}> محاضرات مجانيه</Button>,
+        <Button key={0} fullWidth variant={activeCompo === 0 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(0)}>كورساتك</Button>,
+        <Button key={1} fullWidth variant={activeCompo === 1 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(1)}>محاضرات خاصه</Button>,
+        // <Button key={2} variant={activeCompo === 2 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(2)}>محتوى مجموعاتك</Button>,
+        <Button key={3} fullWidth variant={activeCompo === 3 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(3)}> محاضرات مجانيه</Button>,
 
     ]
 
@@ -96,11 +96,11 @@ function UserHome() {
             </AccordionStyled>,
         },
         { compo: <UserLectures query={{ codes: true, paid: true }} accordionTitle={'محاضراتك' + ' ' + '(تم شراءها' + " || " + "اكواد)"} />, value: 1 },
-        {
-            value: 2,
-            compo: <UserLectures query={{ isGroups: true }} accordionTitle='محاضرات مجموعاتك' />
-            ,
-        },
+        // {
+        //     value: 2,
+        //     compo: <UserLectures query={{ isGroups: true }} accordionTitle='محاضرات مجموعاتك' />
+        //     ,
+        // },
         {
             value: 3,
             compo: <UserLectures query={{ isFree: true }} accordionTitle='محاضرات مجانيه' />
@@ -109,7 +109,7 @@ function UserHome() {
 
 
     if (user.role === user_roles.STUDENT) {
-        btns.push(<Button key={4} variant={activeCompo === 4 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(4)}> محاضرات السنتر</Button>,)
+        btns.push(<Button key={4} fullWidth variant={activeCompo === 4 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(4)}> محاضرات السنتر</Button>,)
         compos.push({ compo: <UserLectures query={{ isCenter: true }} accordionTitle='محاضرات السنتر' />, value: 4 },)
     }
     // const categories = ['يناير', "فبراير", "مارس", "ابريل", "مايو", "يونيو", "يوليو", "اغسطس", "سبتمبر", "اكتوبر", "نوفبمر", "ديسمبر"]
@@ -125,11 +125,9 @@ function UserHome() {
             <TitleSection title={lang.YOUR_SUBSCRIPTIONS} />
 
             {(user.role === user_roles.ONLINE || user.role == user_roles.STUDENT) && <>
-                <FlexColumn>
-                    <ButtonGroup color="primary" aria-label="Medium-sized button group">
-                        {btns}
-                    </ButtonGroup>
-                </FlexColumn>
+                <Grid color="primary" aria-label="Medium-sized button group">
+                    {btns}
+                </Grid>
 
                 {compos.find(compo => compo.value === activeCompo)?.compo}
 

@@ -27,13 +27,12 @@ import InfoText from '../ui/InfoText'
 import AdminLinkLectureToGroup from './AdminLinkLectureToGroup'
 import BtnModal from '../ui/BtnModal'
 import MakeForm from '../../tools/makeform/MakeForm'
-import BtnConfirm from '../ui/BtnConfirm'
 
 
 function AdminCardLecture({ lecture, i, setLectures, courseId }) {
   const [open, setOpen] = useState(false)
+  const isNativeLecture = (lecture?.course?._id === courseId || lecture?.course === courseId)
 
-  // const isLectureLinked = lecture?.course?._id !== courseId
 
   const [sendData, { isLoading }] = useUpdateLectureMutation()
   const [updateLecture] = usePostData(sendData)
@@ -97,7 +96,7 @@ function AdminCardLecture({ lecture, i, setLectures, courseId }) {
         subheader={<TabInfo count={getFullDate(lecture.createdAt)} i={2} />}
       />
       <CardContent sx={{ flex: 1 }}>
-        {lecture?.course?._id !== courseId && (
+        {!isNativeLecture && (
           <div>
             <TabInfo count={lecture.course.name} title={'مربوط بكورس : '} isBold={false} i={1} />
           </div>
@@ -105,11 +104,11 @@ function AdminCardLecture({ lecture, i, setLectures, courseId }) {
 
         <TabInfo count={lecture.isActive ? lang.ACTIVE : lang.NOT_ACTIVE} i={lecture.isActive ? 1 : 3} />
 
-        {(lecture?.course?._id === courseId) && (
+        {isNativeLecture && (
           <>
             <InfoText label={'الوصف'} description={lecture.description} />
             <FlexRow>
-              <InfoText label={'سعر المجاضره'} description={lecture.price + ' ' + 'جنيه'} />
+              <InfoText label={'سعر المحاضره'} description={lecture.price + ' ' + 'جنيه'} />
               <BtnModal
                 btn={<TabInfo sx={{ cursor: 'pointer', margin: '0 8px' }} count={'اضغط لتعديل السعر'} i={2} />}
                 component={<MakeForm inputs={[
@@ -170,7 +169,7 @@ function AdminCardLecture({ lecture, i, setLectures, courseId }) {
 
           <FlexRow>
 
-            {(lecture?.course?._id === courseId) && (
+            {isNativeLecture && (
               <FilledHoverBtn endIcon={<BiSolidShow />} disabled={status.isLoading || isLoading} onClick={() => setOpen(true)} >
                 عرض التفاصيل
               </FilledHoverBtn>
@@ -189,7 +188,7 @@ function AdminCardLecture({ lecture, i, setLectures, courseId }) {
             )}
           </FlexRow>
 
-          {(lecture?.course?._id === courseId) && (
+          {isNativeLecture && (
             <IconButton disabled={status.isLoading || isLoading} onClick={() => setOpenDelete(true)} sx={{ bgcolor: 'error.main', '&:hover': { bgcolor: red[500], opacity: .8 } }}>
               {status.isLoading ? <Loader /> : <MdDelete color='#fff' />}
             </IconButton>
