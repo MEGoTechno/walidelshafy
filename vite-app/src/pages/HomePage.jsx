@@ -31,8 +31,8 @@ function HomePage() {
                 desc={"الصفجه الرئيسيه فى منصه وليد الشافى"}
                 url={"https://walidelshafy.com"}
             />
-            <Hero2 />
-            <Box mt={'50px'} />
+            {/* <Hero2 />
+            <Box mt={'50px'} /> */}
             <Hero />
 
             <LatestCourses />
