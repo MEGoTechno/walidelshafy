@@ -8,6 +8,7 @@ import LatestCourses from '../components/home/LatestCourses'
 import SEOHelmetAsync from '../tools/SEOHelmetAsync'
 import AboutUS from '../components/home/AboutUS'
 import Hero2 from '../components/home/Hero2'
+import { Box } from '@mui/material'
 
 function HomePage() {
 
@@ -30,11 +31,13 @@ function HomePage() {
                 desc={"الصفجه الرئيسيه فى منصه وليد الشافى"}
                 url={"https://walidelshafy.com"}
             />
+            <Hero2 />
+            <Box mt={'50px'} />
             <Hero />
+
             <LatestCourses />
             <Services />
 
-            {/* <Hero2 /> */}
             {/* <AboutUS /> */}
             <Grades />
         </div>
