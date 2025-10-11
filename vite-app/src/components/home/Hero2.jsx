@@ -68,7 +68,7 @@ function AboutUS() {
                     </FlexColumn>
 
                 </FlexColumn>
-                <img src='./assets/hero.webp' style={{ maxWidth: '550px' }} />
+                <img src='./assets/hero.webp' style={{ maxWidth: '550px', marginLeft: '-100px' }} />
             </FlexRow>
         </Section>
         // <Box sx={{
