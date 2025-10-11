@@ -1,58 +1,43 @@
-import { Box, Typography, useTheme } from '@mui/material'
+import { Box, IconButton, Typography, useTheme } from '@mui/material'
 
 import Image from '../ui/Image'
-import { FlexColumn } from '../../style/mui/styled/Flexbox'
-
-import VideoYoutube from '../content/VideoYoutube'
+import { FlexBetween, FlexColumn, FlexRow } from '../../style/mui/styled/Flexbox'
+import Section from '../../style/mui/styled/Section'
+import Separator from '../ui/Separator'
+import { ScallyBtn } from '../../style/buttonsStyles'
+import { FaFacebook, FaInstagram, FaWhatsapp, FaYoutube } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 // function LogosYoutubeIcon({ size, ...props }) {
 //     return (<svg xmlns="http://www.w3.org/2000/svg" width={size || "1.43em"} height={size || '1rem'} viewBox="0 0 256 180" {...props}><path fill="#f00" d="M250.346 28.075A32.18 32.18 0 0 0 227.69 5.418C207.824 0 127.87 0 127.87 0S47.912.164 28.046 5.582A32.18 32.18 0 0 0 5.39 28.24c-6.009 35.298-8.34 89.084.165 122.97a32.18 32.18 0 0 0 22.656 22.657c19.866 5.418 99.822 5.418 99.822 5.418s79.955 0 99.82-5.418a32.18 32.18 0 0 0 22.657-22.657c6.338-35.348 8.291-89.1-.164-123.134"></path><path fill="#fff" d="m102.421 128.06l66.328-38.418l-66.328-38.418z"></path></svg>);
 // }
 
+const dream = <svg xmlns="http://www.w3.org/2000/svg" width={100} height={100} viewBox="0 0 48 48"><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M14.09 33.332c-1.86 0-3.659-1.28-4.39-3.019L3.844 15.22c-1.006-2.47.274-5.214 2.744-6.22c2.47-1.007 5.214.274 6.22 2.744l1.647 4.3l2.013-4.483c.731-1.738 2.47-2.836 4.39-2.836h.092c1.92 0 3.659 1.19 4.39 2.927l1.922 4.574l2.012-4.665c1.098-2.47 3.842-3.568 6.312-2.47s3.567 3.933 2.47 6.312L31.47 30.405c-1.163 2.763-3.134 2.835-4.545 2.835c-2.038 0-3.596-1.189-4.328-2.927l-1.83-4.574l-2.103 4.757c-1.329 2.805-3.073 2.836-4.574 2.836" strokeWidth={1}></path><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="m22.14 29.173l-1.473 3.33c-1.326 2.799-3.073 2.836-4.574 2.836a4.6 4.6 0 0 1-.786-.073a4.7 4.7 0 0 1-1.382-.513a5.05 5.05 0 0 1-2.012-2.003m26.015-21.488a4.8 4.8 0 0 1 1.995 2.004h.009c.247.466.42.97.503 1.49a4.7 4.7 0 0 1-.375 2.653l-6.586 15.002c-1.162 2.763-3.129 2.836-4.547 2.836a4 4 0 0 1-.768-.064a4.6 4.6 0 0 1-1.336-.42a4.4 4.4 0 0 1-1.042-.732a4.8 4.8 0 0 1-.97-1.272" strokeWidth={1}></path><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="m23.777 32.027l-1.098 2.48c-1.335 2.808-3.073 2.835-4.573 2.835c-.76 0-1.51-.21-2.177-.585a5.1 5.1 0 0 1-2.004-2.004m25.998-21.487h.009a4.75 4.75 0 0 1 2.003 2.003h.01a4.64 4.64 0 0 1 .127 4.144l-6.586 15.002c-1.17 2.762-3.137 2.836-4.546 2.836a4.7 4.7 0 0 1-2.113-.485c-.86-.44-1.537-1.135-2.003-2.004" strokeWidth={1}></path><path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="m25.78 34.03l-1.097 2.48c-1.327 2.808-3.074 2.835-4.574 2.835c-1.701 0-3.357-1.07-4.18-2.588M41.935 15.27h.01c2.231 1.197 3.173 3.878 2.13 6.146L37.49 36.418c-1.161 2.763-3.137 2.836-4.546 2.836c-1.866 0-3.32-.988-4.116-2.488" strokeWidth={1}></path></svg>
 function AboutUS() {
 
     const theme = useTheme()
     return (
         <Box sx={{
             // minHeight: '100vh',
-            background: 'linear-gradient(to left, #fdc830, #f37335)',
+            background: `linear-gradient(to left, ${theme.palette.primary.dark} 80%, ${theme.palette.primary.light} )`,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             p: '26px 12px',
             width: '100%',
-            position: 'relative'
+            position: 'relative',
+            minHeight: '86vh',
+            borderTopRightRadius: '70%',
+            mt: '150px'
         }}>
-            <Box sx={{
-                // backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.4'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-                position: 'absolute', top: 0, left: '0',
-                width: '100%', height: '100%', zIndex: 1
-            }} />
-
-            <FlexColumn sx={{ zIndex: 2, width: '100%' }}>
-
-                <FlexColumn sx={{ position: 'relative' }}>
-                    <Image ratio={'auto'} img={'/assets/quote.webp'} sx={{ zIndex: 0, filter: 'drop-shadow(4px 5px 4px rgba(100,100,100,.1))' }} />
-
-                    <Typography variant='h6' component={'h5'} sx={{
-                        color: '#16264c',
-                        fontFamily: 'Lemonada,sans-serif',
-                        zIndex: 1, position: 'absolute', top: '50%', transform: 'translateY(-50%)', fontSize: { xs: '.9rem', sm: '1.8rem' },//{ xs: '.9rem', sm: '1.5rem' }
-                    }}>
-                        شد حيلك يا بطل
-                        <span style={{ color: '' }}> متضيعش وقت</span>
-                        <span style={{ color: '' }}> مستقبلك بين ايديك</span>
-                    </Typography>
+            <FlexBetween sx={{ width: '100%', flexWrap: 'wrap-reverse' }}>
+                <FlexColumn sx={{ textAlign: 'center', flexGrow: 1 }}>
+                    {/* <img src='https://www.svgrepo.com/show/530661/genetic-data.svg' style={{maxWidth: '50px'}} /> */}
+                    <Typography variant='h1' sx={{ maxWidth: '450px', }}>منصه مستر وليد معاك عشان تكمل طريقك وتوصل لحلمك {dream}</Typography>
                 </FlexColumn>
-
-
-                <Box sx={{
-                    width: '100%', maxWidth: '100vh', bgcolor: '#ddd', borderRadius: '16px', boxShadow: theme.shadows[20], mt: '16px'
-                }}>
-                    <VideoYoutube url={'https://youtu.be/ywGV4VT0gKU?si=0924vSlwBPf6-ILU'} />
-                    {/* <LogosYoutubeIcon size={'3rem'} />  aspectRatio: '2/1',*/}
-                </Box>
-            </FlexColumn>
+                <img src='./assets/hero.webp' style={{  maxWidth: '550px' }} />
+                {/* <img src='./assets/mrwalid.png' style={{ marginTop: '-150px', maxWidth: '550px' }} /> */}
+            </FlexBetween>
 
         </Box>
     )

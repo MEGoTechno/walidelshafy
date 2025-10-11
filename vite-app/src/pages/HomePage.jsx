@@ -6,6 +6,8 @@ import Grades from '../components/home/Grades'
 import UserHome from '../components/home/UserHome'
 import LatestCourses from '../components/home/LatestCourses'
 import SEOHelmetAsync from '../tools/SEOHelmetAsync'
+import AboutUS from '../components/home/AboutUS'
+import Hero2 from '../components/home/Hero2'
 
 function HomePage() {
 
@@ -30,8 +32,10 @@ function HomePage() {
             />
             <Hero />
             <LatestCourses />
-            {/* <AboutUS /> */}
             <Services />
+
+            {/* <Hero2 /> */}
+            {/* <AboutUS /> */}
             <Grades />
         </div>
     )

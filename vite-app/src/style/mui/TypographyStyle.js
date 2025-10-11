@@ -1,7 +1,7 @@
 export const typographies = {
 
     fontFamily:
-        '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Rubik", sans-serif',
+        '"Rubik", sans-serif,"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Rubik", sans-serif',
     body1: { fontSize: '.85rem', fontWeight: 500, lineHeight: 1.5 },
     body2: { fontSize: '0.8', fontWeight: 400, lineHeight: 1.57 },
     button: { fontWeight: 500 },
