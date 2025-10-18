@@ -85,7 +85,7 @@ function AdminCardLecture({ lecture, i, setLectures, courseId }) {
   const style = {
     transition,
     transform: CSS.Transform.toString(transform), //Css from utilies
-    touchAction: 'none'
+    // touchAction: 'none'
   }
   return (
     <div ref={setNodeRef} style={style}>

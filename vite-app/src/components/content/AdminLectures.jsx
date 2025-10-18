@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react'
 import Grid from '../../style/vanilla/Grid'
-import { Alert, Box, } from '@mui/material'
+import { Alert, } from '@mui/material'
 import TitleWithDividers from '../ui/TitleWithDividers'
 
 import { useChangeLectureIndexMutation, useLazyGetAllLecturesQuery } from '../../toolkit/apis/lecturesApi'
@@ -14,9 +14,9 @@ import ModalStyled from '../../style/mui/styled/ModalStyled'
 import LectureCreate from './LectureCreate'
 
 import { closestCorners, DndContext, KeyboardSensor, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { arrayMove, SortableContext, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import usePostData from '../../hooks/usePostData'
-import Loader from '../../style/mui/loaders/Loader'
+// import Loader from '../../style/mui/loaders/Loader'
 import { FlexColumn } from '../../style/mui/styled/Flexbox'
 
 function AdminLectures({ course, unit, grade, refetchLectures, setLecturesCount }) {
