@@ -81,8 +81,7 @@ function ManageCoursesPage() {
 
     return (
         <Section>
-            <Paper sx={{ p: '40px' }}>
-
+            <Paper sx={{ p: '16px' }}>
                 <GradesTabs setGrade={changeGrade} counts={counts} grade={grade} />
                 <FlexColumn>
                     {/* <BannerIcon title="manage Courses" icon="icon " /> */}
@@ -110,7 +109,6 @@ function ManageCoursesPage() {
                             <AdminLectures setLecturesCount={setLecturesCount} course={activeCourse} unit={activeUnit} grade={grade} refetchLectures={refetchLectures} />
                         </Box>
                     )}
-
                 </FlexColumn>
             </Paper>
         </Section>

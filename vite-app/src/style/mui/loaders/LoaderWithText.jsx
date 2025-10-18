@@ -1,15 +1,15 @@
 import { Alert } from '@mui/material'
-import React from 'react'
+
 import Loader from './Loader'
 import { FlexRow } from '../styled/Flexbox'
 import { lang } from '../../../settings/constants/arlang'
 
-function LoaderWithText({ text }) {
+function LoaderWithText({ text, variant = 'outlined' }) {
     return (
-        <Alert variant="outlined" severity="warning" sx={{ justifyContent: 'center' }}>
+        <Alert variant={variant} severity="warning" sx={{ justifyContent: 'center' }}>
             <FlexRow >
 
-                {lang.DATA_LOADING}
+                {text ? text : lang.DATA_LOADING}
                 <Loader color={'neutral.0'} sx={{ mx: '12px' }} />
             </FlexRow>
         </Alert>

@@ -58,12 +58,11 @@ const getGoogleDrivePreviewLink = (originalLink) => {
 };
 
 
-const getLectures = getAll(LectureModel, 'lectures', lectureParams, false, 'video') //used bu users
+const getLectures = getAll(LectureModel, 'lectures', lectureParams, false, 'video', null, { sort: { index: 1 } }) //used bu users
 const insertLecture = insertOne(LectureModel, true)
 
 const getLecturesForAdmin = expressAsyncHandler(async (req, res, next) => {
     const courseId = req.query.course
-
 
     const course = await CourseModel.findById(courseId).lean().select('linkedTo _id')
     if (!course) return next(createError('Course Not Found', 404, FAILED))
@@ -77,7 +76,7 @@ const getLecturesForAdmin = expressAsyncHandler(async (req, res, next) => {
 
     let lectures = await LectureModel.find(
         { course: { $in: [...course.linkedTo, course._id] } }
-    ).lean().populate(populate)
+    ).lean().populate(populate).sort({ index: 1 })
 
     res.json({ status: SUCCESS, values: { lectures } })
 })
@@ -308,6 +307,40 @@ const handelUpdateLecture = expressAsyncHandler(async (req, res, next) => {
 
     res.json({ values: { lecture: savedLecture }, message: 'تم تعديل المحاضره بنجاح', status: SUCCESS })
 })
+
+//route content/lectures/:id/reorder
+const changeLectureIndex = expressAsyncHandler(async (req, res, next) => {
+    const { targetId } = req.body
+    //movedIndex => currentIndex || targetIndex = newIndex
+    const lectureId = req.params.id
+
+    const targetIndex = await LectureModel.findById(targetId).select('index')
+        .lean().then(doc => doc?.index)
+    const lecture = await LectureModel.findById(lectureId)
+    const movedIndex = lecture.index
+
+
+    const isMovingUp = Number(movedIndex) > Number(targetIndex) // 5
+
+    if (isMovingUp) {
+        await LectureModel.updateMany({
+            index: { $gte: targetIndex, $lt: movedIndex } // >= 5 <8
+        }, {
+            $inc: { index: 1 }
+        })
+    } else {
+        await LectureModel.updateMany({
+            index: { $gt: movedIndex, $lte: targetIndex } // >= 5 <8
+        }, {
+            $inc: { index: -1 }
+        })
+    }
+
+    lecture.index = targetIndex
+    await lecture.save()
+    res.status(204).json({})
+})
+
 //route content/lectures/:id
 //method DELETE
 const deleteLecture = expressAsyncHandler(async (req, res, next) => {
@@ -409,7 +442,8 @@ module.exports = {
     getOneLecture, getLectureForCenter,
     createLecture, updateLecture, handelUpdateLecture, deleteLecture,
     lectureParams,
-    removeFromLectures, addToLectures, pushLectures
+    removeFromLectures, addToLectures, pushLectures,
+    changeLectureIndex
 }
 
 

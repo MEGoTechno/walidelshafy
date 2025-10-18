@@ -23,7 +23,8 @@ const lockLectures = async (course, userCourse, user = null) => {
             course.isSubscribed = false
         }
 
-        let lectures = await LectureModel.find({ course: { $in: [...course.linkedTo, course._id] }, isActive: true }).populate(populate).lean()
+        let lectures = await LectureModel.find({ course: { $in: [...course.linkedTo, course._id] }, isActive: true })
+            .populate(populate).lean().sort({ index: 1 })
 
         lectures.map((lecture, i) => {
             lecture.index = i + 1

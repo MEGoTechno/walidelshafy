@@ -94,7 +94,7 @@ exports.deleteFromBody = (keys = []) => {
     })
 }
 
-exports.getAll = (Model, docName, params = [], isModernSort = true, populate = '', embedFc = false) =>
+exports.getAll = (Model, docName, params = [], isModernSort = true, populate = '', embedFc = false, meta = {}) =>
     asyncHandler(async (req, res) => {
         const query = req.query
 
@@ -112,7 +112,8 @@ exports.getAll = (Model, docName, params = [], isModernSort = true, populate = '
         // console.log(match)
         //find({course: {$in: [90, 80, 40]}})
         //sort 
-        const sort = {}
+        const sort = meta?.sort ? meta.sort : {}
+
         query.sortkey ? sort[query.sortkey] = Number(query.sortValue) : null
         sort.createdAt = isModernSort ? -1 : 1
         query.sortkey === 'createdAt' ? sort.createdAt = Number(query.sortValue) : null
