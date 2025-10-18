@@ -92,14 +92,14 @@ function AdminCardLecture({ lecture, i, setLectures, courseId }) {
       {/* {...attributes} {...listeners} */}
       <Card elevation={4} sx={{ width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column' }}>
         <CardHeader
-          {...listeners}
-          {...attributes}
-          sx={{
-            cursor: 'grab',        // Shows drag cursor
-            '&:active': { cursor: 'grabbing' },
-          }}
           avatar={
-            <Avatar sx={{ bgcolor: 'primary.main', color: 'grey.0' }} aria-label="recipe">
+            <Avatar
+              {...listeners}
+              {...attributes}
+              sx={{
+                bgcolor: 'primary.main', color: 'grey.0', cursor: 'grab',        // Shows drag cursor
+                '&:active': { cursor: 'grabbing' },
+              }} aria-label="recipe">
               {i + 1}
             </Avatar>
           }
