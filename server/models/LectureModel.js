@@ -13,6 +13,8 @@ const GroupModel = require("./GroupModel")
 const lectureSchema = new mongoose.Schema({
     grade: { type: Number, enum: gradeConstants.map(grade => grade.index), required: true },
     course: { type: mongoose.Schema.Types.ObjectId, ref: CourseModel, required: true },
+    chapter: { type: mongoose.Schema.Types.ObjectId, ref: 'chapter', required: true },
+
     isSalable: Boolean,
     
     name: { type: String, required: true },

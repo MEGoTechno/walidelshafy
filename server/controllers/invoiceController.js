@@ -12,7 +12,7 @@ const LectureModel = require("../models/LectureModel");
 const UserCourseModel = require("../models/UserCourseModel");
 const UserModel = require("../models/UserModel");
 const lockLectures = require("../tools/lockLectures");
-const { getAuthToken, createOrder, iframeURL, generatePaymentKey } = require("../tools/payments/paymob");
+const { getAuthToken, createOrder, iframeURL, generatePaymentKey, makeNewPaymob } = require("../tools/payments/paymob");
 const governments = require("../tools/constants/governments");
 const TagModel = require("../models/TagModel");
 
@@ -72,7 +72,7 @@ const validatePreInvoice = expressAsyncHandler(async (req, res, next) => {
         {
             key: 'lecture',
             model: LectureModel,
-            userCheck: async () => user.lectures.includes(invoice.lecture),
+            userCheck: async () => user.accessLectures.includes(invoice.lecture),
             // isAsync: true,
         },
     ];
@@ -157,10 +157,7 @@ const makeInvoice = expressAsyncHandler(async (req, res, next) => {
             await user.save()
             break;
         case paymentInteg.PAYMOB:
-            const token = await getAuthToken();
-            const orderId = await createOrder(token, invoice.price * 100); // 100 EGP
-
-            const paymentToken = await generatePaymentKey(token, invoice.price * 100, orderId, {
+            const billingData = {
                 apartment: 'Na',
                 email: user.email,
                 first_name: user.name.split(' ')[0],
@@ -175,7 +172,17 @@ const makeInvoice = expressAsyncHandler(async (req, res, next) => {
                 city: governments.find(i => i.id === user.government)?.governorate_name_ar || 'المنصوره',
                 country: "EG",
                 state: governments.find(i => i.id === user.government)?.governorate_name_ar || 'المنصوره',
-            });
+            }
+
+            //######Start New settings
+            // const url = await makeNewPaymob({ price: invoice.price * 100, items: [], billingData })
+            // return res.status(201).json({ values: { redirectUrl: url }, message: 'سيتم تحويلك الي بوابه الدفع', status: SUCCESS })
+            // ########  End
+
+            const token = await getAuthToken();
+            const orderId = await createOrder(token, invoice.price * 100); // 100 EGP
+
+            const paymentToken = await generatePaymentKey(token, invoice.price * 100, orderId, billingData);
 
             invoice.orderId = orderId
             await invoice.save()
@@ -299,7 +306,7 @@ const applySubscription = async (invoice, user, meta = {}) => {
         responseValues = {
             course,
             lectures,
-            currentIndex: userCourse.currentIndex,
+            currentIndex: userCourse.currentIndex || 1,
             wallet: user.wallet
         };
     } else if (invoice.tag) {
@@ -318,7 +325,7 @@ const applySubscription = async (invoice, user, meta = {}) => {
         await UserModel.updateOne(
             { _id: user._id },
             {
-                $push: { lectures: invoice.lecture },
+                $push: { accessLectures: invoice.lecture },
             }
         )
 
@@ -380,7 +387,7 @@ const revokeSubscription = async (invoice, user) => {
         await UserModel.updateOne(
             { _id: user._id },
             {
-                $pull: { lectures: invoice.lecture }
+                $pull: { accessLectures: invoice.lecture }
             }
         );
 

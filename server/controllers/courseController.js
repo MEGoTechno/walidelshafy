@@ -190,6 +190,7 @@ const getLectureAndCheck = expressAsyncHandler(async (req, res, next) => {
     }
 
     let lecture = await LectureModel.findOne({ _id: lectureId, isActive: true }).lean().populate('exam video file link') //'exam video file link'
+    if(!lecture) return next(createError("هذه المحاضره غير موجوده", 404, FAILED))
 
     if (lecture.exam) {
         lecture = await handelExamAndAttempts(lecture, user)
