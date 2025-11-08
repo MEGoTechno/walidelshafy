@@ -199,10 +199,10 @@ const forgetPassword = asyncHandler(async (req, res, next) => {
     
     If you did not make this request, please ignore this message.
     
-    If you have any questions or concerns, please contact our support team at  Mr Elbeltagy platform.
+    If you have any questions or concerns, please contact our support team at  Mr Walid  platform.
     
     Thank you,
-    Mr elbeltagy platform`;
+    Mr Walid platform`;
 
     const forgetMethod = req.body.method || senderConstants.EMAIL
     try {
