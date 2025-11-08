@@ -74,6 +74,7 @@ const handelValueAndOperator = (value, type = null) => { //i use Type for watche
 const handelMatch = (match, key, preVal, type) => {
   const [value, operator, isSkip] = handelValueAndOperator(preVal, type)
   if (isSkip) return match;
+  console.log(value, operator)
 
   if (type === 'array') {
     const existing = match[key] || {};
@@ -88,8 +89,11 @@ const handelMatch = (match, key, preVal, type) => {
 
     return match;
   }
-
+  
   switch (operator) {
+    case 'size':
+      match[key] = { $size: value };
+      break;
     case 'contains':
       match[key] = { $regex: value, $options: 'i' };
       break;
