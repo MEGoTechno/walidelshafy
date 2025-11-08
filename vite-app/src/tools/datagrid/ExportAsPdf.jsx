@@ -11,7 +11,7 @@ import { amiriFont } from './Amiri-Regular-normal';
 function ExportAsPdf({
     fetchFc, sort = {}, filter = {},
     columns, rows,
-    exportObj = {}, exportTitle = 'مرحبا بكم في تقرير مستر البلتاجى', paginationModel = false
+    exportObj = {}, exportTitle = 'مرحبا بكم في تقرير مستر وليد عبدالشافي', paginationModel = false
 }) {
 
     const [isLoading, setLoading] = useState(false)

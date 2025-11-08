@@ -187,11 +187,13 @@ function GetViewsCompo({ lectureId, courseId, role, refetchViews, userId }) {
         }, {
             field: 'createdAt',
             headerName: 'تاريخ المشاهده',
+            type: 'date',
+            valueGetter: (params) => new Date(params),
             width: 200,
             renderCell: (params) => {
                 return <TabInfo count={getFullDate(params.row.createdAt)} i={1} />
             },
-            filterable: false,
+            // filterable: false,
         }, {
             field: 'courseName',
             headerName: 'الكورس المشترك فيه',
@@ -202,7 +204,6 @@ function GetViewsCompo({ lectureId, courseId, role, refetchViews, userId }) {
             field: 'isActive',
             headerName: lang.IS_ACTIVE,
             type: "boolean",
-            valueGetter: (params) => params.row?.isActive,
             renderCell: (params) => {
                 return (
                     <Box>
@@ -231,14 +232,6 @@ function GetViewsCompo({ lectureId, courseId, role, refetchViews, userId }) {
             filterable: false,
             sortable: false,
             valueOptions: makeArrWithValueAndLabel(gradeConstants, { value: 'index', label: 'name' }),
-            renderCell: (params) => {
-                const grade = gradeConstants.filter(({ index }) => index === params.row.grade)[0]
-                return (
-                    <Typography>
-                        {grade?.name}
-                    </Typography>
-                )
-            }
         }, {
             field: 'price',
             headerName: 'سعر الكورس الحالى',
@@ -251,10 +244,12 @@ function GetViewsCompo({ lectureId, courseId, role, refetchViews, userId }) {
             field: 'updatedAt',
             headerName: 'تاريخ انتهاء المشاهده',
             width: 200,
+            type: 'date',
+            valueGetter: (params) => new Date(params),
             renderCell: (params) => {
                 return <TabInfo count={getFullDate(params.row.updatedAt)} i={2} />
             },
-            filterable: false,
+            filterable: true,
         },
     ]
 

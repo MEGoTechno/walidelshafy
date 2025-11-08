@@ -1,13 +1,10 @@
-import React from 'react'
 import './home.css'
 import Section from '../../style/mui/styled/Section'
 import Grid from '../../style/vanilla/Grid'
-import { Box, Paper, Typography, useTheme } from '@mui/material'
-import Battery from '../animations/battery/Battery'
-import { FlexBetween, FlexColumn, FlexRow } from '../../style/mui/styled/Flexbox'
+import { Paper, Typography, useTheme } from '@mui/material'
+import { FlexColumn, FlexRow } from '../../style/mui/styled/Flexbox'
 import Image from '../ui/Image'
-import TitleWithDividers from '../ui/TitleWithDividers'
-import Nucleus from '../animations/nucleus/Nucleus'
+
 
 
 

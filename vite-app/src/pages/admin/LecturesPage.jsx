@@ -104,15 +104,8 @@ function LecturesPage() {
             type: 'singleSelect',
             width: 200,
             valueOptions: makeArrWithValueAndLabel(gradeConstants, { value: 'index', label: 'name' }),
-            renderCell: (params) => {
-                const grade = gradeConstants.find(({ index }) => index === params.row.grade)
-                return (
-                    <Typography>
-                        {grade.name}
-                    </Typography>
-                )
-            }
-        }, {
+        },
+        {
             field: 'users',
             headerName: 'الاعضاء',
             width: 150,
@@ -130,14 +123,14 @@ function LecturesPage() {
                             massActions={[{
                                 label: 'ازاله المستخدمين من المحاضره ' + lecture.name,
                                 onClick: (chosenUsers) => handelUser({
-                                    ids: chosenUsers, field: 'lectures', value: lecture._id, action: 'pull'
+                                    ids: chosenUsers, field: 'accessLectures', value: lecture._id, action: 'pull'
                                 })
                             }]}
                             deleteFc={(userId) => handelUser({
-                                id: userId, field: 'lectures', value: lecture._id, action: 'pull'
+                                id: userId, field: 'accessLectures', value: lecture._id, action: 'pull'
                             })}
                             filters={{
-                                grade: lecture.grade, lectures: lecture._id
+                                accessLectures: lecture._id //grade: lecture.grade, 
                             }}
                         />
                     }
@@ -162,7 +155,7 @@ function LecturesPage() {
                             massActions={[{
                                 label: 'ايضافه الطلاب الي المحاضره ' + lecture.name,
                                 onClick: (chosenUsers) => handelUser({
-                                    ids: chosenUsers, field: 'lectures', value: lecture._id, action: 'push'
+                                    ids: chosenUsers, field: 'accessLectures', value: lecture._id, action: 'push'
                                 })
                             }]}
                             addColumns={[{
@@ -177,7 +170,7 @@ function LecturesPage() {
                                                 desc: 'سيتم اضافه هذا الطالب الي المحاضره' + ' ' + lecture.name
                                             }}
                                             btn={<IconButton color='success' onClick={() => handelUser({
-                                                id: user._id, field: 'lectures', value: lecture._id, action: 'push'
+                                                id: user._id, field: 'accessLectures', value: lecture._id, action: 'push'
                                             })}>
                                                 <IoIosAddCircleOutline></IoIosAddCircleOutline>
                                             </IconButton>} key={0} />
@@ -185,13 +178,15 @@ function LecturesPage() {
                                 }
                             }]}
                             filters={{
-                                grade: lecture.grade, lectures: '!=' + lecture._id
+                                accessLectures: '!=' + lecture._id
                             }}
                         />
                     }
                 />
             }
-        }, {
+        },
+        {
+
             field: 'dateStart',
             headerName: "تاريخ البدء",
             width: 200,
@@ -219,8 +214,6 @@ function LecturesPage() {
             headerName: lang.IS_ACTIVE,
             type: "boolean",
             editable: true,
-
-            valueGetter: (isActive) => isActive,
             renderCell: (params) => {
                 return (
                     <Box>

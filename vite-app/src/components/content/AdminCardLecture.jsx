@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material'
+import { Avatar, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material'
 import { FlexBetween, FlexRow } from '../../style/mui/styled/Flexbox'
 import LectureUpdate from './LectureUpdate'
 import { FilledHoverBtn, OutLinedHoverBtn } from '../../style/buttonsStyles'
@@ -28,10 +28,10 @@ import AdminLinkLectureToGroup from './AdminLinkLectureToGroup'
 import BtnModal from '../ui/BtnModal'
 import MakeForm from '../../tools/makeform/MakeForm'
 
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities';
+// course => Lectures
+// course => chapters => lectures(course, chapter)
 
-
+//Liking
 function AdminCardLecture({ lecture, i, setLectures, courseId }) {
   const [open, setOpen] = useState(false)
   const isNativeLecture = (lecture?.course?._id === courseId || lecture?.course === courseId)
@@ -78,155 +78,134 @@ function AdminCardLecture({ lecture, i, setLectures, courseId }) {
 
   }
 
-  //## Sorting
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: lecture._id })
   if (!lecture) return <></>
 
-  const style = {
-    transition,
-    transform: CSS.Transform.toString(transform), //Css from utilies
-    // touchAction: 'none'
-  }
   return (
-    <div ref={setNodeRef} style={style}>
-      {/* {...attributes} {...listeners} */}
-      <Card elevation={4} sx={{ width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column' }}>
-        <CardHeader
-          avatar={
-            <Avatar
-              {...listeners}
-              {...attributes}
-              sx={{
-                bgcolor: 'primary.main', color: 'grey.0', cursor: 'grab',        // Shows drag cursor
-                '&:active': { cursor: 'grabbing' },
-              }} aria-label="recipe">
-              {i + 1}
-            </Avatar>
-          }
-          action={
-            <IconButton aria-label="settings" color='orange' sx={{ mx: '16px' }}>
-              <SectionIcon lecture={lecture} />
-            </IconButton>
-          }
-          title={<Typography variant='subtitle1' >{lecture.name}</Typography>}
-          subheader={<TabInfo count={getFullDate(lecture.createdAt)} i={2} />}
-        />
 
-        <CardContent sx={{ flex: 1 }}>
-          {!isNativeLecture && (
-            <div>
-              <TabInfo count={lecture.course.name} title={'مربوط بكورس : '} isBold={false} i={1} />
-            </div>
-          )}
-          {(lecture.oldIndex ?? lecture.newIndex) && (
-            <Box>
-              <TabInfo i={2} count={'!! تم تغيير ترتيب المحاضره من' + lecture.oldIndex + ' الي ' + lecture.newIndex} />
-            </Box>
-          )}
-          <TabInfo count={lecture.isActive ? lang.ACTIVE : lang.NOT_ACTIVE} i={lecture.isActive ? 1 : 3} />
+    <Card elevation={4} sx={{ minWidth: '250px', width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'flex-start' }}>
+      <CardHeader
+        avatar={
+          <Avatar sx={{ bgcolor: 'primary.main', color: 'grey.0' }} aria-label="recipe">
+            {i + 1}
+          </Avatar>
+        }
+        action={
+          <IconButton aria-label="settings" color='orange' sx={{ mx: '16px' }}>
+            <SectionIcon lecture={lecture} />
+          </IconButton>
+        }
+        title={<Typography variant='subtitle1' >{lecture.name}</Typography>}
+        subheader={<TabInfo count={getFullDate(lecture.createdAt)} i={2} />}
+      />
 
-          <TabInfo sx={{ marginLeft: '12px' }} count={lecture.index} isBold={false} title={'رقم المحاضره'} i={0} />
+      <CardContent sx={{ flex: 1 }}>
+        {!isNativeLecture && (
+          <div>
+            <TabInfo count={lecture.course.name} title={'مربوط بكورس : '} isBold={false} i={1} />
+          </div>
+        )}
 
-          {isNativeLecture && (
-            <>
-              <InfoText label={'الوصف'} description={lecture.description} />
-              <FlexRow>
-                <InfoText label={'سعر المحاضره'} description={lecture.price + ' ' + 'جنيه'} />
-                <BtnModal
-                  btn={<TabInfo sx={{ cursor: 'pointer', margin: '0 8px' }} count={'اضغط لتعديل السعر'} i={2} />}
-                  component={<MakeForm inputs={[
-                    { name: 'price', label: 'السعر الجديد', type: 'number' }
-                  ]} onSubmit={changeStatus} status={{ isLoading }} formDirection={'row'} btnStyle={{ width: 'fit-content' }} />}
-                />
-                <SwitchStyled label={"قابله للبيع"} checked={lecture.isSalable} onChange={(value) => changeStatus({ isSalable: value })} isLoading={isLoading} />
-              </FlexRow>
+        <TabInfo count={lecture.isActive ? lang.ACTIVE : lang.NOT_ACTIVE} i={lecture.isActive ? 1 : 3} />
 
-              <SwitchStyled label={"الحاله"} checked={lecture.isActive} onChange={(value) => changeStatus({ isActive: value })} isLoading={isLoading} />
-              <SwitchStyled label={"جعل المحاضره مجانيه"} checked={lecture.isFree} onChange={(val) => changeStatus({ isFree: val })} isLoading={isLoading} />
-
-              <div>
-                <LinkMui href={"/management/codes?lecture=" + lecture._id} underline="hover" mr={'auto'} onClick={(e) => {
-                  e.preventDefault()
-                  navigate("/management/codes?lecture=" + lecture._id)
-                }}>
-                  اكواد المحاضره
-                </LinkMui>
-              </div>
-
-              <Separator />
-              <Typography sx={{ width: '100%', textAlign: 'center', textDecoration: 'underline' }} variant='subtitle2'>خاص بطلاب السنتر</Typography>
-              <SwitchStyled label={"تفعيله لطلاب السنتر"} checked={lecture.isCenter} onChange={(val) => changeStatus({ isCenter: val })} isLoading={isLoading} />
-
-              {lecture.sectionType === sectionConstants.EXAM && (
-                <div>
-                  <LinkMui href={'/management/attempts?courseId=' + courseId + '&lectureId=' + lecture._id + '&attemptRole=' + user_roles.STUDENT} underline="hover" mr={'auto'} onClick={(e) => {
-                    e.preventDefault()
-                    navigate('/management/attempts?courseId=' + courseId + '&lectureId=' + lecture._id + '&attemptRole=' + user_roles.STUDENT)
-                  }}>
-                    احصائيات طلاب السنتر
-                  </LinkMui>
-                </div>
-              )}
-
-              {lecture.sectionType === sectionConstants.VIDEO && (
-                <div>
-                  <LinkMui href={'/statistics/views?role=' + user_roles.STUDENT + '&course=' + courseId + '&lecture=' + lecture._id} underline="hover" mr={'auto'} onClick={(e) => {
-                    e.preventDefault()
-                    navigate('/statistics/views?role=' + user_roles.STUDENT + '&course=' + courseId + '&lecture=' + lecture._id)
-                  }}>
-                    احصائيات طلاب السنتر
-                  </LinkMui>
-                </div>
-              )}
-              <FlexRow sx={{ mt: '20px', justifyContent: 'center' }}>
-                <AdminLinkLectureToGroup lecture={lecture} setLectures={changeStatus} status={{ isLoading }} />
-              </FlexRow>
-
-            </>
-          )}
-
-        </CardContent>
-
-        <CardActions sx={{ width: '100%' }} >
-          <FlexBetween sx={{ width: '100%' }}>
-
+        {isNativeLecture && (
+          <>
+            <InfoText label={'الوصف'} description={lecture.description} />
             <FlexRow>
-
-              {isNativeLecture && (
-                <FilledHoverBtn endIcon={<BiSolidShow />} disabled={status.isLoading || isLoading} onClick={() => setOpen(true)} >
-                  عرض التفاصيل
-                </FilledHoverBtn>
-              )}
-
-              {lecture.sectionType === sectionConstants.EXAM && (
-                <OutLinedHoverBtn
-                  colorm='orange'
-                  component={Link} to={'/management/attempts?courseId=' + courseId + '&lectureId=' + lecture._id} endIcon={<FcStatistics />}>{lang.STATISTICS}</OutLinedHoverBtn>
-              )}
-
-              {lecture.sectionType === sectionConstants.VIDEO && (
-                <OutLinedHoverBtn
-                  colorm='orange'
-                  component={Link} to={'/statistics/views?course=' + courseId + '&lecture=' + lecture._id} endIcon={<FcStatistics />}>{lang.STATISTICS}</OutLinedHoverBtn>
-              )}
+              <InfoText label={'سعر المحاضره'} description={lecture.price + ' ' + 'جنيه'} />
+              <BtnModal
+                btn={<TabInfo sx={{ cursor: 'pointer', margin: '0 8px' }} count={'اضغط لتعديل السعر'} i={2} />}
+                component={<MakeForm inputs={[
+                  { name: 'price', label: 'السعر الجديد', type: 'number' }
+                ]} onSubmit={changeStatus} status={{ isLoading }} formDirection={'row'} btnStyle={{ width: 'fit-content' }} />}
+              />
+              <SwitchStyled label={"قابله للبيع"} checked={lecture.isSalable} onChange={(value) => changeStatus({ isSalable: value })} isLoading={isLoading} />
             </FlexRow>
 
-            {isNativeLecture && (
-              <IconButton disabled={status.isLoading || isLoading} onClick={() => setOpenDelete(true)} sx={{ bgcolor: 'error.main', '&:hover': { bgcolor: red[500], opacity: .8 } }}>
-                {status.isLoading ? <Loader /> : <MdDelete color='#fff' />}
-              </IconButton>
+            <SwitchStyled label={"الحاله"} checked={lecture.isActive} onChange={(value) => changeStatus({ isActive: value })} isLoading={isLoading} />
+            <SwitchStyled label={"جعل المحاضره مجانيه"} checked={lecture.isFree} onChange={(val) => changeStatus({ isFree: val })} isLoading={isLoading} />
+
+            <div>
+              <LinkMui href={"/management/codes?lecture=" + lecture._id} underline="hover" mr={'auto'} onClick={(e) => {
+                e.preventDefault()
+                navigate("/management/codes?lecture=" + lecture._id)
+              }}>
+                اكواد المحاضره
+              </LinkMui>
+            </div>
+
+            <Separator />
+            <Typography sx={{ width: '100%', textAlign: 'center', textDecoration: 'underline' }} variant='subtitle2'>خاص بطلاب السنتر</Typography>
+            <SwitchStyled label={"تفعيله لطلاب السنتر"} checked={lecture.isCenter} onChange={(val) => changeStatus({ isCenter: val })} isLoading={isLoading} />
+
+            {lecture.sectionType === sectionConstants.EXAM && (
+              <div>
+                <LinkMui href={'/management/attempts?courseId=' + courseId + '&lectureId=' + lecture._id + '&attemptRole=' + user_roles.STUDENT} underline="hover" mr={'auto'} onClick={(e) => {
+                  e.preventDefault()
+                  navigate('/management/attempts?courseId=' + courseId + '&lectureId=' + lecture._id + '&attemptRole=' + user_roles.STUDENT)
+                }}>
+                  احصائيات طلاب السنتر
+                </LinkMui>
+              </div>
             )}
 
-          </FlexBetween>
-        </CardActions>
+            {lecture.sectionType === sectionConstants.VIDEO && (
+              <div>
+                <LinkMui href={'/statistics/views?role=' + user_roles.STUDENT + '&course=' + courseId + '&lecture=' + lecture._id} underline="hover" mr={'auto'} onClick={(e) => {
+                  e.preventDefault()
+                  navigate('/statistics/views?role=' + user_roles.STUDENT + '&course=' + courseId + '&lecture=' + lecture._id)
+                }}>
+                  احصائيات طلاب السنتر
+                </LinkMui>
+              </div>
+            )}
+            <FlexRow sx={{ mt: '20px', justifyContent: 'center' }}>
+              <AdminLinkLectureToGroup lecture={lecture} setLectures={changeStatus} status={{ isLoading }} />
+            </FlexRow>
 
-        <ModalStyled open={open} setOpen={setOpen} >
-          <LectureUpdate lecture={lecture} setLectures={setLectures} />
-        </ModalStyled>
+          </>
+        )}
 
-        <ModalStyled open={openDelete} setOpen={setOpenDelete} action={triggerDelete} title={'هل انت متاكد من حذف المحاضره'} />
-      </Card>
-    </div>
+      </CardContent>
+
+      <CardActions sx={{ width: '100%' }} >
+        <FlexBetween sx={{ width: '100%' }}>
+
+          <FlexRow>
+
+            {isNativeLecture && (
+              <FilledHoverBtn endIcon={<BiSolidShow />} disabled={status.isLoading || isLoading} onClick={() => setOpen(true)} >
+                عرض التفاصيل
+              </FilledHoverBtn>
+            )}
+
+            {lecture.sectionType === sectionConstants.EXAM && (
+              <OutLinedHoverBtn
+                colorm='orange'
+                component={Link} to={'/management/attempts?courseId=' + courseId + '&lectureId=' + lecture._id} endIcon={<FcStatistics />}>{lang.STATISTICS}</OutLinedHoverBtn>
+            )}
+
+            {lecture.sectionType === sectionConstants.VIDEO && (
+              <OutLinedHoverBtn
+                colorm='orange'
+                component={Link} to={'/statistics/views?course=' + courseId + '&lecture=' + lecture._id} endIcon={<FcStatistics />}>{lang.STATISTICS}</OutLinedHoverBtn>
+            )}
+          </FlexRow>
+
+          {isNativeLecture && (
+            <IconButton disabled={status.isLoading || isLoading} onClick={() => setOpenDelete(true)} sx={{ bgcolor: 'error.main', '&:hover': { bgcolor: red[500], opacity: .8 } }}>
+              {status.isLoading ? <Loader /> : <MdDelete color='#fff' />}
+            </IconButton>
+          )}
+
+        </FlexBetween>
+      </CardActions>
+
+      <ModalStyled open={open} setOpen={setOpen} >
+        <LectureUpdate lecture={lecture} setLectures={setLectures} />
+      </ModalStyled>
+
+      <ModalStyled open={openDelete} setOpen={setOpenDelete} action={triggerDelete} title={'هل انت متاكد من حذف المحاضره'} />
+    </Card>
   )
 }
 export default AdminCardLecture

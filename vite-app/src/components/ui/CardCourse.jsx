@@ -14,6 +14,7 @@ export default function CardCourse({ img, title, children, borderColor }) {
   return (
     <Box
       sx={{
+        width: '100%',
         transition: '.3s all ease',
         '&:hover  img': {
           filter: 'saturate(140%) !important', transform: 'scale(1.1)'
@@ -25,7 +26,7 @@ export default function CardCourse({ img, title, children, borderColor }) {
       }}
       display={'flex'} flexDirection={'column'}>
 
-      <Image img={img} saturate={true} sx={{minHeight: '100px'}} />
+      <Image img={img} saturate={true} sx={{ minHeight: '100px' }} />
 
       <Box sx={{
         transition: '.3s all ease',
