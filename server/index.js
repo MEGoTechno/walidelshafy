@@ -137,24 +137,25 @@ app.use(notFound)
 app.use(errorrHandler)
 
 const appendDefaultChapters = async () => {
-    const courses = await CourseModel.find().lean()
-    let index = 1
+    // const courses = await CourseModel.find().lean()
+    // let index = 1
 
-    let newCourses = []
-    console.log('start creating chaptering')
+    // let newCourses = []
+    // console.log('start creating chaptering')
 
-    for (const course of courses) {
-        const courseLectures = await LectureModel.find({ course: course._id }).lean()
-        const newCourse = { ...course, lectures: courseLectures }
-        newCourses.push(newCourse)
-    }
+    // for (const course of courses) {
+    //     const courseLectures = await LectureModel.find({ course: course._id }).lean()
+    //     const newCourse = { ...course, lectures: courseLectures }
+    //     newCourses.push(newCourse)
+    // }
 
-    for (const course of newCourses) {
-        const chapter = await ChapterModel.insertOne({
-            name: course.name, courses: [course._id], description: 'desc test', grade: course.grade, index: index++
-        })
-        await LectureModel.updateMany({ _id: course.lectures.map(l => l._id) }, { chapter: chapter._id })
-    }
+    // for (const course of newCourses) {
+    //     const chapter = await ChapterModel.insertOne({
+    //         name: course.name, courses: [course._id], description: 'desc test', grade: course.grade, index: index++
+    //     })
+    //     await LectureModel.updateMany({ _id: course.lectures.map(l => l._id) }, { chapter: chapter._id })
+    // }
+    await ChapterModel.updateMany({}, { description: '' })
     console.log('done creating chaptering')
 
 }

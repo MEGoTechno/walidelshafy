@@ -74,7 +74,7 @@ const handelValueAndOperator = (value, type = null) => { //i use Type for watche
 const handelMatch = (match, key, preVal, type) => {
   const [value, operator, isSkip] = handelValueAndOperator(preVal, type)
   if (isSkip) return match;
-  console.log(value, operator)
+  // console.log(value, operator)
 
   if (type === 'array') {
     const existing = match[key] || {};
@@ -89,7 +89,7 @@ const handelMatch = (match, key, preVal, type) => {
 
     return match;
   }
-  
+
   switch (operator) {
     case 'size':
       match[key] = { $size: value };
@@ -154,6 +154,10 @@ const handelMatch = (match, key, preVal, type) => {
     case 'isNot':
     case 'doesNotEqual':
       const isValidD = isValidDate(value)
+      if (value === '[]') {
+        match[key] = { $ne: [] };
+        break;
+      }
       if (isValidD) {
         match[key] = {
           $not: makeDayRange(value)
