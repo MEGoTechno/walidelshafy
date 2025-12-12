@@ -134,7 +134,7 @@ const makeInvoice = expressAsyncHandler(async (req, res, next) => {
 
     invoiceData.price = product.price;
     if (invoiceData.coupon && !(invoiceData.coupon === 'undefined' || invoiceData.coupon === 'null')) {
-        invoiceData.price = await useCoupon(invoiceData.coupon, user, product, { isWallet: true, isSave: true })
+        invoiceData.price = await useCoupon(invoiceData.coupon, user, product, { isWallet: payment.type === paymentInteg.WALLET, isSave: true })
     }
 
     const invoice = new InvoiceModel({
