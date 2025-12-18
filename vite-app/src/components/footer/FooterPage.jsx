@@ -44,10 +44,20 @@ function FooterPage() {
                         {/*   */}
                         <Image img={'/assets/Instagram.png'} maxWidth='50px' ratio={'auto'} />
                     </IconButton>
+                    <IconButton component={Link} to={"naglaawalid101@gmail.com"}>
+                        {/*   */}
+                        <Image img={'https://www.svgrepo.com/show/477054/email-download.svg'} maxWidth='50px' ratio={'auto'} />
+                    </IconButton>
                 </FlexRow>
 
                 <Typography variant='body1' sx={{ textAlign: 'center' }}>
                     منصه تعتمد على توفير الاسئله و شروحات عاليه للطلاب الثانويه العامه
+                </Typography>
+                <Typography variant='body1' sx={{ textAlign: 'center' }}>
+                   العنوان: المنصوره الدقهليه
+                </Typography>
+                <Typography variant='body1' sx={{ textAlign: 'center' }}>
+                   للتواصل: 01011301848
                 </Typography>
                 <Separator sx={{ borderColor: 'grey.100', borderWidth: '1px', width: '40vw' }} />
 
