@@ -4,7 +4,8 @@ import Loader from '../loaders/Loader'
 import { FilledHoverBtn } from '../../buttonsStyles'
 import { FlexColumn } from './Flexbox'
 
-function AutoCompleteStyled({ label, fetchFc, sendFc, status, btnTitle = 'ارسال', defaultValues = [], isLoading, filterKey = 'name', reset = [] }) {
+function AutoCompleteStyled({
+    label, fetchFc, sendFc, setValue, status = {}, btnTitle = 'ارسال', defaultValues = [], isLoading, filterKey = 'name', reset = [] }) {
 
     const [options, setOptions] = useState([])
     const [chosenOptions, setChosenOptions] = useState(defaultValues)
@@ -45,7 +46,7 @@ function AutoCompleteStyled({ label, fetchFc, sendFc, status, btnTitle = 'ارس
     }, [defaultValues, chosenOptions])
 
     return (
-        <FlexColumn>
+        <FlexColumn width={'100%'}>
             <Autocomplete
                 sx={{ width: '100%' }}
                 multiple
@@ -56,7 +57,12 @@ function AutoCompleteStyled({ label, fetchFc, sendFc, status, btnTitle = 'ارس
                 isOptionEqualToValue={(option, value) => option._id === (value._id || value)}
                 value={chosenOptions || []}
 
-                onChange={(e, v) => setChosenOptions(v)} //array
+                onChange={(e, v) => {
+                    setChosenOptions(v)
+                    if (setValue) {
+                        setValue(v)
+                    }
+                }} //array
 
 
                 renderInput={(params) => (

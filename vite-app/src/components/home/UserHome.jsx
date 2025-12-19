@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Section from '../../style/mui/styled/Section'
 import UserHeader from '../ui/UserHeader'
 import { useDispatch, useSelector } from 'react-redux'
-import { Alert, Box, Button, ButtonGroup, Typography } from '@mui/material'
+import { Alert, Box, Button, Typography } from '@mui/material'
 import { useLazyGetCourseSubscriptionsQuery } from '../../toolkit/apis/userCoursesApi'
 import useLazyGetData from '../../hooks/useLazyGetData'
 import TitleSection from '../../components/ui/TitleSection'
@@ -17,11 +17,10 @@ import { user_roles } from '../../settings/constants/roles'
 import { useLazyIsLoggedQuery } from '../../toolkit/apis/usersApi'
 import { setUser } from '../../toolkit/globalSlice'
 import UserLectures from './UserLectures'
-import { FlexColumn, FlexRow } from '../../style/mui/styled/Flexbox'
-import PieChart from '../../tools/charts/PieChart'
-import DynamicBarChart from '../../tools/charts/BarChart'
-import TitleWithDividers from '../ui/TitleWithDividers'
+import { CoursesIcon, VidsIcon2 } from '../ui/svg/ContentSvgs'
 import LatestCourses from './LatestCourses'
+import { FlexColumn } from '../../style/mui/styled/Flexbox'
+import AdminHome from './AdminHome'
 
 function UserHome() {
 
@@ -68,11 +67,10 @@ function UserHome() {
     const [activeCompo, setActiveCompo] = useState(0)
 
     const btns = [
-        <Button key={0} fullWidth variant={activeCompo === 0 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(0)}>كورساتك</Button>,
-        <Button key={1} fullWidth variant={activeCompo === 1 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(1)}>محاضرات خاصه</Button>,
-        // <Button key={2} variant={activeCompo === 2 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(2)}>محتوى مجموعاتك</Button>,
-        <Button key={3} fullWidth variant={activeCompo === 3 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(3)}> محاضرات مجانيه</Button>,
-
+        <Button endIcon={<CoursesIcon />} fullWidth key={0} variant={activeCompo === 0 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(0)}>كورساتك</Button>,
+        <Button endIcon={<VidsIcon2 />} fullWidth key={1} variant={activeCompo === 1 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(1)}>محاضرات خاصه</Button>,
+        // <Button fullWidth key={2} variant={activeCompo === 2 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(2)}>محتوى مجموعاتك</Button>,
+        // <Button fullWidth key={3} variant={activeCompo === 3 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(3)}> محاضرات مجانيه</Button>,
     ]
 
     const compos = [
@@ -95,47 +93,48 @@ function UserHome() {
                 </Grid>
             </AccordionStyled>,
         },
-        { compo: <UserLectures query={{ codes: true, paid: true }} accordionTitle={'محاضراتك' + ' ' + '(تم شراءها' + " || " + "اكواد)"} />, value: 1 },
+        { compo: <UserLectures key={0} query={{ codes: true, paid: true }} accordionTitle={'محاضراتك' + ' ' + '(تم شراءها' + " || " + "اكواد)"} />, value: 1 },
         // {
         //     value: 2,
         //     compo: <UserLectures query={{ isGroups: true }} accordionTitle='محاضرات مجموعاتك' />
         //     ,
         // },
-        {
-            value: 3,
-            compo: <UserLectures query={{ isFree: true }} accordionTitle='محاضرات مجانيه' />
-        },
+        // {
+        //     value: 3,
+        //     compo: <UserLectures key={3} query={{ isFree: true, grade: user.grade }} accordionTitle='محاضرات مجانيه' />
+        // },
     ]
 
 
     if (user.role === user_roles.STUDENT) {
-        btns.push(<Button key={4} fullWidth variant={activeCompo === 4 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(4)}> محاضرات السنتر</Button>,)
-        compos.push({ compo: <UserLectures query={{ isCenter: true }} accordionTitle='محاضرات السنتر' />, value: 4 },)
+        btns.push(<Button fullWidth key={4} variant={activeCompo === 4 ? 'contained' : 'outlined'} onClick={() => setActiveCompo(4)}> محاضرات السنتر</Button>,)
+        compos.push({ compo: <UserLectures key={4} query={{ isCenter: true, grade: user.grade }} accordionTitle='محاضرات السنتر' />, value: 4 },)
     }
     // const categories = ['يناير', "فبراير", "مارس", "ابريل", "مايو", "يونيو", "يوليو", "اغسطس", "سبتمبر", "اكتوبر", "نوفبمر", "ديسمبر"]
 
     return (
         <Section sx={{ minHeight: '86vh' }}>
-            <Typography variant='h4' >
+            <Typography variant='subBanner' >
                 مرحبًا :  {user.name}
             </Typography>
             <Separator />
             <UserHeader user={user} flexDirection={'row'} variant={'circle'} />
-            <Box sx={{ my: '16px' }}></Box>
-            <TitleSection title={lang.YOUR_SUBSCRIPTIONS} />
+            {(user.role === user_roles.ONLINE || user.role == user_roles.STUDENT) ?
+                <Box sx={{ my: '16px' }}>
+                    <TitleSection title={lang.YOUR_SUBSCRIPTIONS} />
 
-            {(user.role === user_roles.ONLINE || user.role == user_roles.STUDENT) && <>
-                <Grid color="primary" aria-label="Medium-sized button group">
-                    {btns}
-                </Grid>
-
-                {compos.find(compo => compo.value === activeCompo)?.compo}
-
-                <LatestCourses />
-
-            </>
+                    <Grid min='120px' sx={{ width: '100%' }}>
+                        {btns}
+                    </Grid>
+                    {compos.find(compo => compo.value === activeCompo)?.compo}
+                    <FlexColumn>
+                        <Separator />
+                        <Separator sx={{ width: '60%', opacity: "60%" }} />
+                    </FlexColumn>
+                    <LatestCourses user={user} />
+                </Box>
+                : (user.role === user_roles.ADMIN || user.role == user_roles.SUBADMIN) ? <AdminHome /> : ''
             }
-
         </Section>
     )
 }

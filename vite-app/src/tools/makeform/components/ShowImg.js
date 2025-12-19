@@ -1,5 +1,5 @@
 import { Avatar, Card, CardHeader, CardMedia, IconButton, Typography, useTheme } from '@mui/material'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ModalStyled from '../../../style/mui/styled/ModalStyled'
 import { MdCancel } from 'react-icons/md'
 

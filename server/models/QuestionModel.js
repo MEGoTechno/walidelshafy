@@ -33,5 +33,7 @@ const questionSchema = new mongoose.Schema({
 
 });
 
+questionSchema.index({ isActive: 1, tags: 1, grade: 1 });
+
 const QuestionModel = mongoose.model('Question', questionSchema);
 module.exports = QuestionModel

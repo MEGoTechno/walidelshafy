@@ -1,6 +1,6 @@
 import useLazyGetData from '../../hooks/useLazyGetData'
 import { lang } from '../../settings/constants/arlang'
-import { formatDuration, getDateWithTime } from '../../settings/constants/dateConstants'
+import { getDateWithTime } from '../../settings/constants/dateConstants'
 import Section from '../../style/mui/styled/Section'
 import MeDatagrid from '../../tools/datagrid/MeDatagrid'
 import usePostData from '../../hooks/usePostData'
@@ -22,6 +22,7 @@ import Loader from '../../style/mui/loaders/Loader'
 import TabInfo from '../ui/TabInfo'
 import { IconButton } from '@mui/material'
 import BtnConfirm from '../ui/BtnConfirm'
+import AdminTagQs from './AdminTagQs'
 
 const exportObj = {
     grade: (row) => {
@@ -43,7 +44,7 @@ const exportObj = {
 }
 
 
-function AdminGetQuestions({ setSelectedQs, allSelected = false, filters = {}, isShowCreate = true, colsIgnored = [], addColumns = [], disableAllActions = false, preReset = [] }) {
+function AdminGetQuestions({ setSelectedQs, allSelected = false, filters = {}, isShowCreate = true, isShowHeader = false, colsIgnored = [], addColumns = [], disableAllActions = false, preReset = [] }) {
 
     const [reset, setReset] = useState(false)
 
@@ -65,12 +66,16 @@ function AdminGetQuestions({ setSelectedQs, allSelected = false, filters = {}, i
         await updateQuestion({ id: data._id, ...data })
         return data
     }
+    const [filterTags, setFilterTags] = useState([])
+    const [grade, setGrade] = useState()
 
     const fetchFc = async (params) => {
-        const res = await getQuestions({ ...params, ...filters }, false)
+        const filterByTags = filterTags.length ? filterTags : filters?.tags || []
+        const res = await getQuestions({ ...params, ...filters, tags: filterByTags }, false)
         const data = { values: res.questions, count: res.count }
         return data
     }
+
 
 
     //Linking
@@ -216,13 +221,13 @@ function AdminGetQuestions({ setSelectedQs, allSelected = false, filters = {}, i
                     type: 'actions',
                     getActions: (params) => {
                         return [
-                            <BtnConfirm 
-                            modalInfo={{
-                                desc: 'سيتم اضافه هذا الرابط الي السؤال'
-                            }}
-                            btn={<IconButton color='success' onClick={() => linkFc(params?.row?._id)}>
-                                <FaPlus></FaPlus>
-                            </IconButton>} key={0} />
+                            <BtnConfirm
+                                modalInfo={{
+                                    desc: 'سيتم اضافه هذا الرابط الي السؤال'
+                                }}
+                                btn={<IconButton color='success' onClick={() => linkFc(params?.row?._id)}>
+                                    <FaPlus></FaPlus>
+                                </IconButton>} key={0} />
                         ]
                     }
                 }
@@ -278,18 +283,35 @@ function AdminGetQuestions({ setSelectedQs, allSelected = false, filters = {}, i
         }
     }, [colsIgnored])
 
+
+    const [activeTag, setActiveTag] = useState()
+
     return (
         <Section>
             {/* <TabInfo count={viewsCount} title={'عدد المشاهدات'} i={1} /> */}
+            {isShowHeader && (
+                <AdminTagQs
+                    filterTags={filterTags}
+                    setFilterTags={setFilterTags}
+                    grade={grade} setGrade={setGrade}
+                    setReset={setReset}
+                    reset={reset} setActiveTag={setActiveTag}
+                />
+            )}
+
             {isShowCreate && (
-                <BtnModal btnName={'انشاء سؤال'} component={<CreateQuestion setReset={setReset} />} size='medium' isFilledHover={true} />
+                <BtnModal btnName={'انشاء سؤال' + ' ' + (activeTag ? activeTag.name : '')}
+                    component={<CreateQuestion defaultQuestion={{
+                        grade: activeTag?.grade ?? grade, tags: activeTag
+                    }} setReset={setReset} />}
+                    size='medium' isFilledHover={true} />
             )}
 
             <MeDatagrid
                 type={'crud'}
                 exportObj={exportObj} exportTitle={'تفاصيل المشاهدات'}
                 columns={modifiedCols} addColumns={addColumns} disableAllActions={disableAllActions}
-                reset={[reset, ...preReset]}
+                reset={[reset, ...preReset, filterTags]}
                 loading={status.isLoading || updateStatus.isLoading || isLoading}
                 fetchFc={fetchFc}
                 deleteFc={deleteFc} updateFc={updateFc} viewFc={viewFc}

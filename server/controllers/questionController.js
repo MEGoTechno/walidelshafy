@@ -71,17 +71,21 @@ const unLinkQuestionToTags = expressAsyncHandler(async (req, res, next) => {
 
 // For Many
 const createManyQuestions = expressAsyncHandler(async (req, res, next) => {
-    const questionsData = req.body.questions || []
+    const questionsData = req.body || []
     const handledQs = questionsData.map(q => {
         if (q.isShuffle) {
             const options = shuffleArray(q.options)
             q.options = options
+        }
+        if (!q.tags) {
+            delete q.tags
         }
         return q
     });
     const questions = await QuestionModel.insertMany(handledQs)
     return res.status(200).json({ message: 'تم انشاء ' + questions.length + ' اسئله', status: SUCCESS })
 })
+
 
 //@desc Question Bank Handel
 //@routes POST /questions/bank //has Body

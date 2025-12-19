@@ -44,7 +44,7 @@ function FooterPage() {
                         {/*   */}
                         <Image img={'/assets/Instagram.png'} maxWidth='50px' ratio={'auto'} />
                     </IconButton>
-                    <IconButton component={Link} to={"naglaawalid101@gmail.com"}>
+                    <IconButton component={Link} to={"mailto:naglaawalid101@gmail.com"}>
                         {/*   */}
                         <Image img={'https://www.svgrepo.com/show/477054/email-download.svg'} maxWidth='50px' ratio={'auto'} />
                     </IconButton>
