@@ -59,6 +59,9 @@ function FooterPage() {
                 <Typography variant='body1' sx={{ textAlign: 'center' }}>
                    للتواصل: 01011301848
                 </Typography>
+                <Typography variant='body1' sx={{ textAlign: 'center' }}>
+                   ايميل: naglaawalid101@gmail.com
+                </Typography>
                 <Separator sx={{ borderColor: 'grey.100', borderWidth: '1px', width: '40vw' }} />
 
                 <FlexRow sx={{ gap: '8px' }}>
