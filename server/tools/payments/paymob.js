@@ -61,7 +61,8 @@ async function makeNewPaymob({ price, userInfo, successUrl }) { //1st step for c
                 '&clientSecret=' + response.data.client_secret
         }
     } catch (error) {
-        console.log('error from new==>', error)
+        console.log(error.response.data);
+        console.log('error from new==>', error.message)
         throw error
     }
 }

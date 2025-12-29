@@ -143,9 +143,10 @@ const makeInvoice = expressAsyncHandler(async (req, res, next) => {
 
     const item = {
         name: invoiceData.description,
-        price: invoiceData.price,
-        quantity: "1"
+        amount: invoiceData.price * 100, //amount for paymob
+        quantity: '1'
     }
+
     const userInfo = {
         first_name: user.name.split(' ')[0],
         last_name: user.name.split(' ')[2],
