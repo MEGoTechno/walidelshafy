@@ -2,7 +2,7 @@ import { Box, Button, Card, CardActions, useTheme } from "@mui/material";
 import { useState } from "react";
 import ShowQuestion from "./ShowQuestion";
 import QuizPagination from "./QuizPagination";
-import { buttonError, buttonStyle, sendSuccess } from "../../style/buttonsStyles";
+import {   buttonStyle, sendSuccess } from "../../style/buttonsStyles";
 
 import { useSelector } from "react-redux";
 import QuizHeader from "./QuizHeader";
@@ -10,7 +10,7 @@ import ModalStyled from "../../style/mui/styled/ModalStyled";
 import Loader from "../../style/mui/loaders/Loader";
 import { user_roles } from "../../settings/constants/roles";
 import BankNavigateBtn from "./BankNavigateBtn";
-import { convertToMs } from "../../settings/constants/dateConstants";
+ 
 import { getExamMethod } from "../../settings/constants/examMethods";
 
 
@@ -106,7 +106,7 @@ export default function QuizCard({ exam, submit, isLoading, navigateToAnswers, e
                         <Button sx={sendSuccess} disabled={isLoading} onClick={openModal}>
                             {isLoading ? <Loader color={'#fff'} /> : "ارسال"}
                         </Button>
-                    ) : <BankNavigateBtn exam={exam} navigateToAnswers={navigateToAnswers} questions={questions} submit={sendData} />}
+                    ) : method?.markQ ? 'قم بتصحيح جميع الاسئله من خلال زر تصحيح السؤال فى كل سؤال وعند ذلك ستكون قد سلمت التدريب' : <BankNavigateBtn exam={exam} navigateToAnswers={navigateToAnswers} questions={questions} submit={sendData} />}
 
                 </CardActions>
 

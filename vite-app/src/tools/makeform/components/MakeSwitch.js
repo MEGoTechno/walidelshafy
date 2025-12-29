@@ -6,7 +6,7 @@ function MakeSwitch({ input, inputName, value, setValue, showError }) {
 
     return <FormGroup error={showError ? true : undefined} >
         <FormLabel >{input.label}</FormLabel>
-        <Field disabled={input.disabled ?? false} as={Switch} name={inputName} label={input.label} checked={Boolean(value)} onChange={() => setValue(!value)} />
+        <Field color='success' disabled={input.disabled ?? false} as={Switch} name={inputName} label={input.label} checked={Boolean(value)} onChange={() => setValue(!value)} />
     </FormGroup>
 }
 

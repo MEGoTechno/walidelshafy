@@ -1,4 +1,4 @@
-import  { useState } from 'react'
+import { useState } from 'react'
 import { lang } from '../../settings/constants/arlang'
 
 import MakeForm from '../../tools/makeform/MakeForm'
@@ -127,7 +127,17 @@ function LectureForm({ grade, course, onSubmit, lecture, status, location, setLe
                 .matches(durationRegex, 'ارقام فقط, غير مسموح بوجود مساحات, h,m,s فقط')
                 .required(lang.REQUERIED),
             value: lecture?.video?.duration,
-        }
+            helperText: 'يرجي كتابه وقت الفيديو بدقه حتي يتم حساب وقت الفيديو اللازم للمشاهده بطريقه صحيحه'
+        }, {
+            name: 'minDuration',
+            label: 'نسبه الفيديو اللازم مشاهدتها (اختياري)',
+            validation: Yup.number()
+                .min(0, 'لا يمكن ان يكون بالسالب').max(100, 'القيمه من 0 : 100%'),
+
+            value: lecture?.video?.minDuration,
+            startIcon: '%',
+            helperText: 'يرجي العلم ان النسبه تحسب  من اجمالي عدد الدقائق المشاهده لذلك يمكن للطالب ان يشاهد الفيديو على سرعه 2x وبالتالي سيكون قد شاهد نصف الفيديو فقط ولكن فى الحقيقه قام بانهاء المحاضره'
+        },
     ]
 
     //lecture? with bunny url

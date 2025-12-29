@@ -65,7 +65,7 @@ function PaymentMethods({ coupon, price, handelResponse,
         const res = await makeInvoice({
             ...values, coupon: couponName, course, wallet, tag, lecture,
             name: invoiceNameId,
-            description: subTitle + ' ' + '(السعر' + ' ' + price + 'جنيه' + ')',
+            description: subTitle + ' ' + '(السعر' + ' ' + price + 'جنيه' + ')',successUrl: location.href
         }, true)
 
         if (res.redirectUrl) {
