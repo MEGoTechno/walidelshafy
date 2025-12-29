@@ -80,8 +80,7 @@ const validatePreInvoice = expressAsyncHandler(async (req, res, next) => {
 
     if (invoice.wallet) {
         const PAIDBefore = await InvoiceModel.findOne({
-            user: user._id, wallet: invoice.wallet, status: PENDING,
-            type: null
+            user: user._id, wallet: invoice.wallet, status: PENDING
         }).lean().select('_id')
         if (PAIDBefore) {
             return next(createError('هناك طلب شحن بنفس المبلغ, يرجى الانتظار لحين قبول هذا الطلب او شحن المحفظه بمبلغ اخر', 404, FAILED))
@@ -96,10 +95,8 @@ const validatePreInvoice = expressAsyncHandler(async (req, res, next) => {
                 const PAIDBefore = await InvoiceModel.findOne({
                     user: user._id,
                     [item.key]: invoice[item.key],
-                    status: { $ne: FAILED },
-                    type: null
+                    status: { $ne: FAILED }
                 }).select('_id').lean();
-
                 if (PAIDBefore) return next(createError('لقد تم طلب دفع مسبقا', 400, FAILED));
 
                 // const isAlreadySubscribed = item.isAsync
@@ -241,8 +238,8 @@ const webhookPaymob = expressAsyncHandler(async (req, res, next) => {
     const hmac = req.query.hmac || req.body.hmac;
     const orderId = data.order?.id
 
-    const isValid = verifyHmac(data, hmac);
-    console.log('from hmac ==>', isValid)
+    // const isValid = verifyHmac(data, hmac);
+    // console.log('from hmac ==>', isValid)
 
     // if (!isValid) {
     //   console.log('❌ Invalid HMAC!');
