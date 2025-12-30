@@ -25,7 +25,8 @@ const invoiceSchema = new mongoose.Schema({
     lecture: { type: mongoose.Schema.Types.ObjectId, ref: 'lecture' },
     // isWallet: Boolean,
     wallet: Number,
-    userInfo: Object
+    userInfo: Object,
+    paymentType: String //manual - others
 }, {
     timestamps: true,
     _v: false

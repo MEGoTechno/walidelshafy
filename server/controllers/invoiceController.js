@@ -77,7 +77,7 @@ const validatePreInvoice = expressAsyncHandler(async (req, res, next) => {
             // isAsync: true,
         },
     ];
-
+    //i want to Reject ==> manually repeated
     if (invoice.wallet) {
         const PAIDBefore = await InvoiceModel.findOne({
             user: user._id, wallet: invoice.wallet, status: PENDING
@@ -95,7 +95,8 @@ const validatePreInvoice = expressAsyncHandler(async (req, res, next) => {
                 const PAIDBefore = await InvoiceModel.findOne({
                     user: user._id,
                     [item.key]: invoice[item.key],
-                    status: { $ne: FAILED }
+                    status: { $ne: FAILED },
+                    paymentType: 'manual'
                 }).select('_id').lean();
                 if (PAIDBefore) return next(createError('لقد تم طلب دفع مسبقا', 400, FAILED));
 
@@ -157,7 +158,7 @@ const makeInvoice = expressAsyncHandler(async (req, res, next) => {
     const invoice = new InvoiceModel({
         ...invoiceData,
         user: user._id,
-        status: PENDING,
+        status: PENDING, paymentType: payment.type || 'manual',
         price: invoiceData.price, userInfo
     });
     await invoice.validate(); // throws if invalid
