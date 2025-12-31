@@ -13,7 +13,7 @@ dotenv.config()
 // }
 
 
-async function makeNewPaymob({ price, userInfo, successUrl }) { //1st step for create token for user
+async function makeNewPaymob({ price, userInfo, successUrl }, payment) { //1st step for create token for user
     try {
         const billingData = {
             apartment: 'Na',
@@ -36,7 +36,7 @@ async function makeNewPaymob({ price, userInfo, successUrl }) { //1st step for c
             amount: price,
             redirection_url: successUrl, //ref to Course
             currency: "EGP",
-            payment_methods: [
+            payment_methods: payment.paymobIntegrationIds || [
                 Number(process.env.PAYMOB_INTEGRATION_ID),
                 Number(process.env.PAYMOB_INTEGRATION_WALLET),
             ],

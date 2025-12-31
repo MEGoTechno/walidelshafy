@@ -16,6 +16,7 @@ const paymentSchema = new mongoose.Schema({
 
     isActive: Boolean,
     type: { enum: [paymentInteg.FAWRY, paymentInteg.WALLET, paymentInteg.PAYMOB, 'manual'], type: String, default: 'manual' },
+    paymobIntegrationIds: Array,
 
     startDate: Date,
     endDate: Date,

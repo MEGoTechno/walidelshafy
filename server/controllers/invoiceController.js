@@ -176,7 +176,7 @@ const makeInvoice = expressAsyncHandler(async (req, res, next) => {
             break;
         case paymentInteg.PAYMOB:
 
-            const { orderId, url } = await makeNewPaymob({ price: invoice.price * 100, userInfo, successUrl: product.successUrl })
+            const { orderId, url } = await makeNewPaymob({ price: invoice.price * 100, userInfo, successUrl: product.successUrl }, payment)
             invoice.orderId = orderId
             await invoice.save()
             return res.status(201).json({ values: { redirectUrl: url }, message: 'سيتم تحويلك الي بوابه الدفع', status: SUCCESS })
