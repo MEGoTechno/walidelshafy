@@ -16,6 +16,11 @@ const courseSchema = new mongoose.Schema({
     isMust: { type: Boolean, default: true },
     isActive: { type: Boolean, required: true, default: true },
     isFixed: Boolean,
+
+    isSalable: {type: Boolean, default: true},
+    isLecturesSalable: {type: Boolean, default: true},
+
+
     dateStart: { type: Date },
     dateEnd: { type: Date },
 

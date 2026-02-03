@@ -67,6 +67,18 @@ function CourseCreate({ unit, grade, setCourses }) {
             icon: <VscSymbolBoolean />,
             value: true
         }, {
+            name: 'isSalable',
+            label: 'قايليه الشراء',
+            type: 'switch',
+            icon: <VscSymbolBoolean />,
+            value: true
+        }, {
+            name: 'isLecturesSalable',
+            label: 'قايليه شراء المحاضرات',
+            type: 'switch',
+            icon: <VscSymbolBoolean />,
+            value: true
+        }, {
             name: 'price',
             label: lang.PRICE,
             icon: <AiFillPoundCircle />,

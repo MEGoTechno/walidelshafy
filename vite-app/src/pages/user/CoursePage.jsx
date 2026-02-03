@@ -130,7 +130,7 @@ function CoursePage() {
                         return <LectureUserCard
                             key={lecture._id}
                             currentUserIndex={currentUserIndex}
-                            lecture={lecture}
+                            lecture={lecture} 
                             currentLectureIndex={lectureIndexInCourse} i={i} isSubscribed={courseDetails?.course?.isSubscribed}
                         />
                     }) : ''}
@@ -167,7 +167,7 @@ function CoursePage() {
             >
                 {(courseDetails?.course) ?
                     <FlexColumn>
-                        <CourseSubscribeCard course={courseDetails?.course} isSubscribed={courseDetails?.course?.isSubscribed} setCourseDetails={setCourseDetails} setCurrentUserIndex={setCurrentUserIndex} />
+                        <CourseSubscribeCard chapters={courseDetails?.chapters} course={courseDetails?.course} isSubscribed={courseDetails?.course?.isSubscribed} setCourseDetails={setCourseDetails} setCurrentUserIndex={setCurrentUserIndex} />
                         <FlexColumn width={'100%'} gap={'12px'}>
                             {isLargeScreen && params.lectureId && (
                                 courseChapters

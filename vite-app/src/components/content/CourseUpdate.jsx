@@ -11,7 +11,7 @@ import { VscSymbolBoolean } from "react-icons/vsc";
 
 
 import * as Yup from "yup"
-import { Box, FormControlLabel, Switch} from '@mui/material'
+import { Box, FormControlLabel, Switch } from '@mui/material'
 import MakeInput from '../../tools/makeform/MakeInput'
 import { FlexRow } from '../../style/mui/styled/Flexbox'
 import dayjs from 'dayjs'
@@ -88,6 +88,20 @@ function CourseUpdate({ course, setCourse, setCourses }) {
             column: 1, row: 5,
 
         }, {
+            name: 'isSalable',
+            label: 'قابلية الشراء',
+            type: 'switch',
+            icon: <VscSymbolBoolean />,
+            value: course.isSalable ?? true,
+            column: 1, row: 6,
+        }, {
+            name: 'isLecturesSalable',
+            label: 'قابلية شراء المحاضرات',
+            type: 'switch',
+            icon: <VscSymbolBoolean />,
+            value: course.isLecturesSalable ?? true,
+            column: 1, row: 6,
+        }, {
             name: 'isMust',
             label: 'تفعيل اكمال المحاضرات',
             type: 'switch',
@@ -134,7 +148,7 @@ function CourseUpdate({ course, setCourse, setCourses }) {
             label: lang.THUMBNAIL,
             type: 'file',
             width: '100%',
-            column: 1, row: 6,
+            column: 1, row: 7,
 
             value: course.thumbnail,
             validation: Yup.mixed()

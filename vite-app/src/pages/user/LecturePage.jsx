@@ -45,6 +45,7 @@ function LecturePage() {
         await passLecture({ courseId: course, lectureId: lecture._id, nextLectureIndex }) //linked to
         setCurrentIndex(nextLectureIndex)
     }
+    
     return (
         <FlexColumn sx={{ minHeight: '90vh', backgroundColor: 'background.alt', borderRadius: '16px', p: '12px', width: '100%' }}>
 

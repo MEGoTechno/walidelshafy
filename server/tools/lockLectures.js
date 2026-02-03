@@ -53,6 +53,7 @@ const lockLectures = async (course, userCourse, user = null) => {
                 ...chapter,
                 lectures: (lecturesByChapter[String(chapter._id)] || []).map(lecture => {
                     lecture.index = globalIndex++
+                    lecture.isSalable = (course.isLecturesSalable ?? true) ? lecture.isSalable : false
 
                     if (user && !userCourse) {
                         user.accessLectures = user.accessLectures || []
