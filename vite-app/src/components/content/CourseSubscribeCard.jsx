@@ -102,7 +102,7 @@ function CourseSubscribeCard({ course, isSubscribed, setCourseDetails, setCurren
 
                         <WrapperHandler status={status} showSuccess={true} />
                     </> : <FlexColumn>
-                        <TabInfo sx={{ flexWrap: 'wrap' }} count={'لايمكن شراء الكورس ولكن يمكن شراء المحاضرات (المستر ماشي محاضره بمحاضره)'} i={2} />
+                        <TabInfo sx={{ flexWrap: 'wrap' }} count={'شراء المحاضرات فقط'} i={2} />
                         <ul>
                             {chapters?.map(ch => {
                                 return <li key={ch._id}><Typography>{ch.name}</Typography></li>

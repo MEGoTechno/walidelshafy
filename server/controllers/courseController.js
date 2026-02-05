@@ -34,6 +34,7 @@ const coursesParams = (query) => {
         { key: "isFixed", value: query.isFixed },
         { key: "unit", value: query.unit, operator: "equal" },
         { key: "index", value: query.index, operator: "equal" },
+        { key: "_id", value: query._id },
     ]
 }
 const createCourse = insertOne(CourseModel, true)
