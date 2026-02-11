@@ -38,13 +38,7 @@ function Courses({ filters, viewFc, updateFc, deleteFc, massActions, reset,selec
             type: 'singleSelect',
             width: 200,
             valueOptions: handelObjsOfArr(gradeConstants, { value: 'index', label: 'name' }),
-        }, {
-            field: "government",
-            headerName: 'المحافظه',
-            type: 'singleSelect',
-            width: 200,
-            valueOptions: makeArrWithValueAndLabel(governments, { value: 'id', label: 'governorate_name_ar', isNumber: true }),
-        }, {
+        },  {
             field: 'createdAt',
             headerName: 'تاريخ الانشاء',
             width: 200,

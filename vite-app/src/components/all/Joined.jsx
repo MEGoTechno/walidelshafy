@@ -4,7 +4,7 @@ import TabsAutoStyled from "../../style/mui/styled/TabsAutoStyled"
 import BtnConfirm from "../ui/BtnConfirm"
 import { IoIosAddCircleOutline } from "react-icons/io"
 
-function Joined({ object = {}, field, Compo, editFc, setReset }) {
+function Joined({ object = {}, field, Compo, editFc, setReset, title }) {
 
 
     const editReset = (value) => {
@@ -69,7 +69,7 @@ function Joined({ object = {}, field, Compo, editFc, setReset }) {
 
     return (
         <Box>
-            <TitleWithDividers title={'كورسات الكوبون'} />
+            <TitleWithDividers title={title} />
             <TabsAutoStyled originalTabs={tabs} />
         </Box>
     )
