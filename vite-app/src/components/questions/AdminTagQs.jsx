@@ -6,9 +6,12 @@ import CreateTag from "../tags/CreateTag"
 import BtnModal from "../ui/BtnModal"
 import { useLazyGetTagsQuery } from "../../toolkit/apis/tagsApi"
 import useLazyGetData from "../../hooks/useLazyGetData"
-import gradeConstants from "../../settings/constants/gradeConstants"
+import useGrades from "../../hooks/useGrades"
+ 
 
 function AdminTagQs({ filterTags, setFilterTags, setGrade, grade, setReset, reset, setActiveTag }) {// grade, 
+
+    const {grades} = useGrades()
 
     const [tags, setTags] = useState([])
 
@@ -41,7 +44,7 @@ function AdminTagQs({ filterTags, setFilterTags, setGrade, grade, setReset, rese
                 variant={'filled'}
                 value={grade}
                 multiple={false} setValue={setGrade}
-                options={handelObjsOfArr(gradeConstants, { label: 'name', id: 'index' })} label={'الصفوف الدراسيه'} />
+                options={handelObjsOfArr(grades, { label: 'name', id: 'index' })} label={'الصفوف الدراسيه'} />
 
             <AutoCompleteFixed
                 sx={{ maxWidth: '350px' }}
@@ -52,7 +55,7 @@ function AdminTagQs({ filterTags, setFilterTags, setGrade, grade, setReset, rese
                 options={handelObjsOfArr(tags, { label: 'name', id: '_id' })} label={'الروابط/ الدروس'} />
 
             <BtnModal
-                fullWidth={true} btnName={' إنشاء رابط' + ' ' + (grade ? ('للصف ' + gradeConstants.find(g => g.index === grade)?.name) : '')}
+                fullWidth={true} btnName={' إنشاء رابط' + ' ' + (grade ? ('للصف ' + grades.find(g => g.index === grade)?.name) : '')}
                 component={<CreateTag setReset={setReset} defaultGrade={grade} />}
                 size='medium' isFilledHover={true} />
         </FlexRow>

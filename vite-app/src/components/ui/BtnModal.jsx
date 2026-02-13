@@ -24,7 +24,7 @@ function BtnModal({
                 <Box onClick={() => setOpen(true)}>
                     {btn}
                 </Box> : isFilledHover ?
-                    <FilledHoverBtn endIcon={icon} size={size} onClick={() => setOpen(true)} color={color}>
+                    <FilledHoverBtn endIcon={icon} size={size} onClick={() => setOpen(true)} colorm={color}>
                         {btnName}
                     </FilledHoverBtn>
                     :

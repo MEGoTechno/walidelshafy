@@ -4,10 +4,10 @@ import { getDateWithTime } from '../../settings/constants/dateConstants'
 import Section from '../../style/mui/styled/Section'
 import MeDatagrid from '../../tools/datagrid/MeDatagrid'
 import usePostData from '../../hooks/usePostData'
-import gradeConstants from '../../settings/constants/gradeConstants'
+ 
 import UserAvatar from '../users/UserAvatar'
 import { useDeleteQuestionMutation, useLazyGetQuestionsQuery, useLinkQuestionToTagsMutation, useUnlinkQuestionToTagsMutation, useUpdateQuestionMutation } from '../../toolkit/apis/questionsApi'
-import CreateQuestion from './CreateQuestions'
+
 import BtnModal from '../ui/BtnModal'
 import { useMemo, useState } from 'react'
 import ModalStyled from '../../style/mui/styled/ModalStyled'
@@ -23,10 +23,12 @@ import TabInfo from '../ui/TabInfo'
 import { IconButton } from '@mui/material'
 import BtnConfirm from '../ui/BtnConfirm'
 import AdminTagQs from './AdminTagQs'
+import CreateQuestionsBtns from './CreateQuestionsBtns'
+import useGrades from '../../hooks/useGrades'
 
-const exportObj = {
+const exportObj = (grades)=>({
     grade: (row) => {
-        return gradeConstants.find(grade => grade.index === row.grade)?.name
+        return grades.find(grade => grade.index === row.grade)?.name
     },
     isActive: (row) => {
         if (row.isActive) {
@@ -41,10 +43,11 @@ const exportObj = {
     updatedAt: (row) => {
         return getDateWithTime(row.updatedAt)
     }
-}
+})
 
 
 function AdminGetQuestions({ setSelectedQs, allSelected = false, filters = {}, isShowCreate = true, isShowHeader = false, colsIgnored = [], addColumns = [], disableAllActions = false, preReset = [] }) {
+    const { grades} = useGrades()
 
     const [reset, setReset] = useState(false)
 
@@ -105,7 +108,10 @@ function AdminGetQuestions({ setSelectedQs, allSelected = false, filters = {}, i
             field: 'title',
             headerName: 'عنوان السؤال',
             width: 200,
-            editable: true
+            editable: true,
+            renderCell: (params) => {
+                return <span dangerouslySetInnerHTML={{ __html: params.row.title }} />
+            }
         }, {
             field: 'hints',
             headerName: "ملاحظات",
@@ -124,7 +130,7 @@ function AdminGetQuestions({ setSelectedQs, allSelected = false, filters = {}, i
             width: 200,
             editable: true,
             filterable: true,
-            valueOptions: makeArrWithValueAndLabel(gradeConstants, { value: 'index', label: 'name' }),
+            valueOptions: makeArrWithValueAndLabel(grades, { value: 'index', label: 'name' }),
         }, {
             field: 'isActive',
             headerName: lang.IS_ACTIVE,
@@ -300,16 +306,12 @@ function AdminGetQuestions({ setSelectedQs, allSelected = false, filters = {}, i
             )}
 
             {isShowCreate && (
-                <BtnModal btnName={'انشاء سؤال' + ' ' + (activeTag ? activeTag.name : '')}
-                    component={<CreateQuestion defaultQuestion={{
-                        grade: activeTag?.grade ?? grade, tags: activeTag
-                    }} setReset={setReset} />}
-                    size='medium' isFilledHover={true} />
+                <CreateQuestionsBtns activeTag={activeTag} grade={grade} setReset={setReset} />
             )}
 
             <MeDatagrid
                 type={'crud'}
-                exportObj={exportObj} exportTitle={'تفاصيل المشاهدات'}
+                exportObj={exportObj(grades)} exportTitle={'تفاصيل المشاهدات'}
                 columns={modifiedCols} addColumns={addColumns} disableAllActions={disableAllActions}
                 reset={[reset, ...preReset, filterTags]}
                 loading={status.isLoading || updateStatus.isLoading || isLoading}

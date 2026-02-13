@@ -18,12 +18,11 @@ export default function ShowImg({ file, removeFile }) {
             <CardHeader
                 avatar={
                     <Avatar aria-label="recipe">
-                        R
+                        w
                     </Avatar>
                 }
-                title={
-                    file?.original_filename || file?.name && (
-                        <Typography variant='body2' sx={{ maxWidth: '100px' }}>
+                title={(file?.original_filename || file?.name) && (
+                        <Typography variant='body2' sx={{ maxWidth: '100px', textOverflow: 'ellipsis', overflow: 'hidden' }}>
                             {file?.original_filename || file?.name}
                         </Typography>
                     )}
@@ -36,7 +35,7 @@ export default function ShowImg({ file, removeFile }) {
             />
 
             {removeFile ?
-                <ModalStyled open={open} setOpen={setOpen} action={removeFile} />
+                <ModalStyled open={open} setOpen={setOpen} action={() => removeFile(file)} />
                 :
                 <ModalStyled open={open} setOpen={setOpen} />
             }

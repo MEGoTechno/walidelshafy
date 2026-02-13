@@ -25,7 +25,8 @@ const CourseModel = require("./models/CourseModel")
 const LectureModel = require("./models/LectureModel")
 const ChapterModel = require("./models/ChapterModel")
 
-
+const GradeModel = require("./models/GradeModel")
+const gradeConstants = require("./tools/constants/gradeConstants")
 // config
 // app.set('trust proxy', 'loopback');
 dotenv.config()
@@ -52,8 +53,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: true }))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json({limit: '3mb'}))
+app.use(bodyParser.urlencoded({ extended: true ,limit: '3mb'}))
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(device.capture());
@@ -61,12 +62,12 @@ app.use(device.capture());
 app.use('/api/get-ip', (req, res, next) => {
     // req.ip === req.socket.remoteAddress if proxy trust not 1 (loopback)
     // req.headers['x-forwarded-for'] === req.headers['x-real-ip']
-    console.log('the ip ===>', req.ip)
-    console.log('X-remote-ip:', req.socket.remoteAddress);
-    console.log('===')
-    console.log('X-Forwarded-For:', req.headers['x-forwarded-for']);
-    console.log('X-real-ip:', req.headers['x-real-ip']);
-    console.log('##################---##############')
+    // console.log('the ip ===>', req.ip)
+    // console.log('X-remote-ip:', req.socket.remoteAddress);
+    // console.log('===')
+    // console.log('X-Forwarded-For:', req.headers['x-forwarded-for']);
+    // console.log('X-real-ip:', req.headers['x-real-ip']);
+    // console.log('##################---##############')
 
     res.json({
         msg: 'done here',
@@ -135,7 +136,12 @@ app.use('/api', require('./routes/APIS'))
 // for errors 
 app.use(notFound)
 app.use(errorrHandler)
-
+const fixGrades = async () => {
+    //gradesTags compo
+    //grades folder and page
+    const grades = await GradeModel.insertMany(gradeConstants)
+    console.log('done ==', grades)
+}
 
 const connectDb = async () => {
     try {

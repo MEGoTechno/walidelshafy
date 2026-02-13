@@ -43,7 +43,7 @@ export default function ShowFileSettings({ file, removeFile }) {
     return (
         <FlexColumn>
             <Alert severity='error'>sorry, un supported file</Alert>
-            <Button onClick={removeFile}>ازاله</Button>
+            <Button variant='outlined' color='error' onClick={removeFile}>ازاله الملف</Button>
         </FlexColumn>
     );
 }
