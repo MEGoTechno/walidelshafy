@@ -22,7 +22,7 @@ function Grades() {
             <Box>
                 <Grid>
                     {grades?.map((grade, i) => (
-                        <CardHover key={i} img={grade.img} title={grade.name} desc={grade.description} to={'/grades/' + grade.index} />
+                        <CardHover key={i} img={grade.image?.url} title={grade.name} desc={grade.description} to={'/grades/' + grade.index} />
                     ))}
                 </Grid>
             </Box>

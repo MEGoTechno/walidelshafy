@@ -53,7 +53,7 @@ function GradeHeader({ gradeId }) {
         , [gradeId])
 
     const gradeImage = useMemo(() =>
-        filterArrWithValue(grades, { key: 'index', value: Number(gradeId) }, true).img
+        filterArrWithValue(grades, { key: 'index', value: Number(gradeId) }, true).image?.url
         , [gradeId])
 
 
