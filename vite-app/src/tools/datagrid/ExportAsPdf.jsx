@@ -4,6 +4,7 @@ import { memo, useState } from 'react'
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { amiriFont } from './Amiri-Regular-normal';
+import { lang } from '../../settings/constants/arlang';
 // import { amiriFont } from './AmiriQuran-Regular-normal';
 // import { myFont } from './Rubik-Regular-normal';
 // import { rubikRegular } from './Rubik-Regular-normal';
@@ -11,7 +12,7 @@ import { amiriFont } from './Amiri-Regular-normal';
 function ExportAsPdf({
     fetchFc, sort = {}, filter = {},
     columns, rows,
-    exportObj = {}, exportTitle = 'مرحبا بكم في تقرير مستر وليد عبدالشافي', paginationModel = false
+    exportObj = {}, exportTitle = `مرحبا بكم في تقرير ${lang.LOGO_AR}`, paginationModel = false
 }) {
 
     const [isLoading, setLoading] = useState(false)

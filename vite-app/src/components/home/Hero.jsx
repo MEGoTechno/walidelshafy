@@ -11,6 +11,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { Link } from 'react-router-dom'
 import WAnimation from './WAnimation'
+import { PHONE } from '../../settings/constants/arlang'
 
 function Hero() {
     const theme = useTheme()
@@ -97,7 +98,7 @@ function Hero() {
                             }} />
                         </IconButton>
 
-                        <IconButton component={Link} to={"https://api.whatsapp.com/send?phone=2001011301848"}>
+                        <IconButton component={Link} to={"https://api.whatsapp.com/send?phone=20" + PHONE}>
                             <FaWhatsapp style={{
                                 color: theme.palette.grey[0],
                             }} />

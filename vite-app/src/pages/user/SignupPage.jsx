@@ -10,6 +10,7 @@ import SignupForm from '../../components/auth/SignupForm'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import SEOHelmetAsync from '../../tools/SEOHelmetAsync'
+import { lang } from '../../settings/constants/arlang'
 
 
 const BUILD = "انشاء"
@@ -33,11 +34,12 @@ function SignupPage() {
         <Section sx={{ minHeight: '86vh' }}>
 
             <SEOHelmetAsync
-                title={'انشاء حساب - انشئ حسابك الان على منصه وليد الشافى'}
-                desc={"انشئ حسابك الان, وابدا رحلتك فى منصه وليد الشافى"}
-                url={"https://walidelshafy.com/signup"}
+                title={lang.SignUp.title}
+                desc={lang.SignUp.description}
+                url={lang.Website + "/signup"}
                 isSiteLink={true}
             />
+
             <FlexRow height={'100%'} justifyContent={'space-evenly'}>
 
                 {/* banner */}

@@ -7,6 +7,7 @@ import { useGetPrivaciesQuery } from '../../toolkit/apis/privacyApi'
 import LoaderSkeleton from '../../style/mui/loaders/LoaderSkeleton'
 import { FlexColumn } from '../../style/mui/styled/Flexbox'
 import SEOHelmetAsync from '../../tools/SEOHelmetAsync'
+import { lang } from '../../settings/constants/arlang'
 
 
 function PrivacyPage() {
@@ -18,11 +19,12 @@ function PrivacyPage() {
     return (
         <Section>
             <SEOHelmetAsync
-                title={'Privacy - السياسات الخاصه بمنصه وليد الشافى'}
-                desc={"كل التفاصيل الخاصه بمنصه وليد الشافى , بطل تضيع وقت وابدا يلا "}
-                url={"https://walidelshafy.com/privacy"}
+                title={lang.Privacy.title}
+                desc={lang.Privacy.description}
+                url={lang.Website + "/privacy"}
                 isSiteLink={true}
             />
+
             <BannerIcon title={'سياسات المنصه'} bgcolor='primary.main' icon={<IoIosCreate style={{
                 width: '3rem', height: '3rem', color: '#fff'
             }} />} />
