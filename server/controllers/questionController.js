@@ -136,7 +136,8 @@ const groq = process.env.groq
 const formatAI = expressAsyncHandler(async(req, res, next)=> {
     const { text } = req.body;
     try {
-
+ 
+        
     // ✅ Groq API - works immediately with free tier
     const response = await fetch(
       "https://api.groq.com/openai/v1/chat/completions",
