@@ -13,7 +13,7 @@ import { LiaSchoolSolid } from "react-icons/lia";
 import { CiBarcode } from "react-icons/ci";
 import { MdOutlineCurrencyPound, MdOutlineSubscriptions } from "react-icons/md";
 import { GiSecretBook } from "react-icons/gi";
-import { SiHashicorp } from "react-icons/si";
+
 import { FcPrivacy } from "react-icons/fc";
 import { RiEditCircleFill } from "react-icons/ri";
 import { MdWatchLater } from "react-icons/md";
@@ -72,6 +72,7 @@ import TestPage from "../pages/test/TestPage.js";
 import { isDevelop } from "../tools/isDevelop.js";
 import ManagePaymentsPage from "../pages/admin/PaymentsPage.jsx";
 import CoursesPage from "../pages/user/CoursesPage.jsx";
+import GradesManage from "../pages/admin/GradesManage.jsx";
 
 const GetQuestionsPage = lazy(() => import("../pages/admin/GetQuestionsPage"))
 
@@ -139,6 +140,9 @@ export const sidebarLinks = [
     }, {
         name: "إدارة المحتوى", icon: <SiGooglecampaignmanager360 size="22px" />, allowedTo: [user_roles.ADMIN, user_roles.SUBADMIN]
     }, {
+        name: "السنوات الدراسيه", icon: <SiGooglecampaignmanager360 size="22px" />, allowedTo: [user_roles.ADMIN, user_roles.SUBADMIN],
+        element: <GradesManage />,to: "/management/grades",
+    },{
         name: "إدارة الكورسات", icon: <FaSchool size="22px" />, to: "/management/courses", allowedTo: [user_roles.ADMIN, user_roles.SUBADMIN],
         element: <ManageCoursesPage />, id: 'coursesManage'
     }, {

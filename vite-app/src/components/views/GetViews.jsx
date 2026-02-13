@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import useLazyGetData from '../../hooks/useLazyGetData'
 import { lang } from '../../settings/constants/arlang'
-import { Alert, Box, Button, Typography } from '@mui/material'
+import { Alert, Box, Button  } from '@mui/material'
 import ModalStyled from '../../style/mui/styled/ModalStyled'
 import TabInfo from '../../components/ui/TabInfo'
 import { formatDuration, getDateWithTime, getFullDate } from '../../settings/constants/dateConstants'
 import Section from '../../style/mui/styled/Section'
 import MeDatagrid from '../../tools/datagrid/MeDatagrid'
 import usePostData from '../../hooks/usePostData'
-import gradeConstants from '../../settings/constants/gradeConstants'
+
 import { makeArrWithValueAndLabel } from '../../tools/fcs/MakeArray'
 import { useDeleteViewMutation, useLazyGetViewsQuery, useUpdateViewMutation } from '../../toolkit/apis/videosStatisticsApi'
 import Separator from '../ui/Separator'
@@ -17,10 +17,11 @@ import DataWith3Items from '../ui/DataWith3Items'
 import { FlexColumn } from '../../style/mui/styled/Flexbox'
 import UserAvatar from '../users/UserAvatar'
 import { user_roles } from '../../settings/constants/roles'
+import useGrades from '../../hooks/useGrades'
 
-const exportObj = {
+const exportObj = grades => ({
     grade: (row) => {
-        return gradeConstants.find(grade => grade.index === row.grade)?.name
+        return grades.find(grade => grade.index === row.grade)?.name
     },
     isActive: (row) => {
         if (row.isActive) {
@@ -47,11 +48,11 @@ const exportObj = {
     price: (row) => {
         return row.price + ' جنيه'
     },
-}
+})
 
 
 function GetViewsCompo({ lectureId, courseId, role, refetchViews, userId }) {
-
+    const { grades } = useGrades()
 
     const [viewsCount, setViewsCount] = useState('')
 
@@ -231,7 +232,7 @@ function GetViewsCompo({ lectureId, courseId, role, refetchViews, userId }) {
             width: 200,
             filterable: false,
             sortable: false,
-            valueOptions: makeArrWithValueAndLabel(gradeConstants, { value: 'index', label: 'name' }),
+            valueOptions: makeArrWithValueAndLabel(grades , { value: 'index', label: 'name' }),
         }, {
             field: 'price',
             headerName: 'سعر الكورس الحالى',
@@ -259,7 +260,7 @@ function GetViewsCompo({ lectureId, courseId, role, refetchViews, userId }) {
             <TabInfo count={viewsCount} title={'عدد المشاهدات'} i={1} />
             <MeDatagrid
                 type={'crud'}
-                exportObj={exportObj} exportTitle={'تفاصيل المشاهدات'}
+                exportObj={exportObj(grades)} exportTitle={'تفاصيل المشاهدات'}
                 columns={columns}
                 loading={status.isLoading || updateStatus.isLoading || isLoading}
                 fetchFc={fetchFc} reset={[courseId, window.location.href]} deleteFc={removeFc} //updateFc={updateFc} 

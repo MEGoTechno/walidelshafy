@@ -12,8 +12,8 @@ import ExamCard from '../exam/ExamCard'
 import Separator from '../ui/Separator'
 import SectionIcon from '../content/SectionIcon'
 import { useSelector } from 'react-redux'
-import TabInfo from '../ui/TabInfo'
 import { formatDuration } from '../../settings/constants/dateConstants'
+import TabInfo from '../ui/TabInfo'
 import InfoText from '../ui/InfoText'
 
 function LectureBody({ lecture, lectureIndex, courseId }) {
@@ -39,7 +39,6 @@ function LectureBody({ lecture, lectureIndex, courseId }) {
                         </Avatar>
                     )}
                     <Typography variant='subtitle1' sx={{ textAlign: 'center', width: '100%', color: 'neutral.0', mr: '40px', textDecoration: 'underline' }}>{lecture.name}</Typography>
-
                 </FlexRow>
             </FlexColumn>
 
@@ -66,6 +65,7 @@ function LectureBody({ lecture, lectureIndex, courseId }) {
                 }
                 <InfoText description={lecture.name} label={'الحصه'} />
                 <InfoText description={lecture.description} label={'الوصف'} />
+                <Typography variant='body2'></Typography>
                 <Separator sx={{ maxWidth: '300px' }} />
             </FlexColumn>
         </Box>

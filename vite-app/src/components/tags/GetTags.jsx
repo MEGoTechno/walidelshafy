@@ -5,7 +5,7 @@ import MeDatagrid from '../../tools/datagrid/MeDatagrid'
 import { getDateWithTime, getFullDate } from '../../settings/constants/dateConstants'
 import { lang } from '../../settings/constants/arlang'
 import { makeArrWithValueAndLabel } from '../../tools/fcs/MakeArray'
-import gradeConstants from '../../settings/constants/gradeConstants'
+
 
 import TabInfo from '../ui/TabInfo'
 
@@ -27,11 +27,12 @@ import GetCoupons from '../coupons/GetCoupons'
 import Users from '../all/Users'
 import { useAddToUserMutation } from '../../toolkit/apis/usersApi'
 import { IoIosAddCircleOutline } from 'react-icons/io'
+import useGrades from '../../hooks/useGrades'
 
 
-const exportObj = {
+const exportObj = (grades) => ({
     grade: (row) => {
-        return gradeConstants.find(grade => grade.index === row.grade)?.name
+        return grades.find(grade => grade.index === row.grade)?.name
     },
     isActive: (row) => {
         if (row.isActive) {
@@ -46,10 +47,11 @@ const exportObj = {
     updatedAt: (row) => {
         return getDateWithTime(row.updatedAt)
     }
-}
+})
 
 function GetTags({ filters = {}, setSelectedTags, preReset = [], addColumns, disabledActions = {}, disableAllActions, colsIgnored = [], isShowCreate = true, defaultGrade }) {
     const [reset, setReset] = useState(false)
+    const { grades } = useGrades()
 
     const [getData, status] = useLazyGetTagsQuery()
     const [getTags] = useLazyGetData(getData)
@@ -116,7 +118,7 @@ function GetTags({ filters = {}, setSelectedTags, preReset = [], addColumns, dis
             type: 'singleSelect',
             width: 200,
             editable: true,
-            valueOptions: makeArrWithValueAndLabel(gradeConstants, { value: 'index', label: 'name' }),
+            valueOptions: makeArrWithValueAndLabel(grades, { value: 'index', label: 'name' }),
         }, {
             field: "price",
             headerName: 'سعر الرابط',
@@ -386,7 +388,7 @@ function GetTags({ filters = {}, setSelectedTags, preReset = [], addColumns, dis
             <MeDatagrid
                 type={'crud'}
                 reset={[reset, ...preReset]}
-                exportObj={exportObj} exportTitle={'الروابط'}
+                exportObj={exportObj(grades)} exportTitle={'الروابط'}
                 columns={modifiedCols} addColumns={addColumns}
                 // loading={status.isLoading || updateStatus.isLoading || isLoading}
                 allStatuses={statuses}

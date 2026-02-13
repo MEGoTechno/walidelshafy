@@ -1,14 +1,15 @@
+import useGrades from "../../hooks/useGrades"
 import { lang } from "../../settings/constants/arlang"
 import { getFullDate } from "../../settings/constants/dateConstants"
-import governments from "../../settings/constants/governments"
-import gradeConstants from "../../settings/constants/gradeConstants"
+
 import { useLazyGetCoursesQuery } from "../../toolkit/apis/coursesApi"
 import FullComponent from "../../tools/datagrid/FullComponent"
-import { handelObjsOfArr, makeArrWithValueAndLabel } from "../../tools/fcs/MakeArray"
+import { makeArrWithValueAndLabel } from "../../tools/fcs/MakeArray"
 import TabInfo from "../ui/TabInfo"
 import UserAvatar from "../users/UserAvatar"
 
 function Courses({ filters, viewFc, updateFc, deleteFc, massActions, reset,selections,addColumns }) {
+    const { grades } = useGrades()
 
     const columns = [
         {
@@ -37,7 +38,7 @@ function Courses({ filters, viewFc, updateFc, deleteFc, massActions, reset,selec
             headerName: lang.GRADE,
             type: 'singleSelect',
             width: 200,
-            valueOptions: handelObjsOfArr(gradeConstants, { value: 'index', label: 'name' }),
+            valueOptions: makeArrWithValueAndLabel(grades, { value: 'index', label: 'name' }),
         },  {
             field: 'createdAt',
             headerName: 'تاريخ الانشاء',

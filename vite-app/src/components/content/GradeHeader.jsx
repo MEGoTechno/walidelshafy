@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import  { useEffect, useMemo, useState } from 'react'
 import HeaderContent from '../ui/HeaderContent'
 
 import { useLazyGetCoursesCountQuery, useLazyGetLecturesCountQuery, useLazyGetUnitsCountQuery } from '../../toolkit/apis/statisticsApi'
@@ -6,10 +6,12 @@ import useLazyGetData from '../../hooks/useLazyGetData'
 
 import { lang } from '../../settings/constants/arlang'
 import { filterArrWithValue } from '../../tools/fcs/MakeArray'
-import gradeConstants from '../../settings/constants/gradeConstants'
+
 import { CoursesIcon, UnitsIcon, VidsIcon2 } from '../ui/svg/ContentSvgs'
+import useGrades from '../../hooks/useGrades'
 
 function GradeHeader({ gradeId }) {
+    const { grades } = useGrades()
 
 
     const [unitsCount, setUnitsCount] = useState('يتم التحميل ...!')
@@ -43,15 +45,15 @@ function GradeHeader({ gradeId }) {
 
 
     const gradeTitle = useMemo(() =>
-        filterArrWithValue(gradeConstants, { key: 'index', value: Number(gradeId) }, true).name
+        filterArrWithValue(grades, { key: 'index', value: Number(gradeId) }, true).name
         , [gradeId])
 
     const gradeDescription = useMemo(() =>
-        filterArrWithValue(gradeConstants, { key: 'index', value: Number(gradeId) }, true).description
+        filterArrWithValue(grades, { key: 'index', value: Number(gradeId) }, true).description
         , [gradeId])
 
     const gradeImage = useMemo(() =>
-        filterArrWithValue(gradeConstants, { key: 'index', value: Number(gradeId) }, true).img
+        filterArrWithValue(grades, { key: 'index', value: Number(gradeId) }, true).img
         , [gradeId])
 
 

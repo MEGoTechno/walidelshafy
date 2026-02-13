@@ -136,13 +136,6 @@ app.use('/api', require('./routes/APIS'))
 // for errors 
 app.use(notFound)
 app.use(errorrHandler)
-const fixGrades = async () => {
-    //gradesTags compo
-    //grades folder and page
-    const grades = await GradeModel.insertMany(gradeConstants)
-    console.log('done ==', grades)
-}
-
 const connectDb = async () => {
     try {
         await mongoose.connect(DB_URI)

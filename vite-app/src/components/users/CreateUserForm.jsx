@@ -1,5 +1,6 @@
 import MakeForm from '../../tools/makeform/MakeForm'
-import gradeConstants from '../../settings/constants/gradeConstants'
+import * as Yup from "yup"
+
 import governments from '../../settings/constants/governments'
 
 // icons
@@ -18,11 +19,12 @@ import { useCreateUserMutation } from '../../toolkit/apis/usersApi';
 import usePostData from '../../hooks/usePostData'
 import { makeArrWithValueAndLabel } from '../../tools/fcs/MakeArray';
 import { user_roles } from '../../settings/constants/roles';
+import useGrades from '../../hooks/useGrades';
 
-import * as Yup from "yup"
 
 function CreateUserForm({ setReset }) {
-
+    const {grades} = useGrades()
+  
   const [sendData, status] = useCreateUserMutation()
   const [createUser] = usePostData(sendData)
 
@@ -71,7 +73,7 @@ function CreateUserForm({ setReset }) {
       name: 'grade',
       label: lang.GRADE,
       type: 'select',
-      options: makeArrWithValueAndLabel(gradeConstants, { value: 'index', label: 'name' }),
+      options: makeArrWithValueAndLabel(grades, { value: 'index', label: 'name' }),
       icon: <IoSchool color='green' />,
       validation: Yup.string().required(lang.REQUERIED)
 

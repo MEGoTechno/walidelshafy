@@ -8,15 +8,16 @@ import useLazyGetData from '../../hooks/useLazyGetData'
 import { useLazyGetUsersQuery } from '../../toolkit/apis/usersApi'
 import Separator from '../../components/ui/Separator'
 import { red } from '@mui/material/colors'
-import gradeConstants from '../../settings/constants/gradeConstants'
+
 import { makeArrWithValueAndLabel } from '../../tools/fcs/MakeArray'
 import { user_roles } from '../../settings/constants/roles'
 import UserAvatar from '../users/UserAvatar'
+import useGrades from '../../hooks/useGrades'
 
 
-const exportObj = {
+const exportObj = grades => ({
     grade: (row) => {
-        return gradeConstants.find(grade => grade.index === row.grade)?.name
+        return grades.find(grade => grade.index === row.grade)?.name
     },
     isActive: (row) => {
         if (row.isActive) {
@@ -25,10 +26,11 @@ const exportObj = {
             return 'غير فعال'
         }
     }
-}
+})
 
 
 function GetStudentsNotViewed({ lectureId, lectureName, course, role }) { //grade,
+    const { grades } = useGrades()
 
     const [notViewedCount, setNotViewedCount] = useState('loading ...')
 
@@ -104,7 +106,7 @@ function GetStudentsNotViewed({ lectureId, lectureName, course, role }) { //grad
             type: 'singleSelect',
             width: 200,
             filterable: false,
-            valueOptions: makeArrWithValueAndLabel(gradeConstants, { value: 'index', label: 'name' }),
+            valueOptions: makeArrWithValueAndLabel(grades, { value: 'index', label: 'name' }),
         },
     ]
 
@@ -114,7 +116,7 @@ function GetStudentsNotViewed({ lectureId, lectureName, course, role }) { //grad
             <Separator sx={{ width: '200px' }} color={red[500]} />
             <MeDatagrid
                 type={'crud'}
-                exportObj={exportObj} exportTitle={'عدد الطلاب الذين لم يشاهدوا المحاضره' + " : " + lectureName}
+                exportObj={exportObj(grades)} exportTitle={'عدد الطلاب الذين لم يشاهدوا المحاضره' + " : " + lectureName}
                 columns={columns} fetchFc={fetchFc} loading={status.isLoading}
                 editing={
                     {

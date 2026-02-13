@@ -1,15 +1,16 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import TabsStyled from '../../style/mui/styled/TabsStyled'
-import { filterArrWithValue, handelObjsOfArr, makeArrWithValueAndLabel } from '../../tools/fcs/MakeArray'
-import gradeConstants from '../../settings/constants/gradeConstants'
+import { handelObjsOfArr } from '../../tools/fcs/MakeArray'
 
 import LoaderSkeleton from '../../style/mui/loaders/LoaderSkeleton';
 import { lang } from '../../settings/constants/arlang';
+import useGrades from '../../hooks/useGrades';
 
-function GradesTabs({ setGrade, counts = 'null', grade, removeAll = false }) {
+function GradesTabs({ setGrade, counts = {}, grade, removeAll = false }) {
+    const { grades: gConst } = useGrades()
 
     // const [value, setValue] = React.useState(grade);
-    const addedCounts = useMemo(() => gradeConstants.map((g, i) => ({ ...g, count: counts[i + 1]?.count })), [counts])
+    const addedCounts = useMemo(() => gConst.map((g, i) => ({ ...g, count: counts[i + 1]?.count })), [counts])
     const grades = handelObjsOfArr(addedCounts, { value: 'index', label: 'name', count: 'count' })
     const [gradeOptions, setGradeOptions] = useState([])
 
