@@ -24,42 +24,6 @@ router.use(
   }),
 );
 
-const tokenHuggingFace = "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";
-
-router.post("/ai/format-failed", async (req, res) => {
-  try {
-    const text = req.body;
-
-    const hfRes = await fetch(
-      "https://router.huggingface.co/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${tokenHuggingFace}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "google/gemma-7b-it",
-          messages: [
-            {
-              role: "user",
-              content: `Convert this text into JSON: { "title": "", "hints": "", "image": "", "rtOptionId": "", "options": [{"title": ""}] } Text: ${text} Return JSON only.`,
-            },
-          ],
-          max_tokens: 500,
-          temperature: 0.1,
-        }),
-      },
-    );
-
-    console.log("hfRes ==>", hfRes);
-    const data = await hfRes.json();
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 router.post(
   "/",
   upload.single("file"),
