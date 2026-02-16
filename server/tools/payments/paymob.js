@@ -39,6 +39,7 @@ async function makeNewPaymob({ price, userInfo, successUrl }, payment) { //1st s
             payment_methods: payment.paymobIntegrationIds || [
                 Number(process.env.PAYMOB_INTEGRATION_ID),
                 Number(process.env.PAYMOB_INTEGRATION_WALLET),
+                // Number(process.env.PAYMOB_INTEGRATION_KIOSK),
             ],
             items: userInfo.items,
             billing_data: billingData,
