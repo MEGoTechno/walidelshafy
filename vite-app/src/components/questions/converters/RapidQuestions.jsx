@@ -20,7 +20,7 @@ function RapidQuestions({ title, appendQuestions }) {
             name: "numbers",
             label: "عدد الاسئله",
             type: "number",
-            helperText: 'قم باختيار الصور ثم سيتم انشاء عدد اسئله متطابقه للاعداد طبقا لعدد الصور واذا لم يوجد صور يتم انشاء عدد اسئله طبقا للرقم هنا واذا كان هناك صور يتم طرح عدد الاسئله ليتم انشاء العدد المناسب',
+            helperText: 'اضافه عدد اسئله بالاضافه الي اسئله الصور',
             column: 1, row: 0
         },
         {
@@ -104,7 +104,7 @@ function RapidQuestions({ title, appendQuestions }) {
 
             points: values.points,
             isShuffle: values.isShuffle,
-            options: values.options.flat(),
+            options: (values.options && Array.isArray(values.options)) ? values.options.flat() : [],
             clarifyUrl: values.clarifyUrl, clarifyText: values.clarifyText
         }
         const questionsWitchImages = values.images ? values.images.map((img) => {
@@ -113,11 +113,9 @@ function RapidQuestions({ title, appendQuestions }) {
                 image: img,
             }
         }) : []
-        const restLength = values.numbers - questionsWitchImages.length && values.numbers - questionsWitchImages.length
 
-        const mergedQuestions = values.numbers && restLength && Array.from({ length: restLength }, () => ({ ...staticConfigs }));
+        const mergedQuestions = values.numbers && Array.from({ length: values.numbers }, () => ({ ...staticConfigs }));
         const questions = [...questionsWitchImages, ...mergedQuestions]
-
         appendQuestions(questions)
     }
 
