@@ -76,6 +76,7 @@ import CoursesPage from "../pages/user/CoursesPage.jsx";
 import GradesManage from "../pages/admin/GradesManage.jsx";
 import { TbReportSearch } from "react-icons/tb";
 import ErrorsPage from "../pages/admin/ErrorsPage.jsx";
+import CommercialUsers from "../pages/admin/CommercialUsers.jsx";
 
 const GetQuestionsPage = lazy(() => import("../pages/admin/GetQuestionsPage"))
 
@@ -209,6 +210,10 @@ const otherLinks = [
     {
         index: true, element: <HomePage />,
 
+    }, {
+        path: '/commercial', element: <ProtectedRoute allowedTo={[user_roles.ADMIN, user_roles.SUBADMIN]}>
+            <CommercialUsers />
+        </ProtectedRoute>
     }, {
         path: '/errors', element: <ProtectedRoute allowedTo={[user_roles.ADMIN, user_roles.SUBADMIN]}>
             <ErrorsPage />

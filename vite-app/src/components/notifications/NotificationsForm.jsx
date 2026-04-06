@@ -10,7 +10,7 @@ import { memo, useState } from 'react'
 
 import { Box } from '@mui/material'
 
-function NotificationsForm({ setNotifications, resetFc, user, users = [], matches, isExcluded = false }) {
+function NotificationsForm({ setNotifications, resetFc, user, users = [], matches, isExcluded = false, isCommercial = false }) {
 
     // const [sendData, status] = useCreateNotificationMutation()
     const [sendData, status] = useSendToManyMutation()
@@ -53,7 +53,7 @@ function NotificationsForm({ setNotifications, resetFc, user, users = [], matche
         //Users = ExcludedUsers
         // match => isExcluded = true
         // console.log({ ...matches, ...values, isExcluded })
-        const res = await sendData({ ...matches, ...values, isExcluded })
+        const res = await sendData({ ...matches, ...values, isExcluded, isCommercial })
         if (setNotifications) {
             setNotifications(pre => {
                 return [...pre, res]

@@ -28,6 +28,9 @@ const senderByMethod = async ({ method, user, subject, message, ...others }) => 
                 await sendUserReport({ user, caption: handledMsgWhatsapp, ...others })
                 break;
         }
+        if (others.isCommercial) {
+            return true
+        }
         await NotificationModel.insertOne({
             user: user._id, subject, message, method,
         })
