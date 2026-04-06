@@ -6,12 +6,15 @@ import { getDateWithTime, getFullDate } from "../../settings/constants/dateConst
 import FullComponent from "../../tools/datagrid/FullComponent"
 import { useDeleteInvoiceMutation, useDeleteManyInvoicesMutation, useInvoiceWebhookMutation, useLazyGetInvoicesQuery, useUpdateInvoiceMutation } from "../../toolkit/apis/invoicesApi"
 import BtnConfirm from "../ui/BtnConfirm"
+
 import { HiArrowLeft, HiExclamationCircle } from "react-icons/hi"
 import { Button } from "@mui/material"
 import { makeArrWithValueAndLabel } from "../../tools/fcs/MakeArray"
 import products from "../../settings/constants/products"
 import statusConstants from "../../settings/constants/status"
 import usePostData from "../../hooks/usePostData"
+import BtnModal from "../ui/BtnModal"
+import CompleteInvoice from "../payment/CompleteInvoice"
 
 const exportObj = {
     grade: (row) => {
@@ -75,8 +78,22 @@ function Invoices() {
             width: 200
         }, {
             field: 'sendFrom',
-            headerName: 'رقم او اسم حساب التحويل',
+            headerName: 'تم الارسال من',
             width: 200
+        }, {
+            field: 'action',
+            headerName: 'استكمال الدفع',
+            type: "actions",
+            width: 200,
+            renderCell: (params) => {
+                return (
+                    <BtnModal
+                        disabled={params.row.status !== statusConstants.PENDING}
+                        btnName={params.row.status === statusConstants.PENDING ? "استكمال الدفع" : params.row.status}
+                        component={<CompleteInvoice invoice={params.row} />}
+                    />
+                )
+            }
         }, {
             field: 'status',
             headerName: lang.IS_ACTIVE,
@@ -86,7 +103,7 @@ function Invoices() {
                 return (
                     <TabInfo
                         count={params.row.status}
-                        i={(params.row.status === statusConstants.FAILED || params.row.status === statusConstants.REJECTED) ? 3 : params.row.status === statusConstants.PENDING ? 2 : 1} />
+                        i={(params.row.status === statusConstants.PAID ? 1 : params.row.status === statusConstants.PENDING ? 2 : 3)} />
                 )
             }
         }, {
@@ -125,9 +142,10 @@ function Invoices() {
 
             renderCell: (params) => {
                 const isAccepted = params.row.status === statusConstants.PAID
+                const isCancelled = params.row.status === statusConstants.CANCELLED
                 return (
-                    <BtnConfirm btn={<Button onClick={() => acceptWebhook({ ...params.row, status: statusConstants.PAID }, params.api)} variant="contained" color="success" disabled={isAccepted} endIcon={<HiArrowLeft />}>
-                        {isAccepted ? 'تم قبوله' : 'قبول الطلب'}
+                    <BtnConfirm btn={<Button onClick={() => acceptWebhook({ ...params.row, status: statusConstants.PAID }, params.api)} variant="contained" color="success" disabled={isAccepted || isCancelled} endIcon={<HiArrowLeft />}>
+                        {isAccepted ? 'تم قبوله' :isCancelled ? 'هذا الطالب ملغي' : 'قبول الطلب'}
                     </Button>} />
                 )
             }
@@ -203,8 +221,3 @@ function Invoices() {
 }
 
 export default Invoices
-//01552788165
-//30703101201509
-//elawadym44@gmail.com
-//1645999
-//15496667

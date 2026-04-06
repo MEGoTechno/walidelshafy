@@ -1,4 +1,4 @@
-
+import { Button } from "@mui/material"
 import CreateGrade from "../../components/grades/CreateGrade"
 import BtnModal from "../../components/ui/BtnModal"
 import TitleWithDividers from "../../components/ui/TitleWithDividers"
@@ -7,7 +7,7 @@ import { lang } from "../../settings/constants/arlang"
 import Section from "../../style/mui/styled/Section"
 import { useDeleteGradeMutation, useLazyGetGradesQuery, useUpdateGradeMutation } from "../../toolkit/apis/gradesApi"
 import FullComponent from "../../tools/datagrid/FullComponent"
-
+import ModalStyled from "../../style/mui/styled/ModalStyled"
 import { useState } from "react"
 import UpdateGrade from "../../components/grades/UpdateGrade"
 
@@ -30,7 +30,8 @@ function GradesManage() {
         }, {
             field: 'index',
             headerName: 'index',
-            editable: true
+            editable: true,
+            type: 'number'
         }, {
             field: 'name',
             headerName: 'الاسم',
@@ -40,7 +41,6 @@ function GradesManage() {
             headerName: 'الوصف',
             flex: 1,
             editable: true
-
 
         }, {
             field: 'isActive',

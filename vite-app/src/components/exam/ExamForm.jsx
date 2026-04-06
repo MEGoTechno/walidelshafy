@@ -1,12 +1,13 @@
 import MakeForm from '../../tools/makeform/MakeForm'
 import * as Yup from 'yup'
+import { v4 as uuidv4 } from 'uuid'
 import sectionConstants from '../../settings/constants/sectionConstants'
 import { lang } from '../../settings/constants/arlang'
 import dayjs from 'dayjs'
 import LinkToQuestion from './LinkToQuestion'
 import { memo } from 'react'
 import examMethods, { getExamMethod } from '../../settings/constants/examMethods'
-
+import { isDevelop } from '../../tools/isDevelop'
 import { durationRegex } from '../content/LectureForm'
 import useQuestionsSchema from '../questions/useQuestionsSchema'
 import { useField } from 'formik'
@@ -26,6 +27,7 @@ const TimeInput = ({ value, input }) => {
 function ExamForm({ lecture, status, onSubmit }) {
     const questionsSchema = useQuestionsSchema({ grade: lecture.grade, questions: lecture?.exam?.questions ?? [] })
 
+    //lecture info
     const lectureInfoInputs = [
         {
             name: 'sectionType',

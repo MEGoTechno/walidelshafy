@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { useGridApiRef } from '@mui/x-data-grid'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -12,9 +12,9 @@ import { getDateWithTime, getFullDate } from '../../settings/constants/dateConst
 import Section from "../../style/mui/styled/Section"
 import ModalStyled from '../../style/mui/styled/ModalStyled'
 import { FilledHoverBtn } from '../../style/buttonsStyles'
-import { FlexColumn } from '../../style/mui/styled/Flexbox'
+import { FlexBetween, FlexColumn } from '../../style/mui/styled/Flexbox'
 
-import { makeArrWithValueAndLabel } from '../../tools/fcs/MakeArray'
+import { handelObjsOfArr, makeArrWithValueAndLabel } from '../../tools/fcs/MakeArray'
 import MeDatagrid from '../../tools/datagrid/MeDatagrid'
 
 import { useLazyGetUsersCountQuery } from '../../toolkit/apis/statisticsApi'
@@ -30,9 +30,11 @@ import UserAvatar from '../../components/users/UserAvatar';
 
 import UserShowTable from '../../components/users/UserShowTable';
 import useGrades from '../../hooks/useGrades';
+import BtnModal from '../../components/ui/BtnModal';
+import NotificationsForm from '../../components/notifications/NotificationsForm';
 // import CreateUser from '../../components/users/CreateUser'
 
-const exportObj = grades => ({
+const exportObj = (grades) => ({
     grade: (row) => {
         return grades.find(grade => grade.index === row.grade)?.name
     },
@@ -52,8 +54,9 @@ const exportObj = grades => ({
 })
 
 
-function GetUsersPage({ setExcludedUsers, isShowTitle = true, courses, isShowGrades = true }) {
+function GetUsersPage({ setExcludedUsers, isShowTitle = true, courses, isShowGrades = true, isShowCreate = true, setUsersNumber }) {
     const { grades } = useGrades()
+
     const navigate = useNavigate()
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -71,12 +74,15 @@ function GetUsersPage({ setExcludedUsers, isShowTitle = true, courses, isShowGra
     //get users
     const [reset, setReset] = useState(false)
     const [getData, { isLoading }] = useLazyGetUsersQuery()
-    const [getUsers] = useLazyGetData(getData)
+    const [getUsers] = usePostData(getData)
 
     const fetchFc = async (params) => {
-        const res = await getUsers({ ...params, grade: grade || 'all', courses }, false)
-        const data = { values: res.users, count: res.count }
-        return data
+        const data = await getUsers({ ...params, grade: grade || 'all', courses }, false)
+        if (setUsersNumber) {
+            setUsersNumber(data.count)
+        }
+        const res = { values: data.users, count: data.count } //res.users
+        return res
     }
 
     //get users count
@@ -93,7 +99,7 @@ function GetUsersPage({ setExcludedUsers, isShowTitle = true, courses, isShowGra
             setGradeCounts(counts)
         }
         trigger()
-    }, [])
+    }, [grades])
 
 
     const columns = [
@@ -144,6 +150,14 @@ function GetUsersPage({ setExcludedUsers, isShowTitle = true, courses, isShowGra
             field: 'familyPhone',
             headerName: lang.FAMILY_PHONE,
             width: 200
+        }, {
+            field: 'sendNotification',
+            headerName: 'ارسال اشعار',
+            type: 'actions',
+            width: 200,
+            renderCell: (p) => {
+                return <BtnModal btnName={'ارسال رساله'} component={<NotificationsForm user={p.row} />} />
+            }
         }, {
             field: 'wallet',
             headerName: lang.WALLET,
@@ -303,6 +317,16 @@ function GetUsersPage({ setExcludedUsers, isShowTitle = true, courses, isShowGra
     const [deleteMany, deleteManyStatus] = useDeleteManyUsersMutation()
     const [deleteManyUsers] = usePostData(deleteMany)
 
+    const massActions = [{
+        Component: ({ selectedIds = [] }) => {
+
+            return <BtnModal
+                btn={'ارسال الي : ' + selectedIds.length + ' ' + 'مستخدم'}
+                component={<NotificationsForm users={selectedIds} />}
+            />
+        }
+    }]
+
     return (
         <Section>
             {isShowTitle && (
@@ -312,17 +336,17 @@ function GetUsersPage({ setExcludedUsers, isShowTitle = true, courses, isShowGra
             )}
 
             <FlexColumn sx={{ width: '100%' }}>
-                <FilledHoverBtn onClick={() => setOpen(true)} >{lang.CREATE_USER}</FilledHoverBtn>
+                {isShowCreate && <FilledHoverBtn onClick={() => setOpen(true)} >{lang.CREATE_USER}</FilledHoverBtn>}
             </FlexColumn>
+
             {isShowGrades && (
                 <GradesTabs grade={grade} setGrade={changeGrade} counts={gradesCounts} />
             )}
 
-
             <MeDatagrid
                 apiRef={apiRef}
                 reset={[reset, grade]}
-                setSelection={setExcludedUsers}
+                setSelection={setExcludedUsers} massActions={massActions}
                 type={'crud'} exportObj={exportObj(grades)} exportTitle={lang.USERS_PAGE} analysisFc={analysisUsers}
                 columns={columns} allStatuses={[deleteManyStatus]} deleteMany={deleteManyUsers}
                 viewFc={viewFc} fetchFc={fetchFc} updateFc={updateFc} deleteFc={deleteFc}

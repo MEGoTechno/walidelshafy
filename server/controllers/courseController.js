@@ -25,7 +25,7 @@ const { convertToMs } = require("../tools/dateFc");
 
 const coursesParams = (query) => {
     return [
-        { key: "grade", value: query.grade, type: "number" },
+        { key: "grade", value: query.grade },
         { key: "name", value: query.name },
         { key: "description", value: query.description },
         { key: "price", value: query.price },
@@ -232,6 +232,7 @@ const lecturePassed = expressAsyncHandler(async (req, res, next) => {
 //@desc get exam for doing it
 //@routes Get /content/courses/:id/exams/:examId
 //@access Private   ==> user
+// Deprecated
 const getExam = expressAsyncHandler(async (req, res, next) => {
 
     const course = req.params.id
@@ -246,7 +247,6 @@ const getExam = expressAsyncHandler(async (req, res, next) => {
 
     const userAttempts = await AttemptModel.countDocuments({ user, exam })
     if (userAttempts >= attempts) return next(createError("لقد استنفزت كل محاولاتك", 400, FAILED))
-
 
     //attempts check
     res.json({ values: foundExam })

@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Outlet, useParams } from 'react-router-dom'
-import { Alert, Paper, useMediaQuery, } from '@mui/material'
+import { Alert, Box, Paper, useMediaQuery, } from '@mui/material'
 
 import HeaderContent from '../../components/ui/HeaderContent'
 import { ExamIcon, FilesIcon, VidsIcon2 } from '../../components/ui/svg/ContentSvgs'
+import TitleSection from '../../components/ui/TitleSection'
 import LectureUserCard from '../../components/content/LectureUserCard'
 import CourseSubscribeCard from '../../components/content/CourseSubscribeCard'
 
 import Section from '../../style/mui/styled/Section'
+import Grid from '../../style/vanilla/Grid'
 import Loader from '../../style/mui/loaders/Loader'
 import LoaderSkeleton from '../../style/mui/loaders/LoaderSkeleton'
 
@@ -100,7 +102,7 @@ function CoursePage() {
         </g>
     </svg>
 
-    const courseChapters = <Paper elevation={1} sx={{ width: '100%', p: '16px', mt: '16px' }}>
+    const courseChapters = <Paper elevation={1} sx={{ width: '100%', p: '16px', mt: '16px', overflow: 'auto', maxHeight: '100vh', scrollbarGutter: 'stable' }}>
         <TitleWithDividers title={'محتوى الكورس'} />
         {courseDetails?.chapters && courseDetails?.chapters.map(chapter => {
             const total = chapter.lectures?.length;
@@ -128,7 +130,7 @@ function CoursePage() {
                         return <LectureUserCard
                             key={lecture._id}
                             currentUserIndex={currentUserIndex}
-                            lecture={lecture}
+                            lecture={lecture} 
                             currentLectureIndex={lectureIndexInCourse} i={i} isSubscribed={courseDetails?.course?.isSubscribed}
                         />
                     }) : ''}

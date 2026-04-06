@@ -16,7 +16,7 @@ const clearTokens = require("../tools/clearTokens.js")
 const jwt = require('jsonwebtoken');
 const { useCode } = require("./factoryHandler.js")
 const { uploadFile } = require("../middleware/upload/uploadFiles.js")
-const senderConstants = require("../tools/constants/sendersConstants.js");
+const { senderConstants } = require("../tools/constants/sendersConstants.js");
 const sendEmail = require("../tools/sendEmail.js");
 const { sendWhatsMsgFc } = require("./whatsappController.js");
 const { arLang } = require("../tools/constants/arLang.js");
@@ -31,6 +31,7 @@ const login = asyncHandler(async (req, res, next) => {
     const user = await UserModel.findOne({ userName }).select(select)
 
     if (!user) return next(createError("هناك خطا فى البيانات المدخله", 404, statusTexts.FAILED))
+    req.user = user
     if (user?.role === user_roles?.INREVIEW) return next(createError("حسابك تحت المراجعه, سيتم تفعيله فى اقل من 24 ساعه", 401, statusTexts.FAILED))
 
     const isTruePass = await bcrypt.compare(password, user.password)
@@ -40,8 +41,6 @@ const login = asyncHandler(async (req, res, next) => {
         const error = createError("عذرًا, حسابك غير مفعل", 401, statusTexts.FAILED)
         return next(error)
     }
-
-    req.user = user
     next()
 })
 
@@ -140,18 +139,21 @@ const islogged = asyncHandler(async (req, res, next) => {
 const refreshTokenFc = asyncHandler(async (req, res, next) => {
     const refreshToken = req.cookies?.refreshToken //signedCookies
 
+    if (!refreshToken) {
+        return next(createError('Bad Credentials', 400, statusTexts.FAILED, true))
+    }
     const { sessionId } = jwt.verify(refreshToken.split(" ")[1], process.env.REFRESH_TOKEN_SECRET)
 
     const currentSession = await SessionModel.findById(sessionId)
 
     if (!currentSession) {
         await clearTokens(req, res)
-        return next(createError('Bad Credentials', 400, FAILED, true))
+        return next(createError('Bad Credentials', 400, statusTexts.FAILED, true))
     }
 
     if (currentSession.logout) {
         await clearTokens(req, res)
-        return next(createError('Session ended, please login again', 400, FAILED, true))
+        return next(createError('Session ended, please login again', 400, statusTexts.FAILED, true))
     }
 
     const accessToken = generateAccessToken({ sessionId: currentSession._id })
@@ -234,6 +236,10 @@ const forgetPassword = asyncHandler(async (req, res, next) => {
 })
 
 const verifyResetPassword = asyncHandler(async (req, res, next) => {
+    if (!req.body.resetCode) return next(createError("الرجاء ادخال كود التحقق", 400, statusTexts.FAILED));
+    if (!req.body.password) return next(createError("الرجاء ادخال الباسورد الجديد", 400, statusTexts.FAILED));
+    if(!req.body.userName) return next(createError("الرجاء ادخال اسم المستخدم", 400, statusTexts.FAILED));
+    
     const hashedResetCode = crypto
         .createHash("sha256")
         .update(req.body.resetCode) // convert resetCode to string

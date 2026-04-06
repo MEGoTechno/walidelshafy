@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 export default function usePostData(sendData, setLoading, setReset = null) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+ 
 
   if (!sendData) return [null]
 
@@ -15,10 +16,10 @@ export default function usePostData(sendData, setLoading, setReset = null) {
     }
 
     // data = values
-    let data = Array.isArray(values) ? values : Object.fromEntries(
+     let data = Array.isArray(values) ? values : Object.fromEntries(
       Object.entries(values).filter(([k, v]) => v !== null && v !== undefined && v !== '')
     );
-
+    // console.log(data)
     // removing spacing
     Object.keys(data).forEach(key => {
       if ((data[key] !== "_id" || data[key] !== "id") && !data?._id) {
@@ -52,7 +53,7 @@ export default function usePostData(sendData, setLoading, setReset = null) {
         if (setLoading) {
           setLoading(false)
         }
-
+        
         if (res.error) {
           // error ===> invalid jwt or not user
           if (res.error?.data?.isKick === true) {

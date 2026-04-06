@@ -1,6 +1,6 @@
-import { Box, useMediaQuery } from '@mui/material'
+import { Box, IconButton, useMediaQuery } from '@mui/material'
 import { Suspense, useEffect, useState } from 'react'
-import { Outlet, useLocation, useNavigationType } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
 import Navbar from '../components/header/Navbar'
 import Sidebar from '../components/header/Sidebar'
@@ -8,6 +8,7 @@ import GlobalMsg from '../components/ui/GlobalMsg'
 
 import LoaderSkeleton from "../style/mui/loaders/LoaderSkeleton"
 import FooterPage from '../components/footer/FooterPage'
+import { lang } from '../settings/constants/arlang'
 
 
 function Layout() {
@@ -43,6 +44,9 @@ function Layout() {
             </Suspense>
             <FooterPage />
             <GlobalMsg />
+            <IconButton onClick={() => window.location.href = "https://api.whatsapp.com/send?phone=" + lang.Contact_Whatsapp + "&text=from Walid Abdel-shafy "} sx={{ position: 'fixed', bottom: '5%', right: '16px' }}>
+                <img src='/assets/whatsapp.png' style={{ width: '50px', height: '50px' }} />
+            </IconButton>
         </Box >
     )
 }

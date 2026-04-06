@@ -46,6 +46,7 @@ const LoginPage = lazy(() => import("../pages/user/LoginPage"))
 const GradesPage = lazy(() => import("../pages/user/GradesPage"))
 
 import GetUserAnswers from "../components/exam/GetUserAnswers";
+import ReportsPage from "../pages/admin/ReportsPage.jsx";
 
 const GetSessionsPage = lazy(() => import("../pages/admin/GetSessionsPage.jsx"))
 const GetUsersPage = lazy(() => import("../pages/admin/GetUsersPage"))
@@ -73,6 +74,8 @@ import { isDevelop } from "../tools/isDevelop.js";
 import ManagePaymentsPage from "../pages/admin/PaymentsPage.jsx";
 import CoursesPage from "../pages/user/CoursesPage.jsx";
 import GradesManage from "../pages/admin/GradesManage.jsx";
+import { TbReportSearch } from "react-icons/tb";
+import ErrorsPage from "../pages/admin/ErrorsPage.jsx";
 
 const GetQuestionsPage = lazy(() => import("../pages/admin/GetQuestionsPage"))
 
@@ -80,7 +83,7 @@ const AttemptPage = lazy(() => import("../pages/user/AttemptPage"))
 const AttemptsPage = lazy(() => import("../pages/admin/AttemptsPage"))
 
 const GetCodesPage = lazy(() => import("../pages/admin/GetCodesPage"))
-const CreateCodePage = lazy(() => import("../pages/admin/CreateCodePage"))
+// const CreateCodePage = lazy(() => import("../pages/admin/CreateCodePage"))
 
 const UnitsPage = lazy(() => import("../pages/user/UnitsPage"))
 const CoursePage = lazy(() => import("../pages/user/CoursePage"))
@@ -116,7 +119,7 @@ export const sidebarLinks = [
         name: "ايجاباتك", icon: <MdQuestionAnswer size="22px" />, to: "/answers",
         allowedTo: [user_roles.STUDENT, user_roles.ONLINE], isDisabled: false, info: { title: 'جديد', i: 1 },
         element: <GetUserAnswers />
-    },  {
+    }, {
         name: "اداره الحساب", allowedTo: [user_roles.STUDENT, user_roles.ONLINE]
     }, {
         name: "حسابى", icon: <SignupIcon size="22px" />, to: "/user/profile",
@@ -141,8 +144,8 @@ export const sidebarLinks = [
         name: "إدارة المحتوى", icon: <SiGooglecampaignmanager360 size="22px" />, allowedTo: [user_roles.ADMIN, user_roles.SUBADMIN]
     }, {
         name: "السنوات الدراسيه", icon: <SiGooglecampaignmanager360 size="22px" />, allowedTo: [user_roles.ADMIN, user_roles.SUBADMIN],
-        element: <GradesManage />,to: "/management/grades",
-    },{
+        element: <GradesManage />, to: "/management/grades",
+    }, {
         name: "إدارة الكورسات", icon: <FaSchool size="22px" />, to: "/management/courses", allowedTo: [user_roles.ADMIN, user_roles.SUBADMIN],
         element: <ManageCoursesPage />, id: 'coursesManage'
     }, {
@@ -180,6 +183,9 @@ export const sidebarLinks = [
         name: "إدارة سياسات الموقع", icon: <RiEditCircleFill size="22px" />, to: "/management/privacy", allowedTo: [user_roles.ADMIN, user_roles.SUBADMIN],
         element: <ManagePrivacyPage />, id: 'managePrivacy'
     }, {
+        name: "تقارير الطلاب", icon: <TbReportSearch size="22px" />, to: "/management/reports", allowedTo: [user_roles.ADMIN, user_roles.SUBADMIN],
+        element: <ReportsPage />, id: 'stdReports', info: { i: 1, title: 'New' }
+    }, {
         name: "المدفوعات", icon: <SignupIcon size="22px" />, allowedTo: [user_roles.ADMIN, user_roles.SUBADMIN], // info: { title: 'تحت الانشاء', i: 2 }
     }, {
         name: "وسائل الدفع", icon: <RiSecurePaymentFill size="22px" />, to: "/management/payments", allowedTo: [user_roles.ADMIN, user_roles.SUBADMIN], isDisabled: false, info: { title: "جديد", i: 1 },
@@ -203,6 +209,10 @@ const otherLinks = [
     {
         index: true, element: <HomePage />,
 
+    }, {
+        path: '/errors', element: <ProtectedRoute allowedTo={[user_roles.ADMIN, user_roles.SUBADMIN]}>
+            <ErrorsPage />
+        </ProtectedRoute>
     }, {
         path: '/grades/:gradeId', element: <UnitsPage />
     }, {// Edit Path here 

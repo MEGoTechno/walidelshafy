@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter, } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 
+
 import rtlPlugin from 'stylis-plugin-rtl';
 import { prefixer } from 'stylis';
 import { CacheProvider } from '@emotion/react';
@@ -19,6 +20,7 @@ import { routesLinks } from './settings/sidebarLinks';
 function App() {
 
   const { mode } = useSelector(s => s.global)
+  arSD.components.MuiDataGrid.defaultProps.localeText.toolbarFilters = 'البحث'
   const theme = useMemo(() => createTheme(themeSettings(mode), locales["arSD"], arSD), [mode]) // he used useMemo ???
 
   const routes = [

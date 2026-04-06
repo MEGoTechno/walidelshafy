@@ -19,7 +19,7 @@ import { IoIosAddCircleOutline } from "react-icons/io"
 import useGrades from "../../hooks/useGrades"
 
 
-const exportObj = grades => ({
+const exportObj = (grades) => ({
     grade: (row) => {
         return grades.find(grade => grade.index === row.grade)?.name
     },
@@ -59,8 +59,8 @@ const exportObj = grades => ({
 
 
 function LecturesPage() {
-    const { grades } = useGrades()
     const [sections] = convertObjToArray(sectionConstants)
+    const { grades } = useGrades()
 
     const [sendData, status] = useAddToUserMutation()
     const [reset, setReset] = useState(false)

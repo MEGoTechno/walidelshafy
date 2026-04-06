@@ -11,7 +11,6 @@ const lecturesRoutes = require("./lectureRoutes")
 const userCourseRoutes = require("./userCourseRoutes")
 const statisticsRoutes = require("./statisticsRoutes")
 
-
 router.use("/sessions", require("./sessionRoutes"))
 router.use("/auth", authRoutes)
 router.use("/users", userRoutes)
@@ -46,5 +45,7 @@ router.use("/groups", require("./groupRoutes"))
 router.use('/files', require('./fileRoutes'))
 router.use('/payments', require('./paymentRoutes'))
 router.use('/invoices', require('./invoiceRoutes'))
+
+router.use('/errors', require('./errorRoutes'))
 
 module.exports = router

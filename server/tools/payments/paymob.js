@@ -41,7 +41,11 @@ async function makeNewPaymob({ price, userInfo, successUrl }, payment) { //1st s
                 Number(process.env.PAYMOB_INTEGRATION_WALLET),
                 // Number(process.env.PAYMOB_INTEGRATION_KIOSK),
             ],
-            items: userInfo.items,
+            items: (userInfo.items?.length > 0) ? userInfo.items.map(i => ({
+                name: i.name,
+                amount: i.amount * 100,
+                quantity: i.quantity || 1
+            })) : [],
             billing_data: billingData,
             customer: billingData,
             // "extras": {
