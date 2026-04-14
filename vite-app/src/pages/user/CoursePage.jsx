@@ -41,7 +41,9 @@ function CoursePage() {
             let counts = {
                 videos: allLectures.filter(lecture => lecture.sectionType === sectionConstants.VIDEO)?.length,
                 files: allLectures.filter(lecture => lecture.sectionType === sectionConstants.FILE)?.length,
-                exams: allLectures.filter(lecture => lecture.sectionType === sectionConstants.EXAM)?.length
+                exams: allLectures.filter(lecture => lecture.sectionType === sectionConstants.EXAM)?.length,
+                estimatedVideos: course.estimatedVideos,
+                estimatedFiles: course.estimatedFiles, estimatedExams: course.estimatedExams,
             }
             setCurrentUserIndex(currentIndex)
             setCourseDetails({ course, chapters: lectures, counts })
@@ -130,7 +132,7 @@ function CoursePage() {
                         return <LectureUserCard
                             key={lecture._id}
                             currentUserIndex={currentUserIndex}
-                            lecture={lecture} 
+                            lecture={lecture}
                             currentLectureIndex={lectureIndexInCourse} i={i} isSubscribed={courseDetails?.course?.isSubscribed}
                         />
                     }) : ''}
@@ -151,11 +153,11 @@ function CoursePage() {
             <HeaderContent title={courseDetails?.course?.name} body={<div dangerouslySetInnerHTML={{ __html: courseDetails?.course?.description }} />}
                 infos={[
                     {
-                        caption: lang.LECTURES, desc: '+ ' + courseDetails?.counts?.videos, icon: <VidsIcon2 size='1.5rem' />
+                        caption: lang.LECTURES, desc: courseDetails?.counts?.videos, icon: <VidsIcon2 size='1.5rem' />, estimated: courseDetails?.counts?.estimatedVideos
                     }, {
-                        caption: lang.FILES, desc: '+ ' + courseDetails?.counts?.files, icon: <FilesIcon size='1.5rem' />
+                        caption: lang.FILES, desc: courseDetails?.counts?.files, icon: <FilesIcon size='1.5rem' />, estimated: courseDetails?.counts?.estimatedFiles
                     }, {
-                        caption: lang.EXAMS, desc: '+ ' + courseDetails?.counts?.exams, icon: <ExamIcon size='1.5rem' />
+                        caption: lang.EXAMS, desc: courseDetails?.counts?.exams, icon: <ExamIcon size='1.5rem' />, estimated: courseDetails?.counts?.estimatedExams
                     }
                 ]}
                 sideChildren={<FlexColumn>
