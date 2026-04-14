@@ -50,7 +50,7 @@ function UnitCourseDetails({ course, subscribedAt, lastLectureAt = false, curren
             // btn2={!subscribedAt && (<OutLinedHoverBtn sx={{ width: '100%' }} endIcon={<MdOutlinePayment />} >subsrcibe</OutLinedHoverBtn>)}
             btn1={
                 <>
-                    <FilledHoverBtn sx={{ flexGrow: 1 }} disabled={isCourseDisabled()} component={Link} to={"/grades/" + course.grade + "/courses/" + course.index} endIcon={< FaArrowRight />} > الذهاب للكورس  </FilledHoverBtn >
+                    <FilledHoverBtn sx={{ flexGrow: 1 }} disabled={isCourseDisabled()} component={Link} title={course?.name} to={"/grades/" + course.grade + "/courses/" + course.index} endIcon={< FaArrowRight />} > الذهاب للكورس  </FilledHoverBtn >
                     <FlexColumn sx={{ width: '100%', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
                         <TabInfo fontSize={'9px'} count={getFullDate(course.dateStart || course.createdAt)} i={'1'} title={'تاريخ انشاء الكورس'} icon={<MdDateRange size='.8rem' />} isBold={false} />
                         {subscribedAt && (
