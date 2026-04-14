@@ -38,7 +38,7 @@ function UnitCourseDetails({ course, subscribedAt, lastLectureAt = false, curren
     }
     return (
         <CardStyled img={course?.thumbnail?.url} title={<Button startIcon={<RtArrow size='1.5rem' />} disabled={isCourseDisabled()} endIcon={<CoursesIcon size='1.5rem' />} sx={{ color: 'primary.main' }}
-            component={Link} to={"/grades/" + course.grade + "/courses/" + course.index}
+            component={Link} to={"/grades/" + course.grade + "/courses/" + course.index} title={course?.name}
         >
 
             {/* course Name */}
