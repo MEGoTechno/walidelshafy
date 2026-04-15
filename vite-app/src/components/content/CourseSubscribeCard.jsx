@@ -89,7 +89,7 @@ function CourseSubscribeCard({ course, isSubscribed, setCourseDetails, setCurren
                         )}
 
                         <FilledHoverBtn sx={{ mt: '16px', width: '100%' }}
-                            onClick={() => setOpen(true)} disabled={status.isLoading} title={course.name} > {status.isLoading ? <Loader color={'orange'} /> : "اشترك الان"} </FilledHoverBtn>
+                            onClick={() => setOpen(true)} disabled={status.isLoading} title={course.name} data-price={course.price} > {status.isLoading ? <Loader color={'orange'} /> : "اشترك الان"} </FilledHoverBtn>
 
                         <VerifyCoupon params={{ course: course._id }} prevPrice={course.price} setCoupon={setCoupon} />
 
