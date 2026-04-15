@@ -61,6 +61,7 @@ export default function CreateFormik({ inputs, onSubmit, status, btnWidth, enabl
 
                             {!isAllDisabled && (
                                 <FilledHoverBtn
+                                    title={SEND}
                                     type='submit'
                                     disabled={disabledBtn ? disabledBtn : status?.isLoading || (!props.dirty && !submitBtnStatus && allowDirty) ? true : false}
                                     sx={{

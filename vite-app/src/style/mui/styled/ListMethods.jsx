@@ -73,7 +73,7 @@ function ListMethods({ methods = [], setMethod, activeMethod, disabled = [], exc
                             >
                                 {method.overlay}
 
-                                <ListItemButton disabled={isDisabled(method)} onClick={() => handelChosen(method.value)} dense>
+                                <ListItemButton title={method.label} disabled={isDisabled(method)} onClick={() => handelChosen(method.value)} dense>
                                     <ListItemIcon>
                                         <Radio
                                             checked={isChecked(method?.value)}

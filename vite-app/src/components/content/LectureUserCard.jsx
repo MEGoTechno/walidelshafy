@@ -107,7 +107,9 @@ function LectureUserCard({ lecture, isSubscribed, currentUserIndex, currentLectu
             </CardContent>
 
             <CardActions disableSpacing>
-                <FilledHoverBtn sx={{ width: '100%', bgcolor: (lecture.index === currentUserIndex) ? 'orange' : 'primary.main' }}
+                <FilledHoverBtn
+                    title={lecture.name}
+                    sx={{ width: '100%', bgcolor: (lecture.index === currentUserIndex) ? 'orange' : 'primary.main' }}
                     endIcon={<SectionIcon lecture={lecture} color='inherit' />}
                     disabled={!isSubscribed || lecture?.isLocked || lecture.index === currentLectureIndex || false} onClick={() => {
                         navigate("lectures/" + lecture._id)
@@ -131,7 +133,9 @@ function LectureUserCard({ lecture, isSubscribed, currentUserIndex, currentLectu
                                     <Typography variant='subtitl2'>
                                         محاضره مجانيه
                                     </Typography>
-                                    <ScallyBtn onClick={openModal} component={Link} to={user ? '/lectures/' + lecture._id : '/login'} sx={{ minWidth: '100px' }}>
+                                    <ScallyBtn
+                                        title={lecture.name}
+                                        onClick={openModal} component={Link} to={user ? '/lectures/' + lecture._id : '/login'} sx={{ minWidth: '100px' }}>
                                         فتح المحاضره
                                     </ScallyBtn>
                                 </>
@@ -143,7 +147,9 @@ function LectureUserCard({ lecture, isSubscribed, currentUserIndex, currentLectu
                                         <Typography variant='subtitle1'>
                                             تم الدفع
                                         </Typography>
-                                        <ScallyBtn component={Link} to={user ? '/lectures/' + lecture._id : '/login'} sx={{ minWidth: '100px' }}>
+                                        <ScallyBtn
+                                            title={lecture.name}
+                                            component={Link} to={user ? '/lectures/' + lecture._id : '/login'} sx={{ minWidth: '100px' }}>
                                             فتح المحاضره
                                         </ScallyBtn>
                                     </>
@@ -152,7 +158,9 @@ function LectureUserCard({ lecture, isSubscribed, currentUserIndex, currentLectu
                                         <Typography variant='subtitle1'>
                                             سعر المحاضره {lecture.price} جنيه
                                         </Typography>
-                                        <ScallyBtn onClick={() => setOpen(true)} sx={{ minWidth: '100px' }}>
+                                        <ScallyBtn
+                                            title={lecture.name}
+                                            onClick={() => setOpen(true)} sx={{ minWidth: '100px' }}>
                                             شراء المحاضره
                                         </ScallyBtn>
                                     </>
