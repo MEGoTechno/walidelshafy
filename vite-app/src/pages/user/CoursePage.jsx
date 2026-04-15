@@ -130,6 +130,7 @@ function CoursePage() {
                     )}
                     {chapter.lectures?.length ? chapter.lectures.map((lecture, i) => {
                         return <LectureUserCard
+                            courseName={courseDetails?.course?.name}
                             key={lecture._id}
                             currentUserIndex={currentUserIndex}
                             lecture={lecture}
