@@ -62,7 +62,7 @@ export default function CreateFormik({ inputs, onSubmit, status, btnWidth, enabl
                             {!isAllDisabled && (
                                 <FilledHoverBtn
                                     title={btnProps.title || SEND}
-                                    price={btnProps.price || 0}
+                                    data-price={btnProps.price || 0}
                                     type='submit'
                                     disabled={disabledBtn ? disabledBtn : status?.isLoading || (!props.dirty && !submitBtnStatus && allowDirty) ? true : false}
                                     sx={{
