@@ -14,7 +14,7 @@ import { useMemo } from 'react';
 // another solution but i don`t do => currentPrev, setCurrentPrev
 
 
-export default function CreateFormik({ inputs, onSubmit, status, btnWidth, enableReinitialize = true, formDirection = 'column', btnStyle = {}, submitBtnStatus = false, disabledBtn = false, allowDirty = true, preValue = null, isAllDisabled = false, SEND = 'إرسال' }) {
+export default function CreateFormik({ inputs, onSubmit, status, btnWidth, enableReinitialize = true, formDirection = 'column', btnStyle = {}, submitBtnStatus = false, disabledBtn = false, allowDirty = true, preValue = null, isAllDisabled = false, SEND = 'إرسال', btnProps = {} }) {
     // arrange data of input with ===> name , validation, initial value
     const { data, validation } = useMemo(() => {
         let data = {}
@@ -61,12 +61,14 @@ export default function CreateFormik({ inputs, onSubmit, status, btnWidth, enabl
 
                             {!isAllDisabled && (
                                 <FilledHoverBtn
-                                    title={SEND}
+                                    title={btnProps.title || SEND}
+                                    price={btnProps.price || 0}
                                     type='submit'
                                     disabled={disabledBtn ? disabledBtn : status?.isLoading || (!props.dirty && !submitBtnStatus && allowDirty) ? true : false}
                                     sx={{
                                         width: btnWidth || '100%', py: '10px', ...btnStyle
                                     }}
+
                                 >
                                     {status?.isLoading ? <Loader color={'#fff'} /> : SEND}
                                 </FilledHoverBtn>

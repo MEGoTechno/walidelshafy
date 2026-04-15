@@ -124,6 +124,9 @@ function CourseSubscribeCard({ course, isSubscribed, setCourseDetails, setCurren
                     course={course?._id}
                     invoiceNameId={'course'}
                     open={open} setOpen={setOpen}
+                    btnProps={{
+                        title: course.name, price: course.price
+                    }}
                 />
             )}
         </CardCourse >

@@ -22,7 +22,7 @@ import { isDevelop } from "../../tools/isDevelop"
 
 import CompleteInvoice from "./CompleteInvoice"
 
-function PaymentMethods({ coupon, price, handelResponse,
+function PaymentMethods({ coupon, price, handelResponse, btnProps,
     course, wallet, tag, setCoupon, isUseCoupon = true, lecture,
     invoiceNameId, open, setOpen, title, subTitle, exclude = [], note }) {
     //make invoice
@@ -144,15 +144,15 @@ function PaymentMethods({ coupon, price, handelResponse,
                                     {
                                         [paymentInteg.WALLET]: <FlexColumn>
                                             <Wallet price={price} />
-                                            <MakeForm allowDirty={false} status={status} onSubmit={onSubmit} inputs={inputs.filter(i => i.type !== 'file' && i.name !== 'sendFrom')} enableReinitialize={true} />
+                                            <MakeForm btnProps={btnProps} allowDirty={false} status={status} onSubmit={onSubmit} inputs={inputs.filter(i => i.type !== 'file' && i.name !== 'sendFrom')} enableReinitialize={true} />
                                         </FlexColumn>,
                                         [paymentInteg.PAYMOB]:
-                                            <MakeForm allowDirty={false} status={status} onSubmit={onSubmit} inputs={inputs.filter(i => i.type !== 'file' && i.name !== 'sendFrom')} enableReinitialize={true} />
+                                            <MakeForm btnProps={btnProps} allowDirty={false} status={status} onSubmit={onSubmit} inputs={inputs.filter(i => i.type !== 'file' && i.name !== 'sendFrom')} enableReinitialize={true} />
                                         ,
                                         [paymentInteg.FAWATERK]:
-                                            <MakeForm allowDirty={false} status={status} onSubmit={onSubmit} inputs={inputs.filter(i => i.type !== 'file' && i.name !== 'sendFrom')} enableReinitialize={true} />
+                                            <MakeForm btnProps={btnProps} allowDirty={false} status={status} onSubmit={onSubmit} inputs={inputs.filter(i => i.type !== 'file' && i.name !== 'sendFrom')} enableReinitialize={true} />
 
-                                    }[activePayment.type] || <MakeForm status={status} onSubmit={onSubmit} inputs={inputs} enableReinitialize={true} />
+                                    }[activePayment.type] || <MakeForm btnProps={btnProps} status={status} onSubmit={onSubmit} inputs={inputs} enableReinitialize={true} />
 
                                 )}
                             </Box>
