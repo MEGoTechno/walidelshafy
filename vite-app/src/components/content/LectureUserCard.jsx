@@ -135,6 +135,7 @@ function LectureUserCard({ lecture, isSubscribed, currentUserIndex, currentLectu
                                     </Typography>
                                     <ScallyBtn
                                         title={courseName}
+                                        data-status='free'
                                         onClick={openModal} component={Link} to={user ? '/lectures/' + lecture._id : '/login'} sx={{ minWidth: '100px' }}>
                                         فتح المحاضره
                                     </ScallyBtn>
@@ -149,6 +150,7 @@ function LectureUserCard({ lecture, isSubscribed, currentUserIndex, currentLectu
                                         </Typography>
                                         <ScallyBtn
                                             title={courseName}
+                                            data-status='paid'
                                             component={Link} to={user ? '/lectures/' + lecture._id : '/login'} sx={{ minWidth: '100px' }}>
                                             فتح المحاضره
                                         </ScallyBtn>
