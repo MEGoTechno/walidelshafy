@@ -12,7 +12,7 @@ import { Alert } from "@mui/material"
 
 function CoursesPage() {
     const [grade, setGrade] = useState(2)
-    const { data, isFetching } = useGetCoursesQuery({ isModernSort: true, grade: grade || 'all' })
+    const { data, isFetching } = useGetCoursesQuery({ isModernSort: true, grade: grade || 'all', isActive: true })
 
     return (
         <Section>
