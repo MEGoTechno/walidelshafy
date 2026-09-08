@@ -7,6 +7,7 @@ const gradeParams = (query) => {
         { key: "description", value: query.description },
         { key: "index", value: query.index },
         { key: "isActive", value: query.isActive },
+        { key: "order", value: query.order },
     ]
 }
 
