@@ -101,7 +101,7 @@ function Hero2() {
                         <ScallyBtn
                             colorm={theme.palette.primary.light}
                             endIcon={reactor}
-                            component={Link} to={'/grades/2'}
+                            component={Link} to={'/courses'}
                             sx={{ fontSize: '1.5rem', borderRadius: 1, width: '80%', maxWidth: '350px', fontFamily: 'main' }}>كورسات الكيميــــــاء
                         </ScallyBtn>
 
