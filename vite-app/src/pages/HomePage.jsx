@@ -1,15 +1,13 @@
 import { useSelector } from 'react-redux'
 
-import Hero from '../components/home/Hero'
 import Services from '../components/home/Services'
 import Grades from '../components/home/Grades'
 import UserHome from '../components/home/UserHome'
 import LatestCourses from '../components/home/LatestCourses'
 import SEOHelmetAsync from '../tools/SEOHelmetAsync'
 import { lang } from '../settings/constants/arlang'
-// import AboutUS from '../components/home/AboutUS'
-// import Hero2 from '../components/home/Hero2'
-// import { Box } from '@mui/material'
+import Hero2 from '../components/home/Hero2'
+import Services2 from '../components/home/Services2'
 
 function HomePage() {
 
@@ -35,10 +33,12 @@ function HomePage() {
             />
             {/* <Hero2 /> */}
             {/* <Box mt={'50px'} /> */}
-            <Hero />
-
+            <Hero2 />
             <LatestCourses />
+            <Services2 />
             <Services />
+            {/* <BeFirst /> */}
+            {/* <Hero /> */}
 
             {/* <AboutUS /> */}
             <Grades />

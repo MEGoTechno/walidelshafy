@@ -13,7 +13,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-export default function ModalStyled({ open, setOpen, title, desc = 'بمجرد الموافقه لن يمكنك العوده !', children, action, agree, fullWidth = false, isKeepMounted = false, fullScreen = false }) {
+export default function ModalStyled({ allowBackClose = false, open, setOpen, title, desc = 'بمجرد الموافقه لن يمكنك العوده !', children, action, agree, fullWidth = false, isKeepMounted = false, fullScreen = false, component }) {
 
     const handleClose = () => {
         setOpen(false);
@@ -23,6 +23,28 @@ export default function ModalStyled({ open, setOpen, title, desc = 'بمجرد �
         setOpen(false)
         await action()
     }
+
+    React.useEffect(() => {
+        if (!open || !allowBackClose) return;
+
+        // Push dummy history entry
+        window.history.pushState({ popup: true }, "");
+
+        const handlePopState = () => {
+            if (open) {
+                setOpen(false);   // close popup
+                // Re-add the history entry to prevent leaving the page
+                window.history.pushState({ popup: true }, "");
+            }
+        };
+
+        window.addEventListener("popstate", handlePopState);
+
+        return () => {
+            window.removeEventListener("popstate", handlePopState);
+        };
+    }, [open, setOpen]);
+
     return (
         <React.Fragment>
             <Dialog
@@ -42,8 +64,9 @@ export default function ModalStyled({ open, setOpen, title, desc = 'بمجرد �
                     <DialogTitle>{title || lang.ARE_YOU_SURE}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-slide-description">
+                            {desc}
                         </DialogContentText>
-                        {desc}
+                        {component}
                     </DialogContent>
                 </>)}
                 <DialogActions>

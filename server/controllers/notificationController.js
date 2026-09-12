@@ -22,6 +22,7 @@ const notificationParams = (query) => {
         { key: "message", value: query.message },
         { key: "subject", value: query.subject },
         { key: "isSeen", value: query.isSeen, type: 'boolean' },
+        { key: "phone", value: query.phone },
     ]
 } //modify it to be more frontend
 
@@ -55,6 +56,12 @@ const handelNotification = expressAsyncHandler(async (req, res, next) => {
     next()
 })
 
+const intervals = [3000, 17000, 12000, 20000, 35000, 30 * 60 * 1000, 15 * 60 * 1000, 10 * 60 * 1000];
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const randomInterval = arr => {
+    return arr[Math.floor(Math.random() * arr.length)];
+};
+
 const sendNotificationsToMany = expressAsyncHandler(async (req, res, next) => {
     const limit = (await pLimit())(5); // Limit to 5 concurrent operations
     //grb routes
@@ -71,6 +78,8 @@ const sendNotificationsToMany = expressAsyncHandler(async (req, res, next) => {
     // Process each user in parallel
     await Promise.all(users.map(user => limit(async () => {
         try {
+            const pending = randomInterval(intervals)
+            await sleep(pending)
             await senderByMethod({ method, user, message, subject, isCommercial })
         } catch (error) {
             failedNums += 1

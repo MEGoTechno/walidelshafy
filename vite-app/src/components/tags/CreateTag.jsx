@@ -17,7 +17,7 @@ import TitleWithDividers from '../ui/TitleWithDividers';
 import useGrades from '../../hooks/useGrades';
 
 function CreateTag({ setReset, defaultGrade }) {
-    const{grades} = useGrades()
+    const { grades } = useGrades()
 
     const [sendData, status] = useCreateTagMutation()
     const [createTagFc] = usePostData(sendData)
@@ -26,7 +26,7 @@ function CreateTag({ setReset, defaultGrade }) {
     const inputs = [
         {
             name: 'name',
-            label: lang.NAME,
+            label: 'اسم الموضوع',
             icon: <MdOutlineDriveFileRenameOutline color='green' />,
             validation: Yup.string().required(lang.REQUERIED)
         }, {

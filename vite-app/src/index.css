@@ -18,6 +18,39 @@ img {
   object-fit: cover;
 }
 
+
+@font-face {
+  font-family: 'main';
+  src: url('/fonts/main/main-200.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'main';
+  src: url('/fonts/main/main-400.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'main';
+  src: url('/fonts/main/main-600.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'main';
+  src: url('/fonts/main/main-800.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 @keyframes move {
   50% {
     transform: translateX(50px);

@@ -51,7 +51,7 @@ const primary = {
 
 const bgColors = {
     light: {
-        dafault: tokensDark.grey[10],
+        dafault: tokensDark.grey[0],
         alt: tokensDark.grey[50],
     },
     dark: {

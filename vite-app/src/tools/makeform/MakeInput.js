@@ -20,8 +20,10 @@ import ShowBunny from './components/ShowBunny'
 import { Alert } from '@mui/material'
 import { useField } from 'formik'
 import { memo } from 'react'
+import ShowIframe from './components/ShowIframe'
 
 const getGoogleDrivePreviewLink = (originalLink) => {
+    if (!originalLink) return
     const fileIdRegex = /\/d\/(.*?)\//;
     const match = originalLink.match(fileIdRegex);
 
@@ -35,12 +37,12 @@ const getGoogleDrivePreviewLink = (originalLink) => {
 
 function MakeInput({ input, nestedInputName = null }) {
     //nestedInputName in case used by field array
-    if(input.type === 'header'){
+    if (input.type === 'header') {
         return <MakeTitle title={input.title} />
-    }else return <RenderInputByType input={input} nestedInputName={nestedInputName} />
+    } else return <RenderInputByType input={input} nestedInputName={nestedInputName} />
 }
 
-function RenderInputByType({input, nestedInputName = null }) {
+function RenderInputByType({ input, nestedInputName = null }) {
 
     const inputName = nestedInputName || input.name
     const [{ value }, { error, touched }, { setValue }] = useField(inputName)
@@ -58,6 +60,7 @@ function RenderInputByType({input, nestedInputName = null }) {
                 case 'youtube': return <ShowVid file={file} />
                 case 'image': return <ShowImg file={file} />
                 case 'bunny': return <ShowBunny file={file} />
+                case 'iframe': return <ShowIframe file={file} />
                 default: return <ShowPdf file={file} />
             }
         }

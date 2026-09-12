@@ -65,7 +65,7 @@ export const TextBorderWithIcons = ({ title = '', startIcon, endIcon, color, col
                     {startIcon}
                     <Box>
                         {textInArr?.map((text, i) => (
-                            <Box component='span' key={i} sx={{ color: i === 0 && colorOne || color, }}> {text} </Box>
+                            <Box component='span' key={i} sx={{ color: i === 0 && colorOne || color,fontFamily: 'main', fontWeight: '200' }}> {text} </Box>
                         ))}
                     </Box>
 

@@ -12,10 +12,11 @@ import 'swiper/css';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { FilledHoverBtn, OutLinedHoverBtn } from "../../style/buttonsStyles";
+import { FilledHoverBtn } from "../../style/buttonsStyles";
 import { FlexColumn } from "../../style/mui/styled/Flexbox";
 import { Link } from "react-router-dom";
 import UnitCourseDetails from "../content/UnitCourseDetails";
+import { Alert } from "@mui/material";
 
 
 const CourseIcon = ({ size }) => {
@@ -28,16 +29,16 @@ const ToDown = ({ size }) => {
 function LatestCourses() {
     const { data } = useGetCoursesQuery({ isFixed: true, limit: 10, isModernSort: true })
 
-    if (data?.values?.courses)
-        return (
-            <Section>
-                <FlexColumn my={'16px'}>
-                    <TextBorderWithIcons sx={{ my: '9px' }} colorOne={'primary.main'} color={'neutral.0'} title={'احدث الكورسات'}
-                    startIcon={<CourseIcon size={45} />}
-                        endIcon={<ToDown size={45} />} />
-                    <FilledHoverBtn size="small" component={Link} to='/courses' >عرض كل الكورسات</FilledHoverBtn>
-                </FlexColumn>
 
+    return (
+        <Section>
+            <FlexColumn my={'16px'}>
+                <TextBorderWithIcons sx={{ my: '9px', fontFamily: 'main' }} colorOne={'primary.main'} color={'neutral.0'} title={'احدث الكورسات'}
+                    startIcon={<CourseIcon size={45} />}
+                    endIcon={<ToDown size={45} />} />
+                <FilledHoverBtn size="small" component={Link} to='/courses' >عرض كل الكورسات</FilledHoverBtn>
+            </FlexColumn>
+            {data?.values?.courses ?
                 <Swiper
                     modules={[Navigation, Pagination, A11y]}
                     navigation
@@ -54,8 +55,11 @@ function LatestCourses() {
                 >
                     {data?.values?.courses.map((course, i) => <SwiperSlide key={i}> <UnitCourseDetails course={course} /> </SwiperSlide>)}
                 </Swiper>
-            </Section>
-        )
+                : <FlexColumn>
+                    <Alert sx={{ maxWidth: '550px' }}>الكورسات هتنزل قريب, خليك متابع</Alert>
+                </FlexColumn>}
+        </Section>
+    )
 }
 
 export default LatestCourses
