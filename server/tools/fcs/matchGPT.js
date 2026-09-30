@@ -17,9 +17,9 @@ function isValidDate(value) {
   return false;
 }
 
+
 const makeDayRange = (value) => {
   const date = new Date(value)
-
   return {
     $gte: new Date(date.setHours(0, 0, 0, 0)),
     $lt: new Date(date.setHours(24, 0, 0, 0)),
@@ -59,6 +59,8 @@ const handelValueAndOperator = (value, type = null) => { //i use Type for watche
     operator = "=";
     value = value.slice(1);
   }
+
+  // if (!operator && value) operator = 'contains' // *_* rev
   if (SKIP_VALUES.includes(value)) isSkip = true;
   if (value === '' && (operator === 'isEmpty' || operator === 'isNotEmpty')) isSkip = false;
 
@@ -74,7 +76,6 @@ const handelValueAndOperator = (value, type = null) => { //i use Type for watche
 const handelMatch = (match, key, preVal, type) => {
   const [value, operator, isSkip] = handelValueAndOperator(preVal, type)
   if (isSkip) return match;
-  // console.log(value, operator)
 
   if (type === 'array') {
     const existing = match[key] || {};
@@ -229,4 +230,4 @@ const parseFilters = (filters) => {
   return match;
 };
 
-module.exports = parseFilters
+export default parseFilters;

@@ -2,7 +2,7 @@ import { Box, Button, Card, CardActions, useTheme } from "@mui/material";
 import { useState } from "react";
 import ShowQuestion from "./ShowQuestion";
 import QuizPagination from "./QuizPagination";
-import {   buttonStyle, sendSuccess } from "../../style/buttonsStyles";
+import { buttonError, buttonStyle, sendSuccess } from "../../style/buttonsStyles";
 
 import { useSelector } from "react-redux";
 import QuizHeader from "./QuizHeader";
@@ -10,7 +10,7 @@ import ModalStyled from "../../style/mui/styled/ModalStyled";
 import Loader from "../../style/mui/loaders/Loader";
 import { user_roles } from "../../settings/constants/roles";
 import BankNavigateBtn from "./BankNavigateBtn";
- 
+import { convertToMs } from "../../settings/constants/dateConstants";
 import { getExamMethod } from "../../settings/constants/examMethods";
 
 
@@ -60,7 +60,7 @@ export default function QuizCard({ exam, submit, isLoading, navigateToAnswers, e
             attemptId: activeAttemptId || null,
             user: user._id,
             exam: exam._id,
-            answers
+            answers,
         }
         if (time && (exam.isTime ?? true)) {
             attempt.tokenTime = time // *_* modify it
@@ -89,7 +89,7 @@ export default function QuizCard({ exam, submit, isLoading, navigateToAnswers, e
             <Card sx={{ bgcolor: theme.palette.background.alt, width: "100%" }} >
 
                 <ShowQuestion
-                    activeAttemptId={activeAttemptId} setActiveAttemptId={setActiveAttemptId} examId={exam._id} tokenTime={time} course={exam.courseId}
+                    activeAttemptId={activeAttemptId} setActiveAttemptId={setActiveAttemptId} examId={exam._id} tokenTime={exam.isTime && time} course={exam.courseId}
                     index={currentQuestionIndex}
                     question={currentQ} isLoading={isLoading} setQuestions={setQuestions} method={method} editUser={editUser} />
 
@@ -106,7 +106,7 @@ export default function QuizCard({ exam, submit, isLoading, navigateToAnswers, e
                         <Button sx={sendSuccess} disabled={isLoading} onClick={openModal}>
                             {isLoading ? <Loader color={'#fff'} /> : "ارسال"}
                         </Button>
-                    ) : method?.markQ ? 'قم بتصحيح جميع الاسئله من خلال زر تصحيح السؤال فى كل سؤال وعند ذلك ستكون قد سلمت التدريب' : <BankNavigateBtn exam={exam} navigateToAnswers={navigateToAnswers} questions={questions} submit={sendData} />}
+                    ) : method?.markQ ? 'قم بتصحيح جميع الاسئله من خلال زر تصحيح السؤال فى كل سؤال وعند ذلك ستكون قد سلمت التدريب تلقائيا!' : <BankNavigateBtn exam={exam} navigateToAnswers={navigateToAnswers} questions={questions} submit={sendData} />}
 
                 </CardActions>
 

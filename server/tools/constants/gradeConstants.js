@@ -1,11 +1,12 @@
 const FIRST_GRADE_TITLE = 'علوم متكامله'
-const THIRD_GRADE_TITLE = 'ماده الكيمياء'
+const THIRD_GRADE_TITLE = 'الچيولوچيا'
 
 
 
 const gradeConstants = [
-    { name: THIRD_GRADE_TITLE, description: 'محتوى ماده الكيمياء للثانويه العامه بالوحدات  و الكورسات الموجوده', index: 2, img: 'https//walidelshafy.com/assets/chemistry.jpg' },
-    // { name: FIRST_GRADE_TITLE, description: 'محتوى الصف الاول الثانوى (علوم متكامله) بالوحدات و الكورسات الموجوده', index: 1, img: '/assets/science.jpg' },
-]
+    { name: FIRST_GRADE_TITLE, description: 'محتوى الصف الاول الثانوى (علوم متكامله) بالوحدات و الكورسات الموجوده', index: 1, isActive: true },
+    { name: THIRD_GRADE_TITLE, description: 'محتوى الصف الثالث الثانوى (الچيولوچيا) بالوحدات و الكورسات الموجوده', index: 2, isActive: true },
+    { name: 'الاحياء', description: 'محتوى الصف الثالث الثانوى (احياء) بالوحدات و الكورسات الموجوده', index: 3, isActive: true },
 
-module.exports = gradeConstants
+]
+export default gradeConstants;

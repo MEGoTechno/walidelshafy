@@ -1,8 +1,8 @@
-const mongoose = require("mongoose")
+import mongoose from 'mongoose';
 
 
 const unitSchema = new mongoose.Schema({
-    grade: { type: Number },
+    grade: { type: Number, },
     name: { type: String },
 }, {
     timestamps: true,
@@ -10,4 +10,4 @@ const unitSchema = new mongoose.Schema({
 })
 
 const UnitModel = mongoose.model("unit", unitSchema)
-module.exports = UnitModel
+export default UnitModel;

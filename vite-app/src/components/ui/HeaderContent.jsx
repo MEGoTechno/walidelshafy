@@ -23,11 +23,13 @@ function HeaderContent({ title, body, infos = [], img, sideImg, children, height
                 //     backgroundImage: `
                 // url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='52' height='52' viewBox='0 0 52 52'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M0 17.83V0h17.83a3 3 0 0 1-5.66 2H5.9A5 5 0 0 1 2 5.9v6.27a3 3 0 0 1-2 5.66zm0 18.34a3 3 0 0 1 2 5.66v6.27A5 5 0 0 1 5.9 52h6.27a3 3 0 0 1 5.66 0H0V36.17zM36.17 52a3 3 0 0 1 5.66 0h6.27a5 5 0 0 1 3.9-3.9v-6.27a3 3 0 0 1 0-5.66V52H36.17zM0 31.93v-9.78a5 5 0 0 1 3.8.72l4.43-4.43a3 3 0 1 1 1.42 1.41L5.2 24.28a5 5 0 0 1 0 5.52l4.44 4.43a3 3 0 1 1-1.42 1.42L3.8 31.2a5 5 0 0 1-3.8.72zm52-14.1a3 3 0 0 1 0-5.66V5.9A5 5 0 0 1 48.1 2h-6.27a3 3 0 0 1-5.66-2H52v17.83zm0 14.1a4.97 4.97 0 0 1-1.72-.72l-4.43 4.44a3 3 0 1 1-1.41-1.42l4.43-4.43a5 5 0 0 1 0-5.52l-4.43-4.43a3 3 0 1 1 1.41-1.41l4.43 4.43c.53-.35 1.12-.6 1.72-.72v9.78zM22.15 0h9.78a5 5 0 0 1-.72 3.8l4.44 4.43a3 3 0 1 1-1.42 1.42L29.8 5.2a5 5 0 0 1-5.52 0l-4.43 4.44a3 3 0 1 1-1.41-1.42l4.43-4.43a5 5 0 0 1-.72-3.8zm0 52c.13-.6.37-1.19.72-1.72l-4.43-4.43a3 3 0 1 1 1.41-1.41l4.43 4.43a5 5 0 0 1 5.52 0l4.43-4.43a3 3 0 1 1 1.42 1.41l-4.44 4.43c.36.53.6 1.12.72 1.72h-9.78zm9.75-24a5 5 0 0 1-3.9 3.9v6.27a3 3 0 1 1-2 0V31.9a5 5 0 0 1-3.9-3.9h-6.27a3 3 0 1 1 0-2h6.27a5 5 0 0 1 3.9-3.9v-6.27a3 3 0 1 1 2 0v6.27a5 5 0 0 1 3.9 3.9h6.27a3 3 0 1 1 0 2H31.9z'%3E%3C/path%3E%3C/svg%3E")
                 // `, //https://pub-c5e31b5cdafb419fb247a8ac2e78df7a.r2.dev/public/assets/background/background-6.webp
-                backgroundPosition: 'right 0% top 0', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', 
+                backgroundPosition: 'right 0% top 0', backgroundRepeat: 'no-repeat', backgroundSize: 'cover',
                 bgcolor: 'primary.light'
             }}>
                 <Box sx={{
                     position: 'absolute', borderRadius: '16px', top: '0', right: '0', width: '100%', height: '100%',
+                    background: `linear-gradient(110deg,  ${theme.palette.primary.dark} 0%,  ${theme.palette.primary.main} 45%,  ${theme.palette.primary.light} 100%)`,
+                    opacity: 0.95,
                     // background: `linear-gradient(to right,
                     // ${darkBg},
                     // rgba(0,0,0,0) 20%) `
@@ -44,7 +46,7 @@ function HeaderContent({ title, body, infos = [], img, sideImg, children, height
 
                 <FlexBetween>
                     <FlexColumn sx={{ zIndex: 1, p: '30px 15px', flex: 1, alignItems: 'flex-start' }}>
-                        <Typography variant='h6' sx={{
+                        <Typography variant='h4' sx={{
                             zIndex: 1,
                             textShadow: theme.shadows[8], bgcolor: theme.palette.grey[0],
                             p: '12px 16px', color: 'primary.main',
@@ -55,10 +57,10 @@ function HeaderContent({ title, body, infos = [], img, sideImg, children, height
                         }}>
                             {/* {sectionName && <span style={{ textDecoration: 'underline' }}>{sectionName}</span>} */}
                             {/* :   */}
-                            <span style={{ opacity: .7}}> الموضوع : </span>
+                            <span style={{ opacity: .7 }}> الموضوع : </span>
                             {title}
                         </Typography>
-                        <Typography variant='body1' sx={{ color: '#fff', zIndex: 1, maxWidth: '800px', my: '16px' }}>
+                        <Typography variant='body1' sx={{ color: '#fff', zIndex: 1, maxWidth: '800px', my: '16px', textAlign: 'start' }}>
                             {body}
                         </Typography>
 
@@ -76,7 +78,7 @@ function HeaderContent({ title, body, infos = [], img, sideImg, children, height
 
             </Box>
 
-            <FlexRow sx={{ flexWrap: 'wrap', flexDirection: 'row-reverse', alignItems: 'flex-start', width: "100%" }}>
+            <FlexRow sx={{ flexWrap: { xs: 'wrap', md: 'nowrap' }, flexDirection: 'row-reverse', alignItems: 'flex-start', width: "100%" }}>
                 {(img || children) && (
                     <Box sx={{
                         zIndex: 5, position: 'relative',

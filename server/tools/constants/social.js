@@ -16,4 +16,4 @@ const SocialConstants = {
 }
 
 //On New Customer => add callback login
-module.exports = SocialConstants
+export default SocialConstants;

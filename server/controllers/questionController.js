@@ -1,15 +1,15 @@
-const { insertOne, getAll, deleteOne, updateOne } = require('./factoryHandler');
-const QuestionModel = require('../models/QuestionModel');
-const AnswerModel = require('../models/AnswerModel');
-const AttemptModel = require('../models/AttemptModel');
-const { SUCCESS, FAILED } = require('../tools/statusTexts');
-const ExamModel = require('../models/ExamModel');
-const getAttemptMark = require('../tools/getAttemptMark');
-const UserModel = require('../models/UserModel');
-const expressAsyncHandler = require('express-async-handler');
-const shuffleArray = require('../tools/fcs/shuffleArray');
-const { user_roles } = require('../tools/constants/rolesConstants');
-const createError = require('../tools/createError');
+import { insertOne, getAll, deleteOne, updateOne } from './factoryHandler.js';
+import QuestionModel from '../models/QuestionModel.js';
+import AnswerModel from '../models/AnswerModel.js';
+import AttemptModel from '../models/AttemptModel.js';
+import { SUCCESS, FAILED } from '../tools/statusTexts.js';
+import ExamModel from '../models/ExamModel.js';
+import getAttemptMark from '../tools/getAttemptMark.js';
+import UserModel from '../models/UserModel.js';
+import expressAsyncHandler from 'express-async-handler';
+import shuffleArray from '../tools/fcs/shuffleArray.js';
+import { user_roles } from '../tools/constants/rolesConstants.js';
+import createError from '../tools/createError.js';
 
 
 const questionParams = (query) => {
@@ -185,7 +185,7 @@ const formatAI = expressAsyncHandler(async (req, res, next) => {
     }
 })
 
-module.exports = {
+export {
     getQuestions, createQuestion, updateQuestion, deleteQuestion, questionParams,
     createManyQuestions,
     linkQuestionToTags, unLinkQuestionToTags,

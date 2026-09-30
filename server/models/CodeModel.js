@@ -1,6 +1,6 @@
-const mongoose = require("mongoose")
-const codeConstants = require("../tools/constants/codeConstants")
-const UserModel = require("./UserModel")
+import mongoose from 'mongoose';
+import codeConstants from '../tools/constants/codeConstants.js';
+import UserModel from './UserModel.js';
 
 const codeSchema = new mongoose.Schema({
     usedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: UserModel }],
@@ -12,11 +12,11 @@ const codeSchema = new mongoose.Schema({
     },
     price: { type: Number, default: 0, min: [0, "القيمة الدنيا هي 0 جنيه"], max: [2000, "اقصى مبلغ هو 2000 جنيه"] },
     isActive: { type: Boolean, default: true },
-    numbers: { type: Number, default: 1, min: [0, 'القيمة الدنيا هي 0'], max: [200, 'اقصى عدد هو 200'] },
+    numbers: { type: Number, default: 1, min: [0, 'القيمة الدنيا هي 0'], max: [1000, 'اقصى عدد هو 1000'] },
 }, {
     timestamps: true,
     versionKey: false
 })
 
 const CodeModel = mongoose.model("code", codeSchema)
-module.exports = CodeModel
+export default CodeModel;

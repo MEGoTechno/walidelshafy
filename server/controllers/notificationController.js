@@ -1,14 +1,15 @@
-const expressAsyncHandler = require("express-async-handler");
-const NotificationModel = require("../models/NotificationModel");
-const { getAll, insertOne, updateOne, deleteOne } = require("./factoryHandler");
-const { notificationMethods } = require("../tools/constants/sendersConstants");
-const UserModel = require("../models/UserModel");
-const CommercialUserModel = require("../models/CommercialUserModel");
-
-const createError = require("../tools/createError");
-const { FAILED, SUCCESS } = require("../tools/statusTexts");
-const selectUsers = require("../tools/fcs/selectUsers");
-const senderByMethod = require("../tools/fcs/senderByMethod");
+import expressAsyncHandler from 'express-async-handler';
+import NotificationModel from '../models/NotificationModel.js';
+import { getAll, insertOne, updateOne, deleteOne } from './factoryHandler.js';
+import { senderConstants, notificationMethods } from '../tools/constants/sendersConstants.js';
+import UserModel from '../models/UserModel.js';
+import sendEmail from '../tools/sendEmail.js';
+import { sendWhatsMsgFc } from './whatsappController.js';
+import sendUserReport from '../tools/sendUserReport.js';
+import createError from '../tools/createError.js';
+import { FAILED, SUCCESS } from '../tools/statusTexts.js';
+import selectUsers from '../tools/fcs/selectUsers.js';
+import senderByMethod from '../tools/fcs/senderByMethod.js';
 
 // Use dynamic import() to load p-limit
 const pLimit = async () => {
@@ -18,10 +19,10 @@ const pLimit = async () => {
 
 const notificationParams = (query) => {
     return [
-        { key: "user", value: query.user, operator: 'equal' },
+        { key: "user", value: query.user },
         { key: "message", value: query.message },
         { key: "subject", value: query.subject },
-        { key: "isSeen", value: query.isSeen, type: 'boolean' },
+        { key: "isSeen", value: query.isSeen },
         { key: "phone", value: query.phone },
     ]
 } //modify it to be more frontend
@@ -45,22 +46,15 @@ const handelNotification = expressAsyncHandler(async (req, res, next) => {
     const userId = req.body.user
     const message = req.body.message
     const subject = req.body.subject
-    const isCommercial = req.body.isCommercial
 
-    const user = isCommercial ? await CommercialUserModel.findById(userId).lean() : await UserModel.findById(userId).lean()
+    const user = await UserModel.findById(userId).lean()
     if (!user) return next(createError("المستخدم غير موجود", 404, FAILED))
 
-    await senderByMethod({ method, user, subject, message, isCommercial })
+    await senderByMethod({ method, user, subject, message })
     req.successMsg = 'تم ارسال : ' + notificationMethods.find(n => n.value === method).label
 
     next()
 })
-
-const intervals = [3000, 17000, 12000, 20000, 35000, 30 * 60 * 1000, 15 * 60 * 1000, 10 * 60 * 1000];
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-const randomInterval = arr => {
-    return arr[Math.floor(Math.random() * arr.length)];
-};
 
 const sendNotificationsToMany = expressAsyncHandler(async (req, res, next) => {
     const limit = (await pLimit())(5); // Limit to 5 concurrent operations
@@ -68,19 +62,16 @@ const sendNotificationsToMany = expressAsyncHandler(async (req, res, next) => {
     const method = req.body.method
     const message = req.body.message
     const subject = req.body.subject
-    const isCommercial = req.body.isCommercial
 
     //Who receive
     const match = selectUsers(req.body)
-    const users = isCommercial ? await CommercialUserModel.find(match).lean() : await UserModel.find(match).lean();
+    const users = await UserModel.find(match).lean();
 
     let failedNums = 0
     // Process each user in parallel
     await Promise.all(users.map(user => limit(async () => {
         try {
-            const pending = randomInterval(intervals)
-            await sleep(pending)
-            await senderByMethod({ method, user, message, subject, isCommercial })
+            await senderByMethod({ method, user, message, subject })
         } catch (error) {
             failedNums += 1
             console.log('failed to send in sendNotificationByWhats ==>', error)
@@ -90,4 +81,4 @@ const sendNotificationsToMany = expressAsyncHandler(async (req, res, next) => {
     const messageToSend = 'تم ارسال : ' + (notificationMethods.find(n => n.value === method).label) + ' ' + 'العدد = ' + (users.length - failedNums)
     return res.status(200).json({ status: SUCCESS, values: '', message: messageToSend })
 })
-module.exports = { getNotifications, handelNotification, createNotification, sendNotificationsToMany, updateNotification, deleteNotification, notificationParams, makeSeen }
+export { getNotifications, handelNotification, createNotification, sendNotificationsToMany, updateNotification, deleteNotification, notificationParams, makeSeen };

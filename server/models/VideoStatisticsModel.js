@@ -1,9 +1,9 @@
-const mongoose = require("mongoose")
-const filePlayers = require("../tools/constants/filePlayers")
-const UserModel = require("./UserModel")
-const CourseModel = require("./CourseModel")
-const LectureModel = require("./LectureModel")
-const VideoModel = require("./VideoModel")
+import mongoose from 'mongoose';
+import filePlayers from '../tools/constants/filePlayers.js';
+import UserModel from './UserModel.js';
+import CourseModel from './CourseModel.js';
+import LectureModel from './LectureModel.js';
+import VideoModel from './VideoModel.js';
 
 const videoStatisticsSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: UserModel },
@@ -15,14 +15,13 @@ const videoStatisticsSchema = new mongoose.Schema({
     role: { type: String },
 
     totalTime: Number,
-    watchedTime: Number,//Seconds
+    watchedTime: Number, //Seconds
 
     mainEvents: [Object],
     // events: [Object],
 }, {
     timestamps: true
 })
-
 videoStatisticsSchema.index({ user: 1, lecture: 1 });
 
 const mainEvent = {
@@ -34,4 +33,4 @@ const mainEvent = {
     endTime: '',
 }
 const VideoStatisticsModel = mongoose.model("VideoStatistics", videoStatisticsSchema)
-module.exports = VideoStatisticsModel
+export default VideoStatisticsModel;

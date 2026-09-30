@@ -5,6 +5,7 @@ import { Box, Divider, useTheme } from '@mui/material';
 import { FlexColumn, FlexRow } from '../../style/mui/styled/Flexbox';
 import Image from './Image';
 
+
 export default function CardCourse({ img, title, children, borderColor }) {
 
   const theme = useTheme()
@@ -24,8 +25,22 @@ export default function CardCourse({ img, title, children, borderColor }) {
       }}
       display={'flex'} flexDirection={'column'}>
 
-      <Box sx={{ p: '16px' }}>
-        <Image borderRadius='8px 8px' img={img} saturate={true} sx={{ minHeight: '100px' }} />
+      <Box sx={{ position: "relative", width: "100%", aspectRatio: "16 / 9" }}>
+        <Box sx={{ overflow: 'hidden' }}>
+          <Box
+            component="img"
+            src={img}
+            alt={title}
+            loading="lazy"
+            // onError={(e) => {
+            //   e.currentTarget.src = placeholderImage(a.light, a.dark, imgW, imgH);
+            // }}
+            sx={{
+              width: "100%", height: "100%", transition: '.3s',
+              objectFit: "cover", objectPosition: "center", display: "block", maxHeight: '500px'
+            }}
+          />
+        </Box>
       </Box>
 
       <Box sx={{
@@ -38,7 +53,7 @@ export default function CardCourse({ img, title, children, borderColor }) {
       }}>
 
         <FlexRow justifyContent={'center'} sx={{ flexWrap: 'nowrap' }}>
-          <Typography variant='h5' component={'h6'} textAlign={'center'} mr={'5px'} fontFamily={'main'}>
+          <Typography variant='h5' component={'h6'} textAlign={'center'} >
             <span>{title} </span>
           </Typography>
         </FlexRow>

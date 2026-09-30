@@ -1,5 +1,4 @@
-const ms = require("ms")
-
+import ms from 'ms';
 
 const DAYES = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
 
@@ -71,4 +70,4 @@ const formatDuration = (ms, isSeconds = false, separated) => {
 }
 
 
-module.exports = { getDateWithTime, getFullDate, formatDuration, convertToMs }
+export { getDateWithTime, getFullDate, formatDuration, convertToMs };

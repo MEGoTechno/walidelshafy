@@ -1,12 +1,12 @@
-const nodemailer = require("nodemailer");
-const { arLang } = require("./constants/arLang");
+import nodemailer from 'nodemailer';
+import { arLang } from './constants/arLang.js';
 
 const sendEmail = async (opt = { email, subject, html, message }) => {
   const transporter = nodemailer.createTransport({
     service: "gmail", //process.env.EMAIL_HOST
     auth: {
       user: process.env.EMAIL_USERNAME, //process.env.EMAIL_USERNAME
-      pass: process.env.EMAIL_PASSWORD,  // process.env.EMAIL_PASSWORD
+      pass: process.env.EMAIL_PASSWORD, // process.env.EMAIL_PASSWORD
     },
   });
 
@@ -21,4 +21,4 @@ const sendEmail = async (opt = { email, subject, html, message }) => {
   await transporter.sendMail(mailerOptions);
 };
 
-module.exports = sendEmail;
+export default sendEmail;
