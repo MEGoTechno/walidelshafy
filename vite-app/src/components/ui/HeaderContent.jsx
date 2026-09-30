@@ -46,7 +46,7 @@ function HeaderContent({ title, body, infos = [], img, sideImg, children, height
                     <FlexColumn sx={{ zIndex: 1, p: '30px 15px', flex: 1, alignItems: 'flex-start' }}>
                         <Typography variant='h6' sx={{
                             zIndex: 1,
-                            // textShadow: theme.shadows[8], bgcolor: theme.palette.grey[0],
+                            textShadow: theme.shadows[8], bgcolor: theme.palette.grey[0],
                             p: '12px 16px', color: 'primary.main',
                             borderRadius: '12px', border: '1px solid',
                             borderColor: theme.palette.primary.main,
@@ -55,7 +55,7 @@ function HeaderContent({ title, body, infos = [], img, sideImg, children, height
                         }}>
                             {/* {sectionName && <span style={{ textDecoration: 'underline' }}>{sectionName}</span>} */}
                             {/* :   */}
-                            <span style={{color: 'whitesmoke', opacity: .7}}> الموضوع : </span>
+                            <span style={{ opacity: .7}}> الموضوع : </span>
                             {title}
                         </Typography>
                         <Typography variant='body1' sx={{ color: '#fff', zIndex: 1, maxWidth: '800px', my: '16px' }}>

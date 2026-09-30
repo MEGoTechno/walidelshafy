@@ -7,7 +7,7 @@ function BannerAuth({ img, title }) {
             flexGrow: 1,
             minHeight: { xs: '50vh', md: '80vh' },
             width: '100%', maxWidth: { xs: '100%', md: '450px' },
-            bgcolor: 'orange', borderRadius: '16px',
+            bgcolor: 'primary.main', borderRadius: '16px',
             backgroundImage: `url(${img})`, backgroundPosition: 'top 50% right 50%', backgroundSize: 'cover',
             display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', overflow: 'clip'
         }}>

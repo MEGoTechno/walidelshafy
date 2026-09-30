@@ -14,9 +14,9 @@ const initializeWhatsApp = expressAsyncHandler(async (req, res, next) => {
     const recordMessages = req.body.recordMessages ?? false
     const status = await whatsappService.getClientStatus(whatsappId)
 
-    if (status.isActive) {
-        return next(createError('الواتس فعال بالفعل', 404, FAILED))
-    }
+    // if (status.isActive) {
+    //     return next(createError('الواتس فعال بالفعل', 404, FAILED))
+    // }
 
     const result = await whatsappService.initialize(whatsappId, { recordMessages });
     console.log('end Iniltializing ==>')
